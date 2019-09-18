@@ -6,7 +6,7 @@ This is a prototype implementation of a a platform that supports the [Virtual Mo
 
 ### Required Dependencies
 - Python v3
-- [Node.js v1.5/1.6)](https://nodejs.org/en/download/)
+- [Node.js v1.5/1.6](https://nodejs.org/en/download/)
 - [npm](https://www.npmjs.com/get-npm)
 - [ElasticSearch v6/7](https://www.elastic.co/products/elasticsearch)
 
@@ -44,4 +44,4 @@ bash ./serve.sh
 
 
 ### _Contact_
-[Ilias Gerostathopoulos](http://www4.in.tum.de/~gerostat/) & [Ljubica Kärkkäinen](https://www.cm.in.tum.de/en/research-group/ljubicak/)
+[Ilias Gerostathopoulos](http://wwwbroy.in.tum.de/~gerostat/) & [Ljubica Kärkkäinen](https://www.cm.in.tum.de/en/research-group/ljubicak/)
