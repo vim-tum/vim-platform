@@ -1,0 +1,5136 @@
+{
+    "experiment": {
+        "status": "SUCCESS", 
+        "changeableVariables": [
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls maximum number of cars allowed for a platoon", 
+                    "min": 2, 
+                    "default": 10, 
+                    "max": 250, 
+                    "name": "maxVehiclesInPlatoon"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Cars try to catchup the platoon-ahead if it's closer than this value (in m.)", 
+                    "min": 10, 
+                    "default": 500, 
+                    "max": 3000, 
+                    "name": "catchupDistance"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Gap (in m.) below which cars are considered as a platoon", 
+                    "min": 10, 
+                    "default": 500, 
+                    "max": 3000, 
+                    "name": "maxPlatoonGap"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Distance (in m.) that is used to determine a car's joining condition to a platoon (if car's arrival position is within the arrival interval of a platoon)", 
+                    "min": 5, 
+                    "default": 3000, 
+                    "max": 3000, 
+                    "name": "joinDistance"
+                }
+            ]
+        ], 
+        "executionStrategy": {
+            "optimizer_iterations": 34, 
+            "sample_size": 500, 
+            "acquisition_method": "gp_hedge", 
+            "stages_count": 50, 
+            "optimizer_iterations_in_design": 16, 
+            "knobs": [
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls maximum number of cars allowed for a platoon", 
+                        "min": 2, 
+                        "default": 10, 
+                        "max": 250, 
+                        "name": "maxVehiclesInPlatoon"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Cars try to catchup the platoon-ahead if it's closer than this value (in m.)", 
+                        "min": 10, 
+                        "default": 500, 
+                        "max": 3000, 
+                        "name": "catchupDistance"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Gap (in m.) below which cars are considered as a platoon", 
+                        "min": 10, 
+                        "default": 500, 
+                        "max": 3000, 
+                        "name": "maxPlatoonGap"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Distance (in m.) that is used to determine a car's joining condition to a platoon (if car's arrival position is within the arrival interval of a platoon)", 
+                        "min": 5, 
+                        "default": 3000, 
+                        "max": 3000, 
+                        "name": "joinDistance"
+                    }
+                ]
+            ], 
+            "type": "self_optimizer"
+        }, 
+        "description": "all parameters (except platoonSplitTime), 50 iterations, 16 for design, 500 sample per stage, scikit", 
+        "targetSystemId": "63db4f95-cadc-9324-d875-3b38f38891e4", 
+        "considered_data_types": [
+            {
+                "disabled": true, 
+                "scale": "Metric", 
+                "description": "number of simulation ticks for the trip", 
+                "weight": 100, 
+                "is_considered": true, 
+                "aggregateFunction": "avg", 
+                "dataProviderName": "Performance", 
+                "criteria": "Minimize", 
+                "name": "tripDuration"
+            }
+        ], 
+        "analysis": {
+            "alpha": 0.05, 
+            "type": "bayesian_opt", 
+            "method": "self_optimizer", 
+            "data_type": {
+                "disabled": true, 
+                "scale": "Metric", 
+                "description": "number of simulation ticks for the trip", 
+                "weight": 100, 
+                "is_considered": true, 
+                "aggregateFunction": "avg", 
+                "dataProviderName": "Performance", 
+                "criteria": "Minimize", 
+                "name": "tripDuration"
+            }, 
+            "inner_type": "self_optimizer"
+        }, 
+        "createdDate": "2018-08-07 20:57:16.408000", 
+        "id": "4f39aef6-d853-6575-9994-38d2f5dc1351", 
+        "name": "Experiment #37 with Platooning to reduce average tripDurations"
+    },
+    "stage_number": 37,
+    "experiment_duration": 131,
+    "stage_data": [
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 42.16782784033731, 
+                "fuelConsumption": 7.419586383683482, 
+                "overhead": 1.3272822167917955
+            }, 
+            "createdDate": "2018-08-07 22:35:50.588000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 251.0, 
+                "speed": 43.5175584663482, 
+                "fuelConsumption": 9.445165930665457, 
+                "overhead": 1.2972979793759203
+            }, 
+            "createdDate": "2018-08-07 22:35:50.899000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.89849050429258, 
+                "fuelConsumption": 7.423503200865134, 
+                "overhead": 1.3443720720214576
+            }, 
+            "createdDate": "2018-08-07 22:35:51.274000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 41.44066842437227, 
+                "fuelConsumption": 8.680794856289758, 
+                "overhead": 1.382013356663776
+            }, 
+            "createdDate": "2018-08-07 22:35:51.436000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 300.0, 
+                "speed": 41.98036510172284, 
+                "fuelConsumption": 8.183028189435813, 
+                "overhead": 1.3457999949344024
+            }, 
+            "createdDate": "2018-08-07 22:35:51.635000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.1757402723924, 
+                "fuelConsumption": 7.4387291850836466, 
+                "overhead": 1.3399506350497576
+            }, 
+            "createdDate": "2018-08-07 22:35:51.835000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 265.0, 
+                "speed": 41.690365609264326, 
+                "fuelConsumption": 7.575595238114018, 
+                "overhead": 1.363445870811108
+            }, 
+            "createdDate": "2018-08-07 22:35:52.116000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.70393535332638, 
+                "fuelConsumption": 8.421166662909794, 
+                "overhead": 1.3521740086601008
+            }, 
+            "createdDate": "2018-08-07 22:35:52.716000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 41.9889880708664, 
+                "fuelConsumption": 7.260278616590918, 
+                "overhead": 1.3455998947531564
+            }, 
+            "createdDate": "2018-08-07 22:35:54.059000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 41.94843553639682, 
+                "fuelConsumption": 7.422938616551943, 
+                "overhead": 1.3433647823841417
+            }, 
+            "createdDate": "2018-08-07 22:35:54.141000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.901528051031065, 
+                "fuelConsumption": 7.877331346368309, 
+                "overhead": 1.33543288999419
+            }, 
+            "createdDate": "2018-08-07 22:35:54.251000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.846916950824806, 
+                "fuelConsumption": 7.477555565526331, 
+                "overhead": 1.3588275849535068
+            }, 
+            "createdDate": "2018-08-07 22:35:54.339000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.62233143538633, 
+                "fuelConsumption": 8.162182830377514, 
+                "overhead": 1.3449815686526596
+            }, 
+            "createdDate": "2018-08-07 22:35:54.449000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.83363622593142, 
+                "fuelConsumption": 8.128303481807077, 
+                "overhead": 1.3466503926845252
+            }, 
+            "createdDate": "2018-08-07 22:35:54.537000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.17159821998096, 
+                "fuelConsumption": 7.2608715882532575, 
+                "overhead": 1.3434554998608788
+            }, 
+            "createdDate": "2018-08-07 22:35:54.659000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 281.0, 
+                "speed": 41.70188889664273, 
+                "fuelConsumption": 8.586513036253038, 
+                "overhead": 1.3417570461690975
+            }, 
+            "createdDate": "2018-08-07 22:35:54.756000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 41.89608609845174, 
+                "fuelConsumption": 7.49164963485434, 
+                "overhead": 1.3600329359205388
+            }, 
+            "createdDate": "2018-08-07 22:35:54.851000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.780410009183186, 
+                "fuelConsumption": 7.451696345191804, 
+                "overhead": 1.356191572000324
+            }, 
+            "createdDate": "2018-08-07 22:35:54.965000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 42.00278979963934, 
+                "fuelConsumption": 7.422083160446223, 
+                "overhead": 1.3576017466614885
+            }, 
+            "createdDate": "2018-08-07 22:35:55.102000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 42.11589578249736, 
+                "fuelConsumption": 7.42224447740189, 
+                "overhead": 1.3341582334425162
+            }, 
+            "createdDate": "2018-08-07 22:35:55.345000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 255.0, 
+                "speed": 41.646085340972434, 
+                "fuelConsumption": 8.033582982662574, 
+                "overhead": 1.3445376546036232
+            }, 
+            "createdDate": "2018-08-07 22:35:55.479000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.856311203028184, 
+                "fuelConsumption": 8.317023038341697, 
+                "overhead": 1.3370159565926403
+            }, 
+            "createdDate": "2018-08-07 22:35:55.610000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 319.0, 
+                "speed": 42.23143707299234, 
+                "fuelConsumption": 7.2795822402707895, 
+                "overhead": 1.3450168461901593
+            }, 
+            "createdDate": "2018-08-07 22:35:55.737000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 41.89363112099783, 
+                "fuelConsumption": 7.820040790802794, 
+                "overhead": 1.3575768309806817
+            }, 
+            "createdDate": "2018-08-07 22:35:55.872000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.490129331435924, 
+                "fuelConsumption": 7.73440658101904, 
+                "overhead": 1.381180000069974
+            }, 
+            "createdDate": "2018-08-07 22:35:56.010000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.99823146034871, 
+                "fuelConsumption": 7.286827410657256, 
+                "overhead": 1.3376700238899164
+            }, 
+            "createdDate": "2018-08-07 22:35:56.266000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 304.0, 
+                "speed": 42.02937108026724, 
+                "fuelConsumption": 8.470893654471354, 
+                "overhead": 1.3305807749350842
+            }, 
+            "createdDate": "2018-08-07 22:35:56.401000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 41.85676554926943, 
+                "fuelConsumption": 8.593501088859806, 
+                "overhead": 1.3362762902449534
+            }, 
+            "createdDate": "2018-08-07 22:35:56.880000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 42.02228235360974, 
+                "fuelConsumption": 7.628661364289243, 
+                "overhead": 1.3315610832485956
+            }, 
+            "createdDate": "2018-08-07 22:35:56.991000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.81127034579495, 
+                "fuelConsumption": 7.418740268371047, 
+                "overhead": 1.3653403424746617
+            }, 
+            "createdDate": "2018-08-07 22:35:57.702000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 265.0, 
+                "speed": 41.71505776552588, 
+                "fuelConsumption": 7.9143319981553635, 
+                "overhead": 1.3679203598628733
+            }, 
+            "createdDate": "2018-08-07 22:35:57.882000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 41.825072672535185, 
+                "fuelConsumption": 8.218223194065276, 
+                "overhead": 1.3592768217515652
+            }, 
+            "createdDate": "2018-08-07 22:35:57.967000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.07813551572901, 
+                "fuelConsumption": 7.241554874411925, 
+                "overhead": 1.3291859621458604
+            }, 
+            "createdDate": "2018-08-07 22:35:58.034000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 42.157360660123956, 
+                "fuelConsumption": 7.416509764958655, 
+                "overhead": 1.3351535491367463
+            }, 
+            "createdDate": "2018-08-07 22:35:58.110000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.06589705650849, 
+                "fuelConsumption": 7.898186792881659, 
+                "overhead": 1.3299147256720685
+            }, 
+            "createdDate": "2018-08-07 22:35:58.209000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.17686727336748, 
+                "fuelConsumption": 7.4324527911718645, 
+                "overhead": 1.3477356376361642
+            }, 
+            "createdDate": "2018-08-07 22:35:58.287000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 41.999145012258545, 
+                "fuelConsumption": 7.468987853368223, 
+                "overhead": 1.3419489496315045
+            }, 
+            "createdDate": "2018-08-07 22:35:58.397000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.16362099415024, 
+                "fuelConsumption": 7.185236473203469, 
+                "overhead": 1.3266122084858143
+            }, 
+            "createdDate": "2018-08-07 22:35:58.496000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.95147827341114, 
+                "fuelConsumption": 7.506681140323143, 
+                "overhead": 1.3436846254183954
+            }, 
+            "createdDate": "2018-08-07 22:35:58.608000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.89759985075384, 
+                "fuelConsumption": 7.385461307240129, 
+                "overhead": 1.349747360998944
+            }, 
+            "createdDate": "2018-08-07 22:35:58.704000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.42540206203892, 
+                "fuelConsumption": 8.093130390599661, 
+                "overhead": 1.351375384144949
+            }, 
+            "createdDate": "2018-08-07 22:35:58.816000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 42.05377966504392, 
+                "fuelConsumption": 7.336852691691556, 
+                "overhead": 1.3346789203908456
+            }, 
+            "createdDate": "2018-08-07 22:35:58.914000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 44.66721182675694, 
+                "fuelConsumption": 9.392757440136295, 
+                "overhead": 1.2738570250981378
+            }, 
+            "createdDate": "2018-08-07 22:35:59.012000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 255.0, 
+                "speed": 41.586098121622925, 
+                "fuelConsumption": 7.499456827719639, 
+                "overhead": 1.3736238429225642
+            }, 
+            "createdDate": "2018-08-07 22:35:59.123000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 43.90824449164687, 
+                "fuelConsumption": 8.89858461515262, 
+                "overhead": 1.2903692456958422
+            }, 
+            "createdDate": "2018-08-07 22:35:59.210000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.712339174769944, 
+                "fuelConsumption": 7.299229608268968, 
+                "overhead": 1.3640961572223975
+            }, 
+            "createdDate": "2018-08-07 22:35:59.322000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.63925945292614, 
+                "fuelConsumption": 7.6469284689558386, 
+                "overhead": 1.3645339173818813
+            }, 
+            "createdDate": "2018-08-07 22:35:59.549000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.27299452195938, 
+                "fuelConsumption": 7.3774168523176655, 
+                "overhead": 1.3440775242138743
+            }, 
+            "createdDate": "2018-08-07 22:35:59.673000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.117404272062586, 
+                "fuelConsumption": 7.509734573284146, 
+                "overhead": 1.3519233381894025
+            }, 
+            "createdDate": "2018-08-07 22:35:59.793000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.47267390481465, 
+                "fuelConsumption": 7.795582576128798, 
+                "overhead": 1.3645621194061746
+            }, 
+            "createdDate": "2018-08-07 22:36:00.061000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.9612599975355, 
+                "fuelConsumption": 7.634916116812266, 
+                "overhead": 1.333362405970425
+            }, 
+            "createdDate": "2018-08-07 22:36:00.313000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 42.20871035244783, 
+                "fuelConsumption": 7.407103282131714, 
+                "overhead": 1.3514270241448507
+            }, 
+            "createdDate": "2018-08-07 22:36:00.401000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.29213227522175, 
+                "fuelConsumption": 7.553547733148494, 
+                "overhead": 1.3220893695015403
+            }, 
+            "createdDate": "2018-08-07 22:36:00.508000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.01986080345948, 
+                "fuelConsumption": 7.608832462900165, 
+                "overhead": 1.3355260475779205
+            }, 
+            "createdDate": "2018-08-07 22:36:00.618000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 42.24280161235318, 
+                "fuelConsumption": 7.352882614929395, 
+                "overhead": 1.3328014611180372
+            }, 
+            "createdDate": "2018-08-07 22:36:00.695000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 42.046124751991115, 
+                "fuelConsumption": 7.39390192401246, 
+                "overhead": 1.3357144443842381
+            }, 
+            "createdDate": "2018-08-07 22:36:00.830000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.73489752324206, 
+                "fuelConsumption": 8.07431891245692, 
+                "overhead": 1.3676949845150206
+            }, 
+            "createdDate": "2018-08-07 22:36:00.905000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 41.97485159713554, 
+                "fuelConsumption": 8.00316771052996, 
+                "overhead": 1.3599299075502556
+            }, 
+            "createdDate": "2018-08-07 22:36:01.258000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.77826634332654, 
+                "fuelConsumption": 8.157041579794042, 
+                "overhead": 1.345056415166892
+            }, 
+            "createdDate": "2018-08-07 22:36:01.478000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.73157188526029, 
+                "fuelConsumption": 8.239541594497254, 
+                "overhead": 1.3688923767676462
+            }, 
+            "createdDate": "2018-08-07 22:36:02.799000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.49835137663428, 
+                "fuelConsumption": 8.412469303548614, 
+                "overhead": 1.3573348970567125
+            }, 
+            "createdDate": "2018-08-07 22:36:03.373000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.79073891322296, 
+                "fuelConsumption": 7.281429452826577, 
+                "overhead": 1.3396402514156551
+            }, 
+            "createdDate": "2018-08-07 22:36:03.763000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.48850348321263, 
+                "fuelConsumption": 7.770397310497029, 
+                "overhead": 1.3706903536921045
+            }, 
+            "createdDate": "2018-08-07 22:36:03.851000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 41.790851298892704, 
+                "fuelConsumption": 7.632911993061335, 
+                "overhead": 1.3634576757608847
+            }, 
+            "createdDate": "2018-08-07 22:36:03.972000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 286.0, 
+                "speed": 42.0915151378438, 
+                "fuelConsumption": 7.356414396344602, 
+                "overhead": 1.3433607316672824
+            }, 
+            "createdDate": "2018-08-07 22:36:04.071000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 285.0, 
+                "speed": 41.986173911766784, 
+                "fuelConsumption": 7.781564070928088, 
+                "overhead": 1.3516425384471171
+            }, 
+            "createdDate": "2018-08-07 22:36:04.181000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 274.0, 
+                "speed": 41.599036344024135, 
+                "fuelConsumption": 7.799857596304379, 
+                "overhead": 1.3705141575043558
+            }, 
+            "createdDate": "2018-08-07 22:36:04.268000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.440363312187685, 
+                "fuelConsumption": 8.371177701127312, 
+                "overhead": 1.398445020382623
+            }, 
+            "createdDate": "2018-08-07 22:36:04.379000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.5731872397248, 
+                "fuelConsumption": 8.813052863403142, 
+                "overhead": 1.37809175746627
+            }, 
+            "createdDate": "2018-08-07 22:36:04.467000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 42.219878346627205, 
+                "fuelConsumption": 7.358600032390047, 
+                "overhead": 1.354188613797113
+            }, 
+            "createdDate": "2018-08-07 22:36:04.576000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.21798733278461, 
+                "fuelConsumption": 7.358805680744574, 
+                "overhead": 1.3336443085783432
+            }, 
+            "createdDate": "2018-08-07 22:36:04.675000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 293.0, 
+                "speed": 42.110566982328876, 
+                "fuelConsumption": 7.447626300254188, 
+                "overhead": 1.3468589906468496
+            }, 
+            "createdDate": "2018-08-07 22:36:04.764000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 41.9551112777224, 
+                "fuelConsumption": 8.195794471195741, 
+                "overhead": 1.3593603600315878
+            }, 
+            "createdDate": "2018-08-07 22:36:04.876000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 319.0, 
+                "speed": 41.86909277869974, 
+                "fuelConsumption": 7.448077649773449, 
+                "overhead": 1.352322549263952
+            }, 
+            "createdDate": "2018-08-07 22:36:05.018000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 293.0, 
+                "speed": 41.76086649095549, 
+                "fuelConsumption": 8.371008692125669, 
+                "overhead": 1.3440877289121942
+            }, 
+            "createdDate": "2018-08-07 22:36:05.083000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.77906944484829, 
+                "fuelConsumption": 7.458460578261329, 
+                "overhead": 1.3803068105649388
+            }, 
+            "createdDate": "2018-08-07 22:36:05.160000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.90006339400249, 
+                "fuelConsumption": 7.493564104680307, 
+                "overhead": 1.380327765895479
+            }, 
+            "createdDate": "2018-08-07 22:36:05.259000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 42.08043442259311, 
+                "fuelConsumption": 7.543821651298768, 
+                "overhead": 1.343631165223215
+            }, 
+            "createdDate": "2018-08-07 22:36:05.363000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.82624924620208, 
+                "fuelConsumption": 7.552769403059566, 
+                "overhead": 1.3637336677266625
+            }, 
+            "createdDate": "2018-08-07 22:36:05.467000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.79093872104752, 
+                "fuelConsumption": 7.263967524090172, 
+                "overhead": 1.3812969081589832
+            }, 
+            "createdDate": "2018-08-07 22:36:05.533000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 41.867918459324514, 
+                "fuelConsumption": 7.7927320372693245, 
+                "overhead": 1.3567906940205507
+            }, 
+            "createdDate": "2018-08-07 22:36:05.611000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 276.0, 
+                "speed": 41.66224860255709, 
+                "fuelConsumption": 7.660137160018768, 
+                "overhead": 1.3432081185405826
+            }, 
+            "createdDate": "2018-08-07 22:36:05.687000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 41.70182572589132, 
+                "fuelConsumption": 8.17194741180804, 
+                "overhead": 1.3452275228747081
+            }, 
+            "createdDate": "2018-08-07 22:36:05.775000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 311.0, 
+                "speed": 41.91204552640492, 
+                "fuelConsumption": 8.216513860161657, 
+                "overhead": 1.3560491884327401
+            }, 
+            "createdDate": "2018-08-07 22:36:05.874000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.75944334187403, 
+                "fuelConsumption": 7.681361721786386, 
+                "overhead": 1.3407645996370388
+            }, 
+            "createdDate": "2018-08-07 22:36:05.962000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 42.13909419784438, 
+                "fuelConsumption": 7.609343455642407, 
+                "overhead": 1.3318839628096708
+            }, 
+            "createdDate": "2018-08-07 22:36:06.099000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.66802622925549, 
+                "fuelConsumption": 8.156939458482023, 
+                "overhead": 1.3759930616993132
+            }, 
+            "createdDate": "2018-08-07 22:36:06.162000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 42.65407236525272, 
+                "fuelConsumption": 8.000093848335542, 
+                "overhead": 1.3573085436331755
+            }, 
+            "createdDate": "2018-08-07 22:36:06.238000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 42.302057355786125, 
+                "fuelConsumption": 8.938948704609185, 
+                "overhead": 1.3453380914086146
+            }, 
+            "createdDate": "2018-08-07 22:36:06.325000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.82463506217276, 
+                "fuelConsumption": 8.184274005847726, 
+                "overhead": 1.3424785484031514
+            }, 
+            "createdDate": "2018-08-07 22:36:06.414000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.01663486747352, 
+                "fuelConsumption": 8.560017532887505, 
+                "overhead": 1.3525738382464003
+            }, 
+            "createdDate": "2018-08-07 22:36:06.513000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 41.5638352599028, 
+                "fuelConsumption": 7.950091446620756, 
+                "overhead": 1.3569610845142466
+            }, 
+            "createdDate": "2018-08-07 22:36:06.623000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 274.0, 
+                "speed": 42.18405018330725, 
+                "fuelConsumption": 7.601011715641077, 
+                "overhead": 1.3315592377102865
+            }, 
+            "createdDate": "2018-08-07 22:36:06.744000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 321.0, 
+                "speed": 42.02175183418768, 
+                "fuelConsumption": 8.265896963290205, 
+                "overhead": 1.355857463584881
+            }, 
+            "createdDate": "2018-08-07 22:36:06.842000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 42.01487203309188, 
+                "fuelConsumption": 7.379203548492978, 
+                "overhead": 1.3324937879249343
+            }, 
+            "createdDate": "2018-08-07 22:36:06.980000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 42.19738145449515, 
+                "fuelConsumption": 7.371234168901611, 
+                "overhead": 1.349244721026918
+            }, 
+            "createdDate": "2018-08-07 22:36:07.117000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 41.8588242301444, 
+                "fuelConsumption": 7.99529313613651, 
+                "overhead": 1.353407503090545
+            }, 
+            "createdDate": "2018-08-07 22:36:07.262000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.91224529319442, 
+                "fuelConsumption": 7.386736265351662, 
+                "overhead": 1.3353033048955762
+            }, 
+            "createdDate": "2018-08-07 22:36:07.641000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.813286163289284, 
+                "fuelConsumption": 8.406367107788858, 
+                "overhead": 1.3436993723419375
+            }, 
+            "createdDate": "2018-08-07 22:36:07.711000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.91227577260237, 
+                "fuelConsumption": 8.176937311250194, 
+                "overhead": 1.3725241509005341
+            }, 
+            "createdDate": "2018-08-07 22:36:07.777000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 41.72799622888245, 
+                "fuelConsumption": 8.53982387006864, 
+                "overhead": 1.3623358502005105
+            }, 
+            "createdDate": "2018-08-07 22:36:07.865000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.94474548207023, 
+                "fuelConsumption": 7.267154240594762, 
+                "overhead": 1.344043529355446
+            }, 
+            "createdDate": "2018-08-07 22:36:07.983000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.86689242095823, 
+                "fuelConsumption": 7.797908684501386, 
+                "overhead": 1.3481880593599738
+            }, 
+            "createdDate": "2018-08-07 22:36:08.076000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.87312601737378, 
+                "fuelConsumption": 7.247567555277514, 
+                "overhead": 1.3420679691615196
+            }, 
+            "createdDate": "2018-08-07 22:36:08.161000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 42.09453629923407, 
+                "fuelConsumption": 7.257885484130808, 
+                "overhead": 1.3296666731576805
+            }, 
+            "createdDate": "2018-08-07 22:36:08.227000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.8558948599121, 
+                "fuelConsumption": 7.394188521600856, 
+                "overhead": 1.3531284692266607
+            }, 
+            "createdDate": "2018-08-07 22:36:08.306000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 41.94026547163776, 
+                "fuelConsumption": 7.43159576216185, 
+                "overhead": 1.347473825598534
+            }, 
+            "createdDate": "2018-08-07 22:36:08.381000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 42.04298986073117, 
+                "fuelConsumption": 7.631225041788648, 
+                "overhead": 1.3305434093377755
+            }, 
+            "createdDate": "2018-08-07 22:36:08.524000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 313.0, 
+                "speed": 42.13537435927891, 
+                "fuelConsumption": 7.344306874454576, 
+                "overhead": 1.3269806394155392
+            }, 
+            "createdDate": "2018-08-07 22:36:08.613000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 304.0, 
+                "speed": 41.79392236275252, 
+                "fuelConsumption": 8.590398199654276, 
+                "overhead": 1.3606032298254376
+            }, 
+            "createdDate": "2018-08-07 22:36:08.901000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 274.0, 
+                "speed": 41.80931137675583, 
+                "fuelConsumption": 7.950840721395491, 
+                "overhead": 1.358533177890629
+            }, 
+            "createdDate": "2018-08-07 22:36:09.390000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.87488196268648, 
+                "fuelConsumption": 7.405344255807986, 
+                "overhead": 1.3414447246974184
+            }, 
+            "createdDate": "2018-08-07 22:36:10.474000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 313.0, 
+                "speed": 42.03475382930482, 
+                "fuelConsumption": 7.970802270876383, 
+                "overhead": 1.3518916872494622
+            }, 
+            "createdDate": "2018-08-07 22:36:10.592000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.764991732719224, 
+                "fuelConsumption": 7.559705252352121, 
+                "overhead": 1.3840483604309959
+            }, 
+            "createdDate": "2018-08-07 22:36:10.657000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 42.11655613087471, 
+                "fuelConsumption": 7.4306169626218965, 
+                "overhead": 1.3330247098359664
+            }, 
+            "createdDate": "2018-08-07 22:36:10.746000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.8268164437023, 
+                "fuelConsumption": 8.418581013941258, 
+                "overhead": 1.3754773858529739
+            }, 
+            "createdDate": "2018-08-07 22:36:10.845000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 300.0, 
+                "speed": 41.96780504356224, 
+                "fuelConsumption": 7.3992391893104426, 
+                "overhead": 1.3507816847887342
+            }, 
+            "createdDate": "2018-08-07 22:36:10.934000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 42.0156642822661, 
+                "fuelConsumption": 7.629843160885639, 
+                "overhead": 1.3359840379339323
+            }, 
+            "createdDate": "2018-08-07 22:36:11.043000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 42.025660277298066, 
+                "fuelConsumption": 7.439899585200129, 
+                "overhead": 1.3352073182478759
+            }, 
+            "createdDate": "2018-08-07 22:36:11.141000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 42.24986594845452, 
+                "fuelConsumption": 7.202834530329441, 
+                "overhead": 1.3369911236725955
+            }, 
+            "createdDate": "2018-08-07 22:36:11.254000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.89700649881074, 
+                "fuelConsumption": 7.529329899731542, 
+                "overhead": 1.3784141670905299
+            }, 
+            "createdDate": "2018-08-07 22:36:11.340000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 42.15521188014175, 
+                "fuelConsumption": 7.307579552841563, 
+                "overhead": 1.3458220069773263
+            }, 
+            "createdDate": "2018-08-07 22:36:11.477000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 41.87997331626773, 
+                "fuelConsumption": 8.23616921492522, 
+                "overhead": 1.3977660332760906
+            }, 
+            "createdDate": "2018-08-07 22:36:11.560000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.86282081062983, 
+                "fuelConsumption": 7.597485302974212, 
+                "overhead": 1.3362381281245077
+            }, 
+            "createdDate": "2018-08-07 22:36:11.659000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 41.96028527366518, 
+                "fuelConsumption": 8.13526706153139, 
+                "overhead": 1.3379401620138036
+            }, 
+            "createdDate": "2018-08-07 22:36:11.736000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 316.0, 
+                "speed": 42.188878233755915, 
+                "fuelConsumption": 7.406418762586856, 
+                "overhead": 1.3510327694124764
+            }, 
+            "createdDate": "2018-08-07 22:36:11.845000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 313.0, 
+                "speed": 42.11891192052751, 
+                "fuelConsumption": 7.581282127919064, 
+                "overhead": 1.3447957058460067
+            }, 
+            "createdDate": "2018-08-07 22:36:11.957000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 259.0, 
+                "speed": 41.74304725671412, 
+                "fuelConsumption": 8.022018057442274, 
+                "overhead": 1.3624563214670768
+            }, 
+            "createdDate": "2018-08-07 22:36:12.088000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.66104834826891, 
+                "fuelConsumption": 8.468128711599535, 
+                "overhead": 1.3779635818932243
+            }, 
+            "createdDate": "2018-08-07 22:36:12.177000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.96995458143455, 
+                "fuelConsumption": 8.092975692821053, 
+                "overhead": 1.3564399058429824
+            }, 
+            "createdDate": "2018-08-07 22:36:12.285000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.65402634477922, 
+                "fuelConsumption": 7.661811639988084, 
+                "overhead": 1.374462769170509
+            }, 
+            "createdDate": "2018-08-07 22:36:12.406000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.85365926495659, 
+                "fuelConsumption": 7.897513118665696, 
+                "overhead": 1.3412513179098013
+            }, 
+            "createdDate": "2018-08-07 22:36:12.537000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 248.0, 
+                "speed": 41.78258911806141, 
+                "fuelConsumption": 7.475826239635097, 
+                "overhead": 1.3404441400383145
+            }, 
+            "createdDate": "2018-08-07 22:36:12.639000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 42.1181112282063, 
+                "fuelConsumption": 7.32588102089765, 
+                "overhead": 1.362526849224558
+            }, 
+            "createdDate": "2018-08-07 22:36:12.805000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 285.0, 
+                "speed": 41.86339634077047, 
+                "fuelConsumption": 7.51946316545178, 
+                "overhead": 1.3507652027876136
+            }, 
+            "createdDate": "2018-08-07 22:36:13.126000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 42.11847695149413, 
+                "fuelConsumption": 7.460717909573896, 
+                "overhead": 1.3372240203586423
+            }, 
+            "createdDate": "2018-08-07 22:36:13.210000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.88821163393334, 
+                "fuelConsumption": 7.9782050812545275, 
+                "overhead": 1.3734800161044438
+            }, 
+            "createdDate": "2018-08-07 22:36:13.288000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 41.84432312154828, 
+                "fuelConsumption": 7.868538355114832, 
+                "overhead": 1.3519888088218004
+            }, 
+            "createdDate": "2018-08-07 22:36:13.557000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 39.80561210718216, 
+                "fuelConsumption": 7.654925453142343, 
+                "overhead": 1.4064488151522399
+            }, 
+            "createdDate": "2018-08-07 22:36:13.806000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 41.84170728626399, 
+                "fuelConsumption": 7.222846454834149, 
+                "overhead": 1.374072517125846
+            }, 
+            "createdDate": "2018-08-07 22:36:13.921000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.01300684382589, 
+                "fuelConsumption": 7.911539617704061, 
+                "overhead": 1.3492368986846452
+            }, 
+            "createdDate": "2018-08-07 22:36:14.001000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 300.0, 
+                "speed": 41.24224426090365, 
+                "fuelConsumption": 7.942530323875433, 
+                "overhead": 1.3698860513951352
+            }, 
+            "createdDate": "2018-08-07 22:36:14.241000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.86423905871939, 
+                "fuelConsumption": 8.31218350619257, 
+                "overhead": 1.3662154918305391
+            }, 
+            "createdDate": "2018-08-07 22:36:14.386000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 41.88332921480333, 
+                "fuelConsumption": 8.195013002126066, 
+                "overhead": 1.3759298777535136
+            }, 
+            "createdDate": "2018-08-07 22:36:14.475000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 42.26532627804817, 
+                "fuelConsumption": 7.482614010065311, 
+                "overhead": 1.3314081870206362
+            }, 
+            "createdDate": "2018-08-07 22:36:14.564000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 41.66457934687378, 
+                "fuelConsumption": 8.436380183733277, 
+                "overhead": 1.3424401318005215
+            }, 
+            "createdDate": "2018-08-07 22:36:14.683000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.00826481138146, 
+                "fuelConsumption": 7.926612750432967, 
+                "overhead": 1.3442425793867738
+            }, 
+            "createdDate": "2018-08-07 22:36:14.771000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 41.23350675788749, 
+                "fuelConsumption": 7.402130507356563, 
+                "overhead": 1.357508666336954
+            }, 
+            "createdDate": "2018-08-07 22:36:14.982000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.873229853138334, 
+                "fuelConsumption": 7.659193848441598, 
+                "overhead": 1.3593429064904936
+            }, 
+            "createdDate": "2018-08-07 22:36:15.349000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 41.80200975551856, 
+                "fuelConsumption": 8.408796530282894, 
+                "overhead": 1.3601304727570889
+            }, 
+            "createdDate": "2018-08-07 22:36:15.455000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 42.02211091908443, 
+                "fuelConsumption": 7.658127344577688, 
+                "overhead": 1.3606554816314294
+            }, 
+            "createdDate": "2018-08-07 22:36:15.574000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 252.0, 
+                "speed": 41.704835731998706, 
+                "fuelConsumption": 7.760534469606729, 
+                "overhead": 1.3590788921350698
+            }, 
+            "createdDate": "2018-08-07 22:36:16.506000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 298.0, 
+                "speed": 41.90554976263599, 
+                "fuelConsumption": 7.9184290019286685, 
+                "overhead": 1.334690303497708
+            }, 
+            "createdDate": "2018-08-07 22:36:16.574000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 42.164233604677875, 
+                "fuelConsumption": 7.716169998144064, 
+                "overhead": 1.334993130844227
+            }, 
+            "createdDate": "2018-08-07 22:36:16.652000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.01476442324022, 
+                "fuelConsumption": 7.561537518789211, 
+                "overhead": 1.3591446543589167
+            }, 
+            "createdDate": "2018-08-07 22:36:16.740000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 274.0, 
+                "speed": 41.900561156162496, 
+                "fuelConsumption": 7.462385214912892, 
+                "overhead": 1.3505352944751243
+            }, 
+            "createdDate": "2018-08-07 22:36:16.827000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.80949060786145, 
+                "fuelConsumption": 7.315535366379117, 
+                "overhead": 1.3387693962733342
+            }, 
+            "createdDate": "2018-08-07 22:36:16.956000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 41.87830744205131, 
+                "fuelConsumption": 8.198391429547087, 
+                "overhead": 1.3875340502385944
+            }, 
+            "createdDate": "2018-08-07 22:36:17.025000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 313.0, 
+                "speed": 41.79118023488377, 
+                "fuelConsumption": 8.278035502604723, 
+                "overhead": 1.3379097143233518
+            }, 
+            "createdDate": "2018-08-07 22:36:17.152000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.19529161309434, 
+                "fuelConsumption": 7.539416523548257, 
+                "overhead": 1.3512773980202815
+            }, 
+            "createdDate": "2018-08-07 22:36:17.268000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.80944160695193, 
+                "fuelConsumption": 8.096418140263125, 
+                "overhead": 1.3379441381658248
+            }, 
+            "createdDate": "2018-08-07 22:36:17.377000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.400710180608264, 
+                "fuelConsumption": 7.4148566113532235, 
+                "overhead": 1.362543206726886
+            }, 
+            "createdDate": "2018-08-07 22:36:17.478000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 41.98203693134689, 
+                "fuelConsumption": 7.221447664078929, 
+                "overhead": 1.382638415244518
+            }, 
+            "createdDate": "2018-08-07 22:36:17.575000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 317.0, 
+                "speed": 42.23160831066478, 
+                "fuelConsumption": 7.42551001107652, 
+                "overhead": 1.332308499655613
+            }, 
+            "createdDate": "2018-08-07 22:36:17.675000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 41.96577794248504, 
+                "fuelConsumption": 8.026860053076554, 
+                "overhead": 1.341248809559642
+            }, 
+            "createdDate": "2018-08-07 22:36:17.785000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.829881051526, 
+                "fuelConsumption": 8.23978473508919, 
+                "overhead": 1.3385475644570952
+            }, 
+            "createdDate": "2018-08-07 22:36:17.883000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.85842154228053, 
+                "fuelConsumption": 7.692000018545558, 
+                "overhead": 1.3724716038674833
+            }, 
+            "createdDate": "2018-08-07 22:36:18.006000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 41.867749474855, 
+                "fuelConsumption": 8.038701672155074, 
+                "overhead": 1.415985264904223
+            }, 
+            "createdDate": "2018-08-07 22:36:18.323000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 276.0, 
+                "speed": 40.90097592249736, 
+                "fuelConsumption": 8.678265311328463, 
+                "overhead": 1.383354908520318
+            }, 
+            "createdDate": "2018-08-07 22:36:18.412000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.80341018505129, 
+                "fuelConsumption": 7.2165399815352185, 
+                "overhead": 1.3603648903719472
+            }, 
+            "createdDate": "2018-08-07 22:36:18.522000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 319.0, 
+                "speed": 42.22481657678081, 
+                "fuelConsumption": 7.7668874263907846, 
+                "overhead": 1.3452277335226939
+            }, 
+            "createdDate": "2018-08-07 22:36:18.599000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 42.01582182130936, 
+                "fuelConsumption": 7.469646072902303, 
+                "overhead": 1.3749517144679007
+            }, 
+            "createdDate": "2018-08-07 22:36:19.203000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.92576385992787, 
+                "fuelConsumption": 7.255603087108327, 
+                "overhead": 1.3457174841592046
+            }, 
+            "createdDate": "2018-08-07 22:36:19.303000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 42.216070433342225, 
+                "fuelConsumption": 7.232848756895692, 
+                "overhead": 1.338987877046976
+            }, 
+            "createdDate": "2018-08-07 22:36:20.029000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.91278326610452, 
+                "fuelConsumption": 7.699455866411886, 
+                "overhead": 1.3519083084848669
+            }, 
+            "createdDate": "2018-08-07 22:36:20.138000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 265.0, 
+                "speed": 42.005729293655925, 
+                "fuelConsumption": 7.316427384003338, 
+                "overhead": 1.337714850235055
+            }, 
+            "createdDate": "2018-08-07 22:36:20.280000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.06927095723661, 
+                "fuelConsumption": 7.431821533909239, 
+                "overhead": 1.3339574787417443
+            }, 
+            "createdDate": "2018-08-07 22:36:20.401000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 41.88424620924182, 
+                "fuelConsumption": 8.195989014514288, 
+                "overhead": 1.3394109466519462
+            }, 
+            "createdDate": "2018-08-07 22:36:20.478000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 40.990971769198424, 
+                "fuelConsumption": 8.717835625633693, 
+                "overhead": 1.378760295194113
+            }, 
+            "createdDate": "2018-08-07 22:36:20.568000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 41.08385249469044, 
+                "fuelConsumption": 8.19608490228862, 
+                "overhead": 1.3658611903335693
+            }, 
+            "createdDate": "2018-08-07 22:36:20.632000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.70876875869386, 
+                "fuelConsumption": 7.638686352870189, 
+                "overhead": 1.3742727414829992
+            }, 
+            "createdDate": "2018-08-07 22:36:20.709000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.48799738024422, 
+                "fuelConsumption": 7.694671660912688, 
+                "overhead": 1.3652291885983199
+            }, 
+            "createdDate": "2018-08-07 22:36:20.786000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 317.0, 
+                "speed": 42.021375605186904, 
+                "fuelConsumption": 7.749010769241034, 
+                "overhead": 1.3607106229971757
+            }, 
+            "createdDate": "2018-08-07 22:36:20.876000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.89087297563767, 
+                "fuelConsumption": 7.215844310784232, 
+                "overhead": 1.341678031366202
+            }, 
+            "createdDate": "2018-08-07 22:36:21.018000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 259.0, 
+                "speed": 41.416339684615615, 
+                "fuelConsumption": 8.146619155264268, 
+                "overhead": 1.3786531080946418
+            }, 
+            "createdDate": "2018-08-07 22:36:21.127000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.85278278415128, 
+                "fuelConsumption": 7.577042046230224, 
+                "overhead": 1.3554478508230874
+            }, 
+            "createdDate": "2018-08-07 22:36:21.226000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 249.0, 
+                "speed": 42.2726629661219, 
+                "fuelConsumption": 9.683535052304771, 
+                "overhead": 1.3248608954573087
+            }, 
+            "createdDate": "2018-08-07 22:36:21.349000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 319.0, 
+                "speed": 42.373032937616365, 
+                "fuelConsumption": 7.3156791202823435, 
+                "overhead": 1.3405222700395547
+            }, 
+            "createdDate": "2018-08-07 22:36:21.434000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 41.099546427913346, 
+                "fuelConsumption": 8.418918540959705, 
+                "overhead": 1.3651593949742553
+            }, 
+            "createdDate": "2018-08-07 22:36:21.545000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 40.74404701610065, 
+                "fuelConsumption": 8.656142491085093, 
+                "overhead": 1.3723797710671628
+            }, 
+            "createdDate": "2018-08-07 22:36:21.646000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.550055222082655, 
+                "fuelConsumption": 7.451089751825161, 
+                "overhead": 1.3476870816137652
+            }, 
+            "createdDate": "2018-08-07 22:36:21.743000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.887646168246, 
+                "fuelConsumption": 7.244712870446725, 
+                "overhead": 1.336742595895436
+            }, 
+            "createdDate": "2018-08-07 22:36:21.853000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 40.812812306412546, 
+                "fuelConsumption": 8.35453026470731, 
+                "overhead": 1.3879190620096484
+            }, 
+            "createdDate": "2018-08-07 22:36:21.942000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 40.93459101279734, 
+                "fuelConsumption": 8.449837964478666, 
+                "overhead": 1.3662265712742037
+            }, 
+            "createdDate": "2018-08-07 22:36:22.051000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 42.18861605535077, 
+                "fuelConsumption": 7.235605793584672, 
+                "overhead": 1.3342791490155415
+            }, 
+            "createdDate": "2018-08-07 22:36:22.151000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.86582353836936, 
+                "fuelConsumption": 7.338401888200646, 
+                "overhead": 1.3472500290017693
+            }, 
+            "createdDate": "2018-08-07 22:36:22.267000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 42.05961083065161, 
+                "fuelConsumption": 7.942116781775909, 
+                "overhead": 1.334829517127505
+            }, 
+            "createdDate": "2018-08-07 22:36:22.387000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.29399193417542, 
+                "fuelConsumption": 7.711306571259779, 
+                "overhead": 1.3484684836657759
+            }, 
+            "createdDate": "2018-08-07 22:36:22.493000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.80641115850055, 
+                "fuelConsumption": 8.069803814995025, 
+                "overhead": 1.3478604067584214
+            }, 
+            "createdDate": "2018-08-07 22:36:22.602000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.87673134899038, 
+                "fuelConsumption": 7.816572909646989, 
+                "overhead": 1.3459416374672535
+            }, 
+            "createdDate": "2018-08-07 22:36:22.679000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 42.11201116187989, 
+                "fuelConsumption": 7.502041239167109, 
+                "overhead": 1.3283311761810082
+            }, 
+            "createdDate": "2018-08-07 22:36:22.808000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 42.16429622252432, 
+                "fuelConsumption": 7.559072347111819, 
+                "overhead": 1.3266217646360114
+            }, 
+            "createdDate": "2018-08-07 22:36:22.939000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.74493086344558, 
+                "fuelConsumption": 7.217276373446345, 
+                "overhead": 1.361783192445468
+            }, 
+            "createdDate": "2018-08-07 22:36:23.042000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 250.0, 
+                "speed": 41.769118029901286, 
+                "fuelConsumption": 7.374045303267797, 
+                "overhead": 1.3462175415808517
+            }, 
+            "createdDate": "2018-08-07 22:36:23.294000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 41.931471214628026, 
+                "fuelConsumption": 7.791444969722905, 
+                "overhead": 1.3339568764116092
+            }, 
+            "createdDate": "2018-08-07 22:36:23.420000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 250.0, 
+                "speed": 41.843634134256256, 
+                "fuelConsumption": 7.343252072040535, 
+                "overhead": 1.338401536771446
+            }, 
+            "createdDate": "2018-08-07 22:36:23.491000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.92714236027187, 
+                "fuelConsumption": 7.094793960395376, 
+                "overhead": 1.3390469002926202
+            }, 
+            "createdDate": "2018-08-07 22:36:23.680000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 253.0, 
+                "speed": 41.82971498103447, 
+                "fuelConsumption": 7.7009125368466975, 
+                "overhead": 1.3603985407663761
+            }, 
+            "createdDate": "2018-08-07 22:36:23.814000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 42.02438723303809, 
+                "fuelConsumption": 7.470759743676088, 
+                "overhead": 1.3506187413328914
+            }, 
+            "createdDate": "2018-08-07 22:36:24.044000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 42.19213650050076, 
+                "fuelConsumption": 7.737559870577335, 
+                "overhead": 1.3298077933214072
+            }, 
+            "createdDate": "2018-08-07 22:36:24.130000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.82224821521357, 
+                "fuelConsumption": 8.338232432912637, 
+                "overhead": 1.3376302009468632
+            }, 
+            "createdDate": "2018-08-07 22:36:24.239000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 322.0, 
+                "speed": 41.192798687594575, 
+                "fuelConsumption": 8.468427909346605, 
+                "overhead": 1.3830326061271774
+            }, 
+            "createdDate": "2018-08-07 22:36:24.329000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 327.0, 
+                "speed": 41.321048677643944, 
+                "fuelConsumption": 8.661263120561769, 
+                "overhead": 1.3738962381186677
+            }, 
+            "createdDate": "2018-08-07 22:36:24.438000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.83945622095134, 
+                "fuelConsumption": 7.622007959482788, 
+                "overhead": 1.3653626453122418
+            }, 
+            "createdDate": "2018-08-07 22:36:24.537000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 304.0, 
+                "speed": 42.153986477404516, 
+                "fuelConsumption": 7.148328458847388, 
+                "overhead": 1.3399581615842113
+            }, 
+            "createdDate": "2018-08-07 22:36:24.677000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.72832676732556, 
+                "fuelConsumption": 7.795533307444793, 
+                "overhead": 1.3548026173588665
+            }, 
+            "createdDate": "2018-08-07 22:36:24.815000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.79824815026243, 
+                "fuelConsumption": 7.724403398506105, 
+                "overhead": 1.342838413703779
+            }, 
+            "createdDate": "2018-08-07 22:36:24.953000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 41.99467454825829, 
+                "fuelConsumption": 8.123150894628123, 
+                "overhead": 1.3406169781214083
+            }, 
+            "createdDate": "2018-08-07 22:36:25.083000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.92102464706527, 
+                "fuelConsumption": 7.6675176563285685, 
+                "overhead": 1.334952006390753
+            }, 
+            "createdDate": "2018-08-07 22:36:25.590000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.677412985291426, 
+                "fuelConsumption": 8.23546861228951, 
+                "overhead": 1.3632847566194621
+            }, 
+            "createdDate": "2018-08-07 22:36:25.669000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.57076724201136, 
+                "fuelConsumption": 8.284420529071667, 
+                "overhead": 1.3839494422993048
+            }, 
+            "createdDate": "2018-08-07 22:36:25.847000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.56379346122351, 
+                "fuelConsumption": 7.285163380878695, 
+                "overhead": 1.367717921913782
+            }, 
+            "createdDate": "2018-08-07 22:36:26.579000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 42.16279537112265, 
+                "fuelConsumption": 7.3114483882601995, 
+                "overhead": 1.3270557717978735
+            }, 
+            "createdDate": "2018-08-07 22:36:26.647000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 42.15335106348424, 
+                "fuelConsumption": 7.259365856788017, 
+                "overhead": 1.3415582250051
+            }, 
+            "createdDate": "2018-08-07 22:36:26.878000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 42.232434324776854, 
+                "fuelConsumption": 7.821912119046063, 
+                "overhead": 1.3240133279151525
+            }, 
+            "createdDate": "2018-08-07 22:36:26.958000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 41.893427444777515, 
+                "fuelConsumption": 7.894611407870543, 
+                "overhead": 1.3394217799537558
+            }, 
+            "createdDate": "2018-08-07 22:36:27.269000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.4630983187752, 
+                "fuelConsumption": 7.806826045032836, 
+                "overhead": 1.38094860622591
+            }, 
+            "createdDate": "2018-08-07 22:36:27.521000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 41.759128631375994, 
+                "fuelConsumption": 7.8327423188541125, 
+                "overhead": 1.381353557726547
+            }, 
+            "createdDate": "2018-08-07 22:36:27.924000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 41.78563189268389, 
+                "fuelConsumption": 7.594235344018745, 
+                "overhead": 1.3516962391891136
+            }, 
+            "createdDate": "2018-08-07 22:36:28.013000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 41.91499372292998, 
+                "fuelConsumption": 7.717250081240934, 
+                "overhead": 1.3790360548253666
+            }, 
+            "createdDate": "2018-08-07 22:36:28.224000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.57700366631457, 
+                "fuelConsumption": 8.72436436385323, 
+                "overhead": 1.391053125417516
+            }, 
+            "createdDate": "2018-08-07 22:36:28.365000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 42.04450043976045, 
+                "fuelConsumption": 7.246839245482792, 
+                "overhead": 1.3352116341289084
+            }, 
+            "createdDate": "2018-08-07 22:36:29.431000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 41.56676547820379, 
+                "fuelConsumption": 8.347782849603139, 
+                "overhead": 1.4036227662374166
+            }, 
+            "createdDate": "2018-08-07 22:36:29.540000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.03096935442381, 
+                "fuelConsumption": 7.721530823089406, 
+                "overhead": 1.3498995984138675
+            }, 
+            "createdDate": "2018-08-07 22:36:29.640000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 281.0, 
+                "speed": 41.96687791495871, 
+                "fuelConsumption": 7.6598144463646864, 
+                "overhead": 1.3777276965495509
+            }, 
+            "createdDate": "2018-08-07 22:36:29.738000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 41.915090082714194, 
+                "fuelConsumption": 7.463270382880893, 
+                "overhead": 1.3541405941861346
+            }, 
+            "createdDate": "2018-08-07 22:36:29.858000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.73868820001089, 
+                "fuelConsumption": 7.609331523734274, 
+                "overhead": 1.341513192905666
+            }, 
+            "createdDate": "2018-08-07 22:36:29.969000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.67326944760926, 
+                "fuelConsumption": 7.697371039635456, 
+                "overhead": 1.3704494959991074
+            }, 
+            "createdDate": "2018-08-07 22:36:30.056000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 259.0, 
+                "speed": 41.528807187941894, 
+                "fuelConsumption": 7.666019889128027, 
+                "overhead": 1.364093329180465
+            }, 
+            "createdDate": "2018-08-07 22:36:30.464000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.287401217380726, 
+                "fuelConsumption": 7.376382103643135, 
+                "overhead": 1.327258951732286
+            }, 
+            "createdDate": "2018-08-07 22:36:30.892000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 253.0, 
+                "speed": 41.72216507046067, 
+                "fuelConsumption": 7.792299686913999, 
+                "overhead": 1.347538463722431
+            }, 
+            "createdDate": "2018-08-07 22:36:31.037000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 42.262827334119386, 
+                "fuelConsumption": 7.061796377204199, 
+                "overhead": 1.3277145116873579
+            }, 
+            "createdDate": "2018-08-07 22:36:31.175000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 259.0, 
+                "speed": 41.78281852577098, 
+                "fuelConsumption": 7.619335540562927, 
+                "overhead": 1.3399740966436446
+            }, 
+            "createdDate": "2018-08-07 22:36:31.257000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 42.01086883974688, 
+                "fuelConsumption": 7.496868873447894, 
+                "overhead": 1.3596600679781798
+            }, 
+            "createdDate": "2018-08-07 22:36:31.333000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 41.836940570621955, 
+                "fuelConsumption": 8.034794466580369, 
+                "overhead": 1.3743370503155974
+            }, 
+            "createdDate": "2018-08-07 22:36:31.464000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 311.0, 
+                "speed": 42.11944040849192, 
+                "fuelConsumption": 7.704487392665281, 
+                "overhead": 1.340552617118469
+            }, 
+            "createdDate": "2018-08-07 22:36:31.542000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.9835252833027, 
+                "fuelConsumption": 7.262266990562385, 
+                "overhead": 1.3336898342159866
+            }, 
+            "createdDate": "2018-08-07 22:36:31.630000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.57678486292182, 
+                "fuelConsumption": 8.835998238403223, 
+                "overhead": 1.3881534843378347
+            }, 
+            "createdDate": "2018-08-07 22:36:31.696000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 281.0, 
+                "speed": 41.52006479849427, 
+                "fuelConsumption": 8.224411182293174, 
+                "overhead": 1.367234782584816
+            }, 
+            "createdDate": "2018-08-07 22:36:31.772000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 285.0, 
+                "speed": 41.517217224920024, 
+                "fuelConsumption": 8.296885879428325, 
+                "overhead": 1.4020878133129175
+            }, 
+            "createdDate": "2018-08-07 22:36:31.838000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 41.57901310916138, 
+                "fuelConsumption": 8.144033131773249, 
+                "overhead": 1.378190654822954
+            }, 
+            "createdDate": "2018-08-07 22:36:31.939000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.37412750790048, 
+                "fuelConsumption": 7.789355613160493, 
+                "overhead": 1.3618535327201067
+            }, 
+            "createdDate": "2018-08-07 22:36:32.016000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 298.0, 
+                "speed": 41.5618455598559, 
+                "fuelConsumption": 8.116842873393972, 
+                "overhead": 1.3783232816089257
+            }, 
+            "createdDate": "2018-08-07 22:36:32.248000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 42.1114024613114, 
+                "fuelConsumption": 7.761486460554589, 
+                "overhead": 1.344951802302024
+            }, 
+            "createdDate": "2018-08-07 22:36:32.376000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 41.96257425687722, 
+                "fuelConsumption": 7.608799850268005, 
+                "overhead": 1.3593539680243036
+            }, 
+            "createdDate": "2018-08-07 22:36:32.482000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 311.0, 
+                "speed": 42.1136282798654, 
+                "fuelConsumption": 7.119282101831157, 
+                "overhead": 1.3320315391467006
+            }, 
+            "createdDate": "2018-08-07 22:36:32.631000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 42.00908205730253, 
+                "fuelConsumption": 7.439915099774016, 
+                "overhead": 1.3324462241508417
+            }, 
+            "createdDate": "2018-08-07 22:36:32.762000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.82419364275432, 
+                "fuelConsumption": 7.690277117616538, 
+                "overhead": 1.338770601369166
+            }, 
+            "createdDate": "2018-08-07 22:36:32.852000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 41.850063058282785, 
+                "fuelConsumption": 8.815266754642241, 
+                "overhead": 1.378193123758919
+            }, 
+            "createdDate": "2018-08-07 22:36:32.929000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 311.0, 
+                "speed": 42.032069137640086, 
+                "fuelConsumption": 7.558365998338059, 
+                "overhead": 1.3477435894225296
+            }, 
+            "createdDate": "2018-08-07 22:36:33.130000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.88339553970572, 
+                "fuelConsumption": 7.49425008991322, 
+                "overhead": 1.3409568956364735
+            }, 
+            "createdDate": "2018-08-07 22:36:33.252000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.88958762199906, 
+                "fuelConsumption": 7.256571494611398, 
+                "overhead": 1.3361721901917991
+            }, 
+            "createdDate": "2018-08-07 22:36:33.358000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.83798016219049, 
+                "fuelConsumption": 7.2860649961202, 
+                "overhead": 1.3522831925990082
+            }, 
+            "createdDate": "2018-08-07 22:36:33.446000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.563747835921255, 
+                "fuelConsumption": 7.7083832309232765, 
+                "overhead": 1.362046200649553
+            }, 
+            "createdDate": "2018-08-07 22:36:33.567000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 41.8737618205097, 
+                "fuelConsumption": 7.947609153087918, 
+                "overhead": 1.3495352676460493
+            }, 
+            "createdDate": "2018-08-07 22:36:33.696000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 42.021126570076426, 
+                "fuelConsumption": 7.612438180747705, 
+                "overhead": 1.3546729294412743
+            }, 
+            "createdDate": "2018-08-07 22:36:33.944000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 267.0, 
+                "speed": 41.873285550890294, 
+                "fuelConsumption": 8.357484081901971, 
+                "overhead": 1.3418309059742288
+            }, 
+            "createdDate": "2018-08-07 22:36:34.321000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 41.92011360958675, 
+                "fuelConsumption": 7.571569120855636, 
+                "overhead": 1.345126328803284
+            }, 
+            "createdDate": "2018-08-07 22:36:34.544000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 42.01715065973907, 
+                "fuelConsumption": 7.268936656741983, 
+                "overhead": 1.332005557505074
+            }, 
+            "createdDate": "2018-08-07 22:36:34.689000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 42.28856827820278, 
+                "fuelConsumption": 7.347413596374943, 
+                "overhead": 1.3652437796714643
+            }, 
+            "createdDate": "2018-08-07 22:36:34.811000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 42.06777293659944, 
+                "fuelConsumption": 7.185949558853924, 
+                "overhead": 1.335079661723075
+            }, 
+            "createdDate": "2018-08-07 22:36:34.940000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.902580908041145, 
+                "fuelConsumption": 7.202251586052612, 
+                "overhead": 1.3470398056939903
+            }, 
+            "createdDate": "2018-08-07 22:36:35.438000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 42.04777771953649, 
+                "fuelConsumption": 7.66294971528328, 
+                "overhead": 1.3348694339110494
+            }, 
+            "createdDate": "2018-08-07 22:36:35.531000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.119948486377595, 
+                "fuelConsumption": 7.482284739213059, 
+                "overhead": 1.332262780189185
+            }, 
+            "createdDate": "2018-08-07 22:36:36.583000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 327.0, 
+                "speed": 41.7309522769634, 
+                "fuelConsumption": 8.161240831913865, 
+                "overhead": 1.3732755571913708
+            }, 
+            "createdDate": "2018-08-07 22:36:36.666000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.76220773827809, 
+                "fuelConsumption": 7.621952537866365, 
+                "overhead": 1.3455736227310713
+            }, 
+            "createdDate": "2018-08-07 22:36:36.765000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.93702608890438, 
+                "fuelConsumption": 7.4206341139738345, 
+                "overhead": 1.3449626079035268
+            }, 
+            "createdDate": "2018-08-07 22:36:36.841000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 322.0, 
+                "speed": 42.12035729097172, 
+                "fuelConsumption": 7.589882118597328, 
+                "overhead": 1.3656233410778527
+            }, 
+            "createdDate": "2018-08-07 22:36:36.975000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 41.77200082605537, 
+                "fuelConsumption": 7.654924143905539, 
+                "overhead": 1.364072964025118
+            }, 
+            "createdDate": "2018-08-07 22:36:37.083000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 323.0, 
+                "speed": 41.890367457698495, 
+                "fuelConsumption": 8.10636661237478, 
+                "overhead": 1.3642256134697903
+            }, 
+            "createdDate": "2018-08-07 22:36:37.183000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.91376565227569, 
+                "fuelConsumption": 7.606577666933875, 
+                "overhead": 1.3442073794400458
+            }, 
+            "createdDate": "2018-08-07 22:36:37.320000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 42.152148276888006, 
+                "fuelConsumption": 7.704730329070449, 
+                "overhead": 1.3312006967676697
+            }, 
+            "createdDate": "2018-08-07 22:36:37.480000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.63068978630972, 
+                "fuelConsumption": 7.937473621683366, 
+                "overhead": 1.3502472292218286
+            }, 
+            "createdDate": "2018-08-07 22:36:37.567000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 42.06375750923886, 
+                "fuelConsumption": 7.307848952428848, 
+                "overhead": 1.3354758958400348
+            }, 
+            "createdDate": "2018-08-07 22:36:37.634000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.59471181019795, 
+                "fuelConsumption": 7.4435549399469565, 
+                "overhead": 1.3514151460180701
+            }, 
+            "createdDate": "2018-08-07 22:36:37.721000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 42.105805085980194, 
+                "fuelConsumption": 7.261894958745168, 
+                "overhead": 1.3435046058418463
+            }, 
+            "createdDate": "2018-08-07 22:36:37.788000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.961297748961236, 
+                "fuelConsumption": 8.163414556401726, 
+                "overhead": 1.33795695146343
+            }, 
+            "createdDate": "2018-08-07 22:36:37.865000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.62350465207433, 
+                "fuelConsumption": 7.9483451861834284, 
+                "overhead": 1.3545630273607916
+            }, 
+            "createdDate": "2018-08-07 22:36:37.963000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 253.0, 
+                "speed": 41.587070098311955, 
+                "fuelConsumption": 7.895887219352007, 
+                "overhead": 1.3628184699273602
+            }, 
+            "createdDate": "2018-08-07 22:36:38.065000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 41.99627683438572, 
+                "fuelConsumption": 7.599441520387211, 
+                "overhead": 1.3404482398666004
+            }, 
+            "createdDate": "2018-08-07 22:36:38.370000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.956396027213295, 
+                "fuelConsumption": 7.615756255574533, 
+                "overhead": 1.3377768005929302
+            }, 
+            "createdDate": "2018-08-07 22:36:38.460000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 42.019795429680705, 
+                "fuelConsumption": 7.847871463511591, 
+                "overhead": 1.3540416163937117
+            }, 
+            "createdDate": "2018-08-07 22:36:38.750000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.821516953003446, 
+                "fuelConsumption": 7.521873575539993, 
+                "overhead": 1.3434349221789934
+            }, 
+            "createdDate": "2018-08-07 22:36:38.886000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.985733277630274, 
+                "fuelConsumption": 7.745693793399635, 
+                "overhead": 1.3377949191022203
+            }, 
+            "createdDate": "2018-08-07 22:36:39.005000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 300.0, 
+                "speed": 41.94816745561878, 
+                "fuelConsumption": 7.590544498082958, 
+                "overhead": 1.3377633919946812
+            }, 
+            "createdDate": "2018-08-07 22:36:39.397000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 42.01374596365721, 
+                "fuelConsumption": 7.899841036133265, 
+                "overhead": 1.3404325006363627
+            }, 
+            "createdDate": "2018-08-07 22:36:39.521000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 298.0, 
+                "speed": 41.97952952774395, 
+                "fuelConsumption": 7.631559080231523, 
+                "overhead": 1.359903820923836
+            }, 
+            "createdDate": "2018-08-07 22:36:39.651000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.77910436766638, 
+                "fuelConsumption": 7.343557743126315, 
+                "overhead": 1.3452071612883199
+            }, 
+            "createdDate": "2018-08-07 22:36:39.745000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.788296177600856, 
+                "fuelConsumption": 7.20575814458605, 
+                "overhead": 1.3578394039997577
+            }, 
+            "createdDate": "2018-08-07 22:36:39.857000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.48043522380972, 
+                "fuelConsumption": 7.729336147402163, 
+                "overhead": 1.3768204408407325
+            }, 
+            "createdDate": "2018-08-07 22:36:40.925000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.744551358157366, 
+                "fuelConsumption": 7.980633279576461, 
+                "overhead": 1.351803872799284
+            }, 
+            "createdDate": "2018-08-07 22:36:41.031000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 42.00955923688482, 
+                "fuelConsumption": 7.450983480984416, 
+                "overhead": 1.3519473653195486
+            }, 
+            "createdDate": "2018-08-07 22:36:41.109000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.830954168957184, 
+                "fuelConsumption": 7.513781476296724, 
+                "overhead": 1.3644119268054604
+            }, 
+            "createdDate": "2018-08-07 22:36:41.186000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 42.28779194787472, 
+                "fuelConsumption": 8.105851047038687, 
+                "overhead": 1.3228096039386381
+            }, 
+            "createdDate": "2018-08-07 22:36:41.285000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.75244968858023, 
+                "fuelConsumption": 7.570854995267076, 
+                "overhead": 1.3516309744916963
+            }, 
+            "createdDate": "2018-08-07 22:36:41.361000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.547045555405234, 
+                "fuelConsumption": 8.036428719112312, 
+                "overhead": 1.3524251451789604
+            }, 
+            "createdDate": "2018-08-07 22:36:41.589000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.93684354451633, 
+                "fuelConsumption": 7.454294133464182, 
+                "overhead": 1.3386392821556745
+            }, 
+            "createdDate": "2018-08-07 22:36:41.739000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.47385613293754, 
+                "fuelConsumption": 8.024021990960673, 
+                "overhead": 1.376594103169885
+            }, 
+            "createdDate": "2018-08-07 22:36:41.857000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.77522466180589, 
+                "fuelConsumption": 7.474623919035443, 
+                "overhead": 1.3626469537853398
+            }, 
+            "createdDate": "2018-08-07 22:36:41.993000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.7721670937144, 
+                "fuelConsumption": 8.633401532735396, 
+                "overhead": 1.3653641766864792
+            }, 
+            "createdDate": "2018-08-07 22:36:42.065000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.68157029329122, 
+                "fuelConsumption": 8.142419028582182, 
+                "overhead": 1.3643413890938239
+            }, 
+            "createdDate": "2018-08-07 22:36:42.153000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 42.08240010783551, 
+                "fuelConsumption": 7.780617314279356, 
+                "overhead": 1.341523121792687
+            }, 
+            "createdDate": "2018-08-07 22:36:42.218000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 41.89282842423357, 
+                "fuelConsumption": 7.223521429147351, 
+                "overhead": 1.3459282906591838
+            }, 
+            "createdDate": "2018-08-07 22:36:42.307000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 41.46452889025216, 
+                "fuelConsumption": 8.024194579644298, 
+                "overhead": 1.3715185217681016
+            }, 
+            "createdDate": "2018-08-07 22:36:42.374000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 255.0, 
+                "speed": 41.37327967016376, 
+                "fuelConsumption": 7.925609298621313, 
+                "overhead": 1.3534032195217498
+            }, 
+            "createdDate": "2018-08-07 22:36:42.451000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 304.0, 
+                "speed": 42.157346536478265, 
+                "fuelConsumption": 7.683308313284279, 
+                "overhead": 1.3265415813973556
+            }, 
+            "createdDate": "2018-08-07 22:36:42.571000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 293.0, 
+                "speed": 41.73015985622449, 
+                "fuelConsumption": 7.592791321381229, 
+                "overhead": 1.3783472095389402
+            }, 
+            "createdDate": "2018-08-07 22:36:42.665000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.15507885170629, 
+                "fuelConsumption": 7.347689241838398, 
+                "overhead": 1.3411694157277048
+            }, 
+            "createdDate": "2018-08-07 22:36:42.748000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 321.0, 
+                "speed": 42.05563137021203, 
+                "fuelConsumption": 7.391921134683667, 
+                "overhead": 1.3547652003068182
+            }, 
+            "createdDate": "2018-08-07 22:36:42.901000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 42.132196780216745, 
+                "fuelConsumption": 7.437622765503903, 
+                "overhead": 1.3430195067940773
+            }, 
+            "createdDate": "2018-08-07 22:36:43.015000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.81686285545135, 
+                "fuelConsumption": 7.642168073915297, 
+                "overhead": 1.3439328625229465
+            }, 
+            "createdDate": "2018-08-07 22:36:43.100000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.10143150212327, 
+                "fuelConsumption": 7.536019465467558, 
+                "overhead": 1.3464031277777733
+            }, 
+            "createdDate": "2018-08-07 22:36:43.175000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 317.0, 
+                "speed": 42.34000831329525, 
+                "fuelConsumption": 7.5529634385490985, 
+                "overhead": 1.3417577866760817
+            }, 
+            "createdDate": "2018-08-07 22:36:43.359000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.833885591069546, 
+                "fuelConsumption": 7.321493284309703, 
+                "overhead": 1.3373230411868977
+            }, 
+            "createdDate": "2018-08-07 22:36:43.601000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.73639239742011, 
+                "fuelConsumption": 8.548590378661162, 
+                "overhead": 1.3411899726122738
+            }, 
+            "createdDate": "2018-08-07 22:36:44.087000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 42.10468557947346, 
+                "fuelConsumption": 7.349443650360864, 
+                "overhead": 1.3425300711511317
+            }, 
+            "createdDate": "2018-08-07 22:36:44.587000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 41.77771187264444, 
+                "fuelConsumption": 7.653265503612205, 
+                "overhead": 1.338205719983147
+            }, 
+            "createdDate": "2018-08-07 22:36:46.165000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 42.07897292070027, 
+                "fuelConsumption": 7.425755251677717, 
+                "overhead": 1.3532755315049836
+            }, 
+            "createdDate": "2018-08-07 22:36:46.244000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.63212639510188, 
+                "fuelConsumption": 7.521229846466115, 
+                "overhead": 1.3753419003804976
+            }, 
+            "createdDate": "2018-08-07 22:36:46.354000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 266.0, 
+                "speed": 41.77841673627293, 
+                "fuelConsumption": 7.549610645467303, 
+                "overhead": 1.3398408879346315
+            }, 
+            "createdDate": "2018-08-07 22:36:46.442000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 41.93020869264054, 
+                "fuelConsumption": 8.253084233561713, 
+                "overhead": 1.3377338912696801
+            }, 
+            "createdDate": "2018-08-07 22:36:46.552000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 42.11971907103329, 
+                "fuelConsumption": 7.84641739968427, 
+                "overhead": 1.34090175721177
+            }, 
+            "createdDate": "2018-08-07 22:36:46.651000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 41.995250128172, 
+                "fuelConsumption": 7.152049159703526, 
+                "overhead": 1.3476743582125834
+            }, 
+            "createdDate": "2018-08-07 22:36:46.728000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.0436989964811, 
+                "fuelConsumption": 7.688508281423943, 
+                "overhead": 1.3383716896016244
+            }, 
+            "createdDate": "2018-08-07 22:36:46.838000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.11692799881358, 
+                "fuelConsumption": 7.785409197929612, 
+                "overhead": 1.327902277782279
+            }, 
+            "createdDate": "2018-08-07 22:36:46.915000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.76309380591043, 
+                "fuelConsumption": 7.173598087812769, 
+                "overhead": 1.3607186395409339
+            }, 
+            "createdDate": "2018-08-07 22:36:47.024000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 311.0, 
+                "speed": 42.09054469012146, 
+                "fuelConsumption": 7.48570465769723, 
+                "overhead": 1.3327620611630349
+            }, 
+            "createdDate": "2018-08-07 22:36:47.158000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 314.0, 
+                "speed": 41.95346157874111, 
+                "fuelConsumption": 7.226484092246573, 
+                "overhead": 1.3369924465202832
+            }, 
+            "createdDate": "2018-08-07 22:36:47.245000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.822889680214, 
+                "fuelConsumption": 7.696663996985512, 
+                "overhead": 1.3433342937605504
+            }, 
+            "createdDate": "2018-08-07 22:36:47.321000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.05798903775634, 
+                "fuelConsumption": 7.8822139943237595, 
+                "overhead": 1.3509486097201404
+            }, 
+            "createdDate": "2018-08-07 22:36:47.470000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 41.83756046210644, 
+                "fuelConsumption": 8.297725843158629, 
+                "overhead": 1.3421654250497828
+            }, 
+            "createdDate": "2018-08-07 22:36:47.602000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 286.0, 
+                "speed": 41.92571040572382, 
+                "fuelConsumption": 7.542949404535994, 
+                "overhead": 1.348673356405161
+            }, 
+            "createdDate": "2018-08-07 22:36:47.695000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 295.0, 
+                "speed": 42.07672213479192, 
+                "fuelConsumption": 7.42757062295358, 
+                "overhead": 1.3384884312833227
+            }, 
+            "createdDate": "2018-08-07 22:36:47.795000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.67404992129241, 
+                "fuelConsumption": 7.8931083608869645, 
+                "overhead": 1.3708771911135107
+            }, 
+            "createdDate": "2018-08-07 22:36:47.862000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.94416772207044, 
+                "fuelConsumption": 7.436641781560127, 
+                "overhead": 1.3453705070069326
+            }, 
+            "createdDate": "2018-08-07 22:36:47.938000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.85859761253106, 
+                "fuelConsumption": 7.736997784822945, 
+                "overhead": 1.3595909168407967
+            }, 
+            "createdDate": "2018-08-07 22:36:48.025000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.49009300200589, 
+                "fuelConsumption": 8.119379046001828, 
+                "overhead": 1.3490754647591703
+            }, 
+            "createdDate": "2018-08-07 22:36:48.114000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 252.0, 
+                "speed": 41.61388925143824, 
+                "fuelConsumption": 7.369294405861034, 
+                "overhead": 1.3565570034114216
+            }, 
+            "createdDate": "2018-08-07 22:36:48.223000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 317.0, 
+                "speed": 41.98663412391887, 
+                "fuelConsumption": 8.198140765746881, 
+                "overhead": 1.3315734973328777
+            }, 
+            "createdDate": "2018-08-07 22:36:48.333000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.776624605959434, 
+                "fuelConsumption": 7.850998853205597, 
+                "overhead": 1.3612371044799205
+            }, 
+            "createdDate": "2018-08-07 22:36:48.455000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.76221321911324, 
+                "fuelConsumption": 7.415920062537636, 
+                "overhead": 1.389050353763636
+            }, 
+            "createdDate": "2018-08-07 22:36:48.553000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.98953829079105, 
+                "fuelConsumption": 7.5423677262864866, 
+                "overhead": 1.3565161438049615
+            }, 
+            "createdDate": "2018-08-07 22:36:48.665000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 42.1358946150063, 
+                "fuelConsumption": 7.8578812063294325, 
+                "overhead": 1.3352812406889825
+            }, 
+            "createdDate": "2018-08-07 22:36:48.773000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 287.0, 
+                "speed": 41.77457805154761, 
+                "fuelConsumption": 8.147427083620807, 
+                "overhead": 1.3729430524914643
+            }, 
+            "createdDate": "2018-08-07 22:36:48.850000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.86527054145882, 
+                "fuelConsumption": 7.795948796518511, 
+                "overhead": 1.3654721628294926
+            }, 
+            "createdDate": "2018-08-07 22:36:49.004000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 41.89660899241733, 
+                "fuelConsumption": 7.9304367464474765, 
+                "overhead": 1.3453734543019316
+            }, 
+            "createdDate": "2018-08-07 22:36:49.103000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 41.894424676454776, 
+                "fuelConsumption": 8.445448004354997, 
+                "overhead": 1.3349252641093567
+            }, 
+            "createdDate": "2018-08-07 22:36:49.213000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 316.0, 
+                "speed": 41.89368773198664, 
+                "fuelConsumption": 8.172720491132926, 
+                "overhead": 1.3517746333302894
+            }, 
+            "createdDate": "2018-08-07 22:36:49.303000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 42.04028716774967, 
+                "fuelConsumption": 7.540037239078045, 
+                "overhead": 1.3479134060277627
+            }, 
+            "createdDate": "2018-08-07 22:36:49.422000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.74552527689653, 
+                "fuelConsumption": 7.7581995842972695, 
+                "overhead": 1.3400244145211408
+            }, 
+            "createdDate": "2018-08-07 22:36:49.510000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.862948387108595, 
+                "fuelConsumption": 7.922870456031409, 
+                "overhead": 1.341718699175317
+            }, 
+            "createdDate": "2018-08-07 22:36:49.637000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 253.0, 
+                "speed": 41.65873911722924, 
+                "fuelConsumption": 7.888504090000042, 
+                "overhead": 1.3442132549288428
+            }, 
+            "createdDate": "2018-08-07 22:36:49.730000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.62522733253982, 
+                "fuelConsumption": 7.612446345224186, 
+                "overhead": 1.3558458028313076
+            }, 
+            "createdDate": "2018-08-07 22:36:49.925000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 41.955693705562204, 
+                "fuelConsumption": 7.666016828598293, 
+                "overhead": 1.3416865687770547
+            }, 
+            "createdDate": "2018-08-07 22:36:49.996000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 41.85594477503487, 
+                "fuelConsumption": 7.28725407970199, 
+                "overhead": 1.3493520602430977
+            }, 
+            "createdDate": "2018-08-07 22:36:50.206000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.049732558393, 
+                "fuelConsumption": 7.572715674734706, 
+                "overhead": 1.3445294187064603
+            }, 
+            "createdDate": "2018-08-07 22:36:50.352000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 42.15005047328308, 
+                "fuelConsumption": 7.733391669147376, 
+                "overhead": 1.344491456617827
+            }, 
+            "createdDate": "2018-08-07 22:36:50.457000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.25520447416861, 
+                "fuelConsumption": 7.248970522667226, 
+                "overhead": 1.3276522635032775
+            }, 
+            "createdDate": "2018-08-07 22:36:50.557000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 250.0, 
+                "speed": 41.858035999236556, 
+                "fuelConsumption": 7.609754498633697, 
+                "overhead": 1.3488186097250787
+            }, 
+            "createdDate": "2018-08-07 22:36:50.653000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 285.0, 
+                "speed": 42.026726535197845, 
+                "fuelConsumption": 7.157525756056802, 
+                "overhead": 1.3359730041547626
+            }, 
+            "createdDate": "2018-08-07 22:36:50.763000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.702977759564966, 
+                "fuelConsumption": 7.608306441500785, 
+                "overhead": 1.369473217005761
+            }, 
+            "createdDate": "2018-08-07 22:36:50.874000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 281.0, 
+                "speed": 41.982816489509446, 
+                "fuelConsumption": 7.546271964910396, 
+                "overhead": 1.3772046488496055
+            }, 
+            "createdDate": "2018-08-07 22:36:51.019000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 42.15234376896525, 
+                "fuelConsumption": 7.448990783698438, 
+                "overhead": 1.3400843392966897
+            }, 
+            "createdDate": "2018-08-07 22:36:51.144000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 42.04637684293187, 
+                "fuelConsumption": 7.2560938871712874, 
+                "overhead": 1.3304046987680258
+            }, 
+            "createdDate": "2018-08-07 22:36:51.225000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.19374613177418, 
+                "fuelConsumption": 7.6455441251757295, 
+                "overhead": 1.3252551888680333
+            }, 
+            "createdDate": "2018-08-07 22:36:51.325000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.44361054306814, 
+                "fuelConsumption": 8.613340641204479, 
+                "overhead": 1.3560968663478858
+            }, 
+            "createdDate": "2018-08-07 22:36:51.412000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 41.7929881079777, 
+                "fuelConsumption": 7.5322395510984625, 
+                "overhead": 1.3383154907546286
+            }, 
+            "createdDate": "2018-08-07 22:36:51.522000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 42.00989025737045, 
+                "fuelConsumption": 7.4752657782379455, 
+                "overhead": 1.3472978046090514
+            }, 
+            "createdDate": "2018-08-07 22:36:51.611000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 296.0, 
+                "speed": 42.106907901656975, 
+                "fuelConsumption": 7.362141858654414, 
+                "overhead": 1.3329020478187708
+            }, 
+            "createdDate": "2018-08-07 22:36:51.722000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 41.916289552621166, 
+                "fuelConsumption": 7.094279567137944, 
+                "overhead": 1.3349972681823248
+            }, 
+            "createdDate": "2018-08-07 22:36:51.819000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.03311132388536, 
+                "fuelConsumption": 7.303270899545269, 
+                "overhead": 1.3441873834555516
+            }, 
+            "createdDate": "2018-08-07 22:36:51.945000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 276.0, 
+                "speed": 41.917219950631406, 
+                "fuelConsumption": 8.137885933458152, 
+                "overhead": 1.3350377392756407
+            }, 
+            "createdDate": "2018-08-07 22:36:52.057000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 41.677396240532396, 
+                "fuelConsumption": 7.7595135384018326, 
+                "overhead": 1.3682011339563784
+            }, 
+            "createdDate": "2018-08-07 22:36:52.183000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 256.0, 
+                "speed": 41.95371905676174, 
+                "fuelConsumption": 7.639801073227355, 
+                "overhead": 1.339912607219078
+            }, 
+            "createdDate": "2018-08-07 22:36:52.564000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 254.0, 
+                "speed": 41.729890807129365, 
+                "fuelConsumption": 7.917856677833943, 
+                "overhead": 1.3580464234189558
+            }, 
+            "createdDate": "2018-08-07 22:36:54.164000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 41.759694069235174, 
+                "fuelConsumption": 7.958535725128047, 
+                "overhead": 1.3398656814778174
+            }, 
+            "createdDate": "2018-08-07 22:36:54.261000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.94104498338156, 
+                "fuelConsumption": 7.9609624835094905, 
+                "overhead": 1.3428811586067149
+            }, 
+            "createdDate": "2018-08-07 22:36:54.338000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 285.0, 
+                "speed": 41.78873551265947, 
+                "fuelConsumption": 7.716921965209504, 
+                "overhead": 1.3531785145900987
+            }, 
+            "createdDate": "2018-08-07 22:36:54.439000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 42.012575158789254, 
+                "fuelConsumption": 7.8167593667305875, 
+                "overhead": 1.3679538602573096
+            }, 
+            "createdDate": "2018-08-07 22:36:54.524000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 42.219701949829805, 
+                "fuelConsumption": 7.297365663446325, 
+                "overhead": 1.3287266638512996
+            }, 
+            "createdDate": "2018-08-07 22:36:54.635000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.14205268218489, 
+                "fuelConsumption": 7.3585528692237965, 
+                "overhead": 1.3438904989804006
+            }, 
+            "createdDate": "2018-08-07 22:36:54.747000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 42.21668567507827, 
+                "fuelConsumption": 7.520413102058244, 
+                "overhead": 1.3334499017016561
+            }, 
+            "createdDate": "2018-08-07 22:36:54.857000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 41.81627611139908, 
+                "fuelConsumption": 7.886611746064373, 
+                "overhead": 1.353535947697489
+            }, 
+            "createdDate": "2018-08-07 22:36:54.944000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.193882747296136, 
+                "fuelConsumption": 7.603447492740048, 
+                "overhead": 1.3294564574039434
+            }, 
+            "createdDate": "2018-08-07 22:36:55.024000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 42.106149801509964, 
+                "fuelConsumption": 7.336763919523374, 
+                "overhead": 1.3387487726919864
+            }, 
+            "createdDate": "2018-08-07 22:36:55.120000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.96352322815067, 
+                "fuelConsumption": 7.430140257140538, 
+                "overhead": 1.3529978516786936
+            }, 
+            "createdDate": "2018-08-07 22:36:55.208000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.029249761947, 
+                "fuelConsumption": 7.304525782076537, 
+                "overhead": 1.3474973864129283
+            }, 
+            "createdDate": "2018-08-07 22:36:55.406000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 301.0, 
+                "speed": 42.060183977842534, 
+                "fuelConsumption": 7.343867475675078, 
+                "overhead": 1.3386479373381204
+            }, 
+            "createdDate": "2018-08-07 22:36:55.879000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 282.0, 
+                "speed": 41.92932991316722, 
+                "fuelConsumption": 7.668283210602155, 
+                "overhead": 1.3344449116705304
+            }, 
+            "createdDate": "2018-08-07 22:36:56.010000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.127859959980135, 
+                "fuelConsumption": 8.5197581012745, 
+                "overhead": 1.3314168733713683
+            }, 
+            "createdDate": "2018-08-07 22:36:56.257000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.776978608382485, 
+                "fuelConsumption": 8.269863963836446, 
+                "overhead": 1.3448105593812092
+            }, 
+            "createdDate": "2018-08-07 22:36:56.361000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 42.151962841595, 
+                "fuelConsumption": 7.16962452262574, 
+                "overhead": 1.3442547261811535
+            }, 
+            "createdDate": "2018-08-07 22:36:56.450000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.82879491590957, 
+                "fuelConsumption": 7.527136212517885, 
+                "overhead": 1.3539049767703866
+            }, 
+            "createdDate": "2018-08-07 22:36:56.702000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 41.98931539292237, 
+                "fuelConsumption": 8.717881721649784, 
+                "overhead": 1.3360593603386042
+            }, 
+            "createdDate": "2018-08-07 22:36:58.515000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 41.80585212705194, 
+                "fuelConsumption": 7.719024167219122, 
+                "overhead": 1.3607512806098911
+            }, 
+            "createdDate": "2018-08-07 22:36:58.629000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 272.0, 
+                "speed": 42.00257948907408, 
+                "fuelConsumption": 7.905741643570843, 
+                "overhead": 1.3424114337209754
+            }, 
+            "createdDate": "2018-08-07 22:36:58.714000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 42.00419029439801, 
+                "fuelConsumption": 7.266388091011713, 
+                "overhead": 1.3463222224828082
+            }, 
+            "createdDate": "2018-08-07 22:36:58.824000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 41.977833583827, 
+                "fuelConsumption": 8.0763380801475, 
+                "overhead": 1.3413948843181813
+            }, 
+            "createdDate": "2018-08-07 22:36:58.913000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.93186009202659, 
+                "fuelConsumption": 7.744277037449568, 
+                "overhead": 1.3347881331974147
+            }, 
+            "createdDate": "2018-08-07 22:36:58.989000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.96111810105758, 
+                "fuelConsumption": 7.647933814327591, 
+                "overhead": 1.3425591404737207
+            }, 
+            "createdDate": "2018-08-07 22:36:59.099000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.04345560360825, 
+                "fuelConsumption": 7.947075276203879, 
+                "overhead": 1.3639511537626312
+            }, 
+            "createdDate": "2018-08-07 22:36:59.220000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.30523787724459, 
+                "fuelConsumption": 7.90756328985855, 
+                "overhead": 1.3554266154646641
+            }, 
+            "createdDate": "2018-08-07 22:36:59.385000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 318.0, 
+                "speed": 42.1943932348901, 
+                "fuelConsumption": 7.320814401745242, 
+                "overhead": 1.3376901566028587
+            }, 
+            "createdDate": "2018-08-07 22:36:59.517000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.127639868198905, 
+                "fuelConsumption": 7.478487667980197, 
+                "overhead": 1.350357318778176
+            }, 
+            "createdDate": "2018-08-07 22:37:00.162000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 41.77528224234934, 
+                "fuelConsumption": 8.257561534672826, 
+                "overhead": 1.3473649173946776
+            }, 
+            "createdDate": "2018-08-07 22:37:00.314000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.83547718193518, 
+                "fuelConsumption": 7.494079702198935, 
+                "overhead": 1.3799371270919782
+            }, 
+            "createdDate": "2018-08-07 22:37:00.489000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 299.0, 
+                "speed": 42.209223443021514, 
+                "fuelConsumption": 7.43534855784692, 
+                "overhead": 1.325057948916733
+            }, 
+            "createdDate": "2018-08-07 22:37:00.746000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 42.08400164691126, 
+                "fuelConsumption": 7.6873238811845335, 
+                "overhead": 1.339596082821065
+            }, 
+            "createdDate": "2018-08-07 22:37:00.859000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.809256187725275, 
+                "fuelConsumption": 7.466826327888706, 
+                "overhead": 1.3546378984980054
+            }, 
+            "createdDate": "2018-08-07 22:37:00.984000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.74823920759656, 
+                "fuelConsumption": 7.624422902977239, 
+                "overhead": 1.3571314479343477
+            }, 
+            "createdDate": "2018-08-07 22:37:01.255000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.89473822504648, 
+                "fuelConsumption": 7.0617121285054925, 
+                "overhead": 1.3519746727081308
+            }, 
+            "createdDate": "2018-08-07 22:37:01.365000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 307.0, 
+                "speed": 42.15567507796141, 
+                "fuelConsumption": 7.212180126526106, 
+                "overhead": 1.335264163732575
+            }, 
+            "createdDate": "2018-08-07 22:37:01.441000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.18153108817321, 
+                "fuelConsumption": 8.805491819293987, 
+                "overhead": 1.370369259442087
+            }, 
+            "createdDate": "2018-08-07 22:37:01.554000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 251.0, 
+                "speed": 42.250000140148416, 
+                "fuelConsumption": 9.45616375031519, 
+                "overhead": 1.3416504929224051
+            }, 
+            "createdDate": "2018-08-07 22:37:01.640000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 41.952532838362394, 
+                "fuelConsumption": 7.589508556416427, 
+                "overhead": 1.3384363196171092
+            }, 
+            "createdDate": "2018-08-07 22:37:01.750000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 41.88543302088781, 
+                "fuelConsumption": 7.521116576129749, 
+                "overhead": 1.3583851859849285
+            }, 
+            "createdDate": "2018-08-07 22:37:01.860000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.82932135717667, 
+                "fuelConsumption": 7.975110928261242, 
+                "overhead": 1.3477522925665442
+            }, 
+            "createdDate": "2018-08-07 22:37:01.996000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 284.0, 
+                "speed": 41.933339238600844, 
+                "fuelConsumption": 7.4650057927808025, 
+                "overhead": 1.338998429060731
+            }, 
+            "createdDate": "2018-08-07 22:37:02.123000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.22811120538157, 
+                "fuelConsumption": 7.833206750015054, 
+                "overhead": 1.3789759160578205
+            }, 
+            "createdDate": "2018-08-07 22:37:02.278000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 309.0, 
+                "speed": 42.09674316192366, 
+                "fuelConsumption": 7.643668223639921, 
+                "overhead": 1.3684256703784048
+            }, 
+            "createdDate": "2018-08-07 22:37:02.387000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.2383655555778, 
+                "fuelConsumption": 7.92448870234054, 
+                "overhead": 1.3785111134684433
+            }, 
+            "createdDate": "2018-08-07 22:37:02.477000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 264.0, 
+                "speed": 41.50621017389304, 
+                "fuelConsumption": 8.033324910451542, 
+                "overhead": 1.4078118595301803
+            }, 
+            "createdDate": "2018-08-07 22:37:02.586000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 42.28404948033778, 
+                "fuelConsumption": 7.334652053879926, 
+                "overhead": 1.3224528977009025
+            }, 
+            "createdDate": "2018-08-07 22:37:02.673000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.92029974294792, 
+                "fuelConsumption": 7.277952917732165, 
+                "overhead": 1.364679301841774
+            }, 
+            "createdDate": "2018-08-07 22:37:02.794000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 41.904349100714626, 
+                "fuelConsumption": 7.8064306319154255, 
+                "overhead": 1.34310097104185
+            }, 
+            "createdDate": "2018-08-07 22:37:02.893000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 310.0, 
+                "speed": 41.791203951079716, 
+                "fuelConsumption": 7.864097255961012, 
+                "overhead": 1.355597384797575
+            }, 
+            "createdDate": "2018-08-07 22:37:03.008000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.82933062320718, 
+                "fuelConsumption": 8.534108950957519, 
+                "overhead": 1.3373715809273492
+            }, 
+            "createdDate": "2018-08-07 22:37:03.135000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 281.0, 
+                "speed": 41.81140749821413, 
+                "fuelConsumption": 7.76372672513752, 
+                "overhead": 1.3577078640584268
+            }, 
+            "createdDate": "2018-08-07 22:37:03.201000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 41.84875592404591, 
+                "fuelConsumption": 7.324458889434662, 
+                "overhead": 1.3679130268541648
+            }, 
+            "createdDate": "2018-08-07 22:37:03.278000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 276.0, 
+                "speed": 41.60211963741091, 
+                "fuelConsumption": 7.575308272603226, 
+                "overhead": 1.3701522820033036
+            }, 
+            "createdDate": "2018-08-07 22:37:03.344000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 42.18318443978952, 
+                "fuelConsumption": 7.480851018503494, 
+                "overhead": 1.3300900034072078
+            }, 
+            "createdDate": "2018-08-07 22:37:03.421000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 291.0, 
+                "speed": 41.69783036924113, 
+                "fuelConsumption": 8.027524487822793, 
+                "overhead": 1.3462153489085928
+            }, 
+            "createdDate": "2018-08-07 22:37:03.521000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 253.0, 
+                "speed": 41.89899738931196, 
+                "fuelConsumption": 7.336521844892714, 
+                "overhead": 1.3581490433322083
+            }, 
+            "createdDate": "2018-08-07 22:37:03.598000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 270.0, 
+                "speed": 41.612700147493044, 
+                "fuelConsumption": 8.528247483593539, 
+                "overhead": 1.3810991395442638
+            }, 
+            "createdDate": "2018-08-07 22:37:03.699000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 42.01418286555336, 
+                "fuelConsumption": 7.602410527563011, 
+                "overhead": 1.344125008423217
+            }, 
+            "createdDate": "2018-08-07 22:37:03.784000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 262.0, 
+                "speed": 41.75475093472565, 
+                "fuelConsumption": 7.462024002059536, 
+                "overhead": 1.3564061974275317
+            }, 
+            "createdDate": "2018-08-07 22:37:03.905000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 42.023050301958584, 
+                "fuelConsumption": 7.300241067940718, 
+                "overhead": 1.3409795474337682
+            }, 
+            "createdDate": "2018-08-07 22:37:03.993000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 292.0, 
+                "speed": 41.87735369499984, 
+                "fuelConsumption": 7.433846352885387, 
+                "overhead": 1.335774407461825
+            }, 
+            "createdDate": "2018-08-07 22:37:04.126000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 288.0, 
+                "speed": 42.11305992464466, 
+                "fuelConsumption": 7.6480716083072, 
+                "overhead": 1.328425339886484
+            }, 
+            "createdDate": "2018-08-07 22:37:04.213000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 276.0, 
+                "speed": 41.78790686121268, 
+                "fuelConsumption": 7.680573502516552, 
+                "overhead": 1.3846502389386883
+            }, 
+            "createdDate": "2018-08-07 22:37:04.312000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 41.851105067310506, 
+                "fuelConsumption": 7.545311128301547, 
+                "overhead": 1.3373268859496432
+            }, 
+            "createdDate": "2018-08-07 22:37:04.411000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 305.0, 
+                "speed": 42.019186477880034, 
+                "fuelConsumption": 7.646637989408223, 
+                "overhead": 1.3308743833485415
+            }, 
+            "createdDate": "2018-08-07 22:37:04.510000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 41.87190082388811, 
+                "fuelConsumption": 7.744409977338106, 
+                "overhead": 1.3446074002578736
+            }, 
+            "createdDate": "2018-08-07 22:37:04.620000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 283.0, 
+                "speed": 41.69650095800883, 
+                "fuelConsumption": 7.931529705825382, 
+                "overhead": 1.3761436033107344
+            }, 
+            "createdDate": "2018-08-07 22:37:04.750000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.90728566420499, 
+                "fuelConsumption": 7.305485108645054, 
+                "overhead": 1.3360345926951005
+            }, 
+            "createdDate": "2018-08-07 22:37:04.851000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 251.0, 
+                "speed": 41.81312283920321, 
+                "fuelConsumption": 7.458077791340089, 
+                "overhead": 1.3393351444427712
+            }, 
+            "createdDate": "2018-08-07 22:37:04.972000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 41.877914520310206, 
+                "fuelConsumption": 8.137435756024106, 
+                "overhead": 1.3351662597120533
+            }, 
+            "createdDate": "2018-08-07 22:37:05.060000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.53307760414153, 
+                "fuelConsumption": 8.15755699040647, 
+                "overhead": 1.3929371259001937
+            }, 
+            "createdDate": "2018-08-07 22:37:05.137000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 306.0, 
+                "speed": 41.9511109406678, 
+                "fuelConsumption": 7.580488229186952, 
+                "overhead": 1.3462910528279701
+            }, 
+            "createdDate": "2018-08-07 22:37:05.225000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 280.0, 
+                "speed": 41.62418436121476, 
+                "fuelConsumption": 7.989352636857832, 
+                "overhead": 1.373949864996013
+            }, 
+            "createdDate": "2018-08-07 22:37:05.292000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.96113805555967, 
+                "fuelConsumption": 7.288902040879062, 
+                "overhead": 1.3444238890484972
+            }, 
+            "createdDate": "2018-08-07 22:37:05.370000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 42.20395361100802, 
+                "fuelConsumption": 7.4609128034472585, 
+                "overhead": 1.3520569048718676
+            }, 
+            "createdDate": "2018-08-07 22:37:05.445000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 300.0, 
+                "speed": 42.094695148812875, 
+                "fuelConsumption": 7.284005553082051, 
+                "overhead": 1.3605935002379987
+            }, 
+            "createdDate": "2018-08-07 22:37:05.543000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 42.28007810614828, 
+                "fuelConsumption": 7.77254335142024, 
+                "overhead": 1.3400946935975075
+            }, 
+            "createdDate": "2018-08-07 22:37:05.653000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 42.009132716839616, 
+                "fuelConsumption": 7.52908358122658, 
+                "overhead": 1.3593452181822363
+            }, 
+            "createdDate": "2018-08-07 22:37:05.753000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 315.0, 
+                "speed": 42.305598646764174, 
+                "fuelConsumption": 7.596938612863848, 
+                "overhead": 1.325823186147816
+            }, 
+            "createdDate": "2018-08-07 22:37:05.863000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.07284006379102, 
+                "fuelConsumption": 7.383887021336212, 
+                "overhead": 1.3419671474126014
+            }, 
+            "createdDate": "2018-08-07 22:37:05.950000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 278.0, 
+                "speed": 41.88589203182209, 
+                "fuelConsumption": 8.297560930849537, 
+                "overhead": 1.3457176827186186
+            }, 
+            "createdDate": "2018-08-07 22:37:06.072000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 275.0, 
+                "speed": 41.458223975469274, 
+                "fuelConsumption": 7.324462516099435, 
+                "overhead": 1.3750380029038753
+            }, 
+            "createdDate": "2018-08-07 22:37:06.197000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 260.0, 
+                "speed": 41.90014016274469, 
+                "fuelConsumption": 7.225863755368883, 
+                "overhead": 1.346621058830727
+            }, 
+            "createdDate": "2018-08-07 22:37:06.280000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.72719584016356, 
+                "fuelConsumption": 7.637960507638173, 
+                "overhead": 1.3577114468250373
+            }, 
+            "createdDate": "2018-08-07 22:37:06.402000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 293.0, 
+                "speed": 42.085507526896926, 
+                "fuelConsumption": 7.770257738858217, 
+                "overhead": 1.3383345928417012
+            }, 
+            "createdDate": "2018-08-07 22:37:06.479000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 286.0, 
+                "speed": 42.031914284748105, 
+                "fuelConsumption": 7.398267061086557, 
+                "overhead": 1.3597828590803986
+            }, 
+            "createdDate": "2018-08-07 22:37:06.599000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 289.0, 
+                "speed": 41.46803553988757, 
+                "fuelConsumption": 7.930105219511487, 
+                "overhead": 1.372975435835924
+            }, 
+            "createdDate": "2018-08-07 22:37:06.733000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 263.0, 
+                "speed": 41.85640528120897, 
+                "fuelConsumption": 7.299047894412821, 
+                "overhead": 1.3374600195320416
+            }, 
+            "createdDate": "2018-08-07 22:37:06.875000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 268.0, 
+                "speed": 41.555144200913105, 
+                "fuelConsumption": 7.87119270649852, 
+                "overhead": 1.346963596828341
+            }, 
+            "createdDate": "2018-08-07 22:37:06.984000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 312.0, 
+                "speed": 42.02257997721141, 
+                "fuelConsumption": 7.355936909677747, 
+                "overhead": 1.3479629333803433
+            }, 
+            "createdDate": "2018-08-07 22:37:07.117000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.90829051870708, 
+                "fuelConsumption": 7.556501631525429, 
+                "overhead": 1.355888822359177
+            }, 
+            "createdDate": "2018-08-07 22:37:07.215000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.71451902298877, 
+                "fuelConsumption": 7.8817825170972755, 
+                "overhead": 1.3422085318178458
+            }, 
+            "createdDate": "2018-08-07 22:37:07.398000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 290.0, 
+                "speed": 41.90496420649263, 
+                "fuelConsumption": 7.144582240647805, 
+                "overhead": 1.3349577808737034
+            }, 
+            "createdDate": "2018-08-07 22:37:07.582000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 302.0, 
+                "speed": 42.05517027339506, 
+                "fuelConsumption": 7.902401736507479, 
+                "overhead": 1.3523622091121914
+            }, 
+            "createdDate": "2018-08-07 22:37:07.666000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 269.0, 
+                "speed": 41.94236372802762, 
+                "fuelConsumption": 7.605791410509788, 
+                "overhead": 1.3757106794150422
+            }, 
+            "createdDate": "2018-08-07 22:37:07.765000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 308.0, 
+                "speed": 41.91446806971367, 
+                "fuelConsumption": 7.595816846750557, 
+                "overhead": 1.3428907081436543
+            }, 
+            "createdDate": "2018-08-07 22:37:07.853000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 250.0, 
+                "speed": 41.675827972438995, 
+                "fuelConsumption": 7.155661370363135, 
+                "overhead": 1.3492310080893968
+            }, 
+            "createdDate": "2018-08-07 22:37:07.966000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 319.0, 
+                "speed": 41.66126133327723, 
+                "fuelConsumption": 8.394762245745449, 
+                "overhead": 1.3856303522331819
+            }, 
+            "createdDate": "2018-08-07 22:37:08.585000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 279.0, 
+                "speed": 41.95014994133852, 
+                "fuelConsumption": 7.467509780924529, 
+                "overhead": 1.3684672757471363
+            }, 
+            "createdDate": "2018-08-07 22:37:08.829000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 42.11997318859693, 
+                "fuelConsumption": 7.359408514283757, 
+                "overhead": 1.3343206591311947
+            }, 
+            "createdDate": "2018-08-07 22:37:10.302000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 271.0, 
+                "speed": 42.11815385764378, 
+                "fuelConsumption": 7.388325781637518, 
+                "overhead": 1.3489056852491876
+            }, 
+            "createdDate": "2018-08-07 22:37:10.405000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 258.0, 
+                "speed": 41.58353420981978, 
+                "fuelConsumption": 7.856552421187327, 
+                "overhead": 1.3678083876015357
+            }, 
+            "createdDate": "2018-08-07 22:37:10.503000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 286.0, 
+                "speed": 41.79163594151671, 
+                "fuelConsumption": 7.422841880570827, 
+                "overhead": 1.367600843831977
+            }, 
+            "createdDate": "2018-08-07 22:37:10.591000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 42.13451253877697, 
+                "fuelConsumption": 7.349521019097646, 
+                "overhead": 1.3274676748272658
+            }, 
+            "createdDate": "2018-08-07 22:37:10.701000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 294.0, 
+                "speed": 41.64029746955438, 
+                "fuelConsumption": 8.224169841920748, 
+                "overhead": 1.357260340854101
+            }, 
+            "createdDate": "2018-08-07 22:37:10.789000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 298.0, 
+                "speed": 42.127818054578945, 
+                "fuelConsumption": 7.212146355210515, 
+                "overhead": 1.3276484165040137
+            }, 
+            "createdDate": "2018-08-07 22:37:10.899000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 303.0, 
+                "speed": 41.93226667327427, 
+                "fuelConsumption": 7.13093042686365, 
+                "overhead": 1.3336912095721043
+            }, 
+            "createdDate": "2018-08-07 22:37:10.998000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 261.0, 
+                "speed": 41.81596283281921, 
+                "fuelConsumption": 7.157276283919483, 
+                "overhead": 1.344021435361694
+            }, 
+            "createdDate": "2018-08-07 22:37:11.108000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 257.0, 
+                "speed": 41.7994360045063, 
+                "fuelConsumption": 7.384380375920276, 
+                "overhead": 1.3501116200205965
+            }, 
+            "createdDate": "2018-08-07 22:37:11.209000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 298.0, 
+                "speed": 41.831948583603484, 
+                "fuelConsumption": 7.4204601470862235, 
+                "overhead": 1.3600117951995454
+            }, 
+            "createdDate": "2018-08-07 22:37:11.428000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 277.0, 
+                "speed": 41.986094195084185, 
+                "fuelConsumption": 7.8393500139212104, 
+                "overhead": 1.3328126140904015
+            }, 
+            "createdDate": "2018-08-07 22:37:11.526000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 297.0, 
+                "speed": 41.91046291772115, 
+                "fuelConsumption": 7.607723408334803, 
+                "overhead": 1.3436738526276215
+            }, 
+            "createdDate": "2018-08-07 22:37:11.625000"
+        }, 
+        {
+            "stage_id": "4f39aef6-d853-6575-9994-38d2f5dc1351#37", 
+            "payload": {
+                "tripDuration": 273.0, 
+                "speed": 41.767934464653486, 
+                "fuelConsumption": 8.438452367201911, 
+                "overhead": 1.3549159307575191
+            }, 
+            "createdDate": "2018-08-07 22:37:11.883000"
+        }
+    ]
+}

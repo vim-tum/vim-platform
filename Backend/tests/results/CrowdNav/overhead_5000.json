@@ -1,0 +1,58 @@
+{
+    "experiment_durations": [
+        400, 
+        465, 
+        413
+    ], 
+    "best_results": [
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 400, 
+            "stage_result": 2.04815465952158, 
+            "step_name": "T-test", 
+            "experiment_id": "14c8a3f5-aca8-da8d-a7cb-7eb4afe40f9d", 
+            "createdDate": "2018-07-24 07:47:15.263000", 
+            "knobs": {
+                "data_freshness_threshold": 567.3915511780426, 
+                "static_info_weight": 1.697783512495778
+            }, 
+            "id": "14c8a3f5-aca8-da8d-a7cb-7eb4afe40f9d#5#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 465, 
+            "stage_result": 2.085843665480614, 
+            "step_name": "T-test", 
+            "experiment_id": "251975e9-8931-d95e-c8bf-05fae56acbb2", 
+            "createdDate": "2018-08-05 01:05:18.665000", 
+            "knobs": {
+                "data_freshness_threshold": 683.8583431349681, 
+                "static_info_weight": 1.6211335373196558
+            }, 
+            "id": "251975e9-8931-d95e-c8bf-05fae56acbb2#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 413, 
+            "stage_result": 2.2750101374506952, 
+            "step_name": "T-test", 
+            "experiment_id": "076861f3-b77b-d1a3-90c4-cc34c00712aa", 
+            "createdDate": "2018-07-23 08:16:17.175000", 
+            "knobs": {
+                "exploration_percentage": 0.1463
+            }, 
+            "id": "076861f3-b77b-d1a3-90c4-cc34c00712aa#4#2"
+        }
+    ], 
+    "optimization_percentages": [
+        16.10926593249031, 
+        8.806580230809526, 
+        -3.8278862388791817
+    ], 
+    "average_experiment_duration": 426.0, 
+    "average_optimization_percentage": 7.029319974806885, 
+    "numberOfExperiments": 3
+}

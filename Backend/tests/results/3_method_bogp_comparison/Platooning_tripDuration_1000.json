@@ -1,0 +1,38 @@
+{
+    "average_result_SM": 284.988, 
+    "results": [
+        {
+            "3_method_duration": 61, 
+            "mean_diff": 8.228999999999985, 
+            "effect_size": 0.330214903182943, 
+            "3_method_average": 293.467, 
+            "sm_duration": 419, 
+            "duration_difference_percentage": -85.44152744630071, 
+            "sm_average": 285.238, 
+            "statistic": 7.380136868711728, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -2.8040631484971006, 
+            "pvalue": 2.4062442889545944e-13
+        }, 
+        {
+            "3_method_duration": 61, 
+            "mean_diff": 8.728999999999985, 
+            "effect_size": 0.35410784679512397, 
+            "3_method_average": 293.467, 
+            "sm_duration": 131, 
+            "duration_difference_percentage": -53.43511450381679, 
+            "sm_average": 284.738, 
+            "statistic": 6.894176658380993, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -2.9744400562925253, 
+            "pvalue": 8.263241835074679e-12
+        }
+    ], 
+    "average_duration_difference": -69.43832097505876, 
+    "average_experiment_duration_3M": 61.0, 
+    "average_result_difference": -2.889251602394813, 
+    "average_result_3M": 293.467, 
+    "average_experiment_duration_SM": 275.0
+}

@@ -1,0 +1,73 @@
+{
+    "experiment_durations": [
+        155, 
+        208, 
+        214, 
+        279
+    ], 
+    "best_results": [
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 155, 
+            "stage_result": 1.3678908861279488, 
+            "step_name": "T-test", 
+            "experiment_id": "4710f1a3-65cf-475e-a352-3ab7da50dd18", 
+            "createdDate": "2018-08-05 02:37:28.788000", 
+            "knobs": {
+                "joinDistance": 5.0
+            }, 
+            "id": "4710f1a3-65cf-475e-a352-3ab7da50dd18#5#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 208, 
+            "stage_result": 1.3722284179925919, 
+            "step_name": "T-test", 
+            "experiment_id": "090ec218-35c3-0011-40c1-1b132285915b", 
+            "createdDate": "2018-08-03 20:41:31.283000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 2.019069321802121
+            }, 
+            "id": "090ec218-35c3-0011-40c1-1b132285915b#5#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 214, 
+            "stage_result": 1.4144700706005096, 
+            "step_name": "T-test", 
+            "experiment_id": "7702b887-f7f3-766b-0635-7481c103a639", 
+            "createdDate": "2018-08-04 16:14:36.644000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 2.016051363113869
+            }, 
+            "id": "7702b887-f7f3-766b-0635-7481c103a639#5#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 279, 
+            "stage_result": 1.4331387592554092, 
+            "step_name": "T-test", 
+            "experiment_id": "8bfa5b2a-f3fe-7183-15d5-eb7a044aee8e", 
+            "createdDate": "2018-08-10 04:28:43.921000", 
+            "knobs": {
+                "maxPlatoonGap": 43.958370503101975, 
+                "catchupDistance": 23.816001248065177, 
+                "maxVehiclesInPlatoon": 3.6272123425964455
+            }, 
+            "id": "8bfa5b2a-f3fe-7183-15d5-eb7a044aee8e#5#2"
+        }
+    ], 
+    "optimization_percentages": [
+        14.058167946733224, 
+        11.37561061307731, 
+        8.57590025297189, 
+        8.261088822194456
+    ], 
+    "average_experiment_duration": 214.0, 
+    "average_optimization_percentage": 10.56769190874422, 
+    "numberOfExperiments": 4
+}

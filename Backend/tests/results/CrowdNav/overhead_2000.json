@@ -1,0 +1,71 @@
+{
+    "experiment_durations": [
+        122, 
+        139, 
+        205, 
+        218
+    ], 
+    "best_results": [
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 122, 
+            "stage_result": 2.181103816896677, 
+            "step_name": "T-test", 
+            "experiment_id": "f1207338-f35c-52e1-6b3c-e7a125834afd", 
+            "createdDate": "2018-07-28 13:14:46.420000", 
+            "knobs": {
+                "route_randomization": 0.3488759265064111
+            }, 
+            "id": "f1207338-f35c-52e1-6b3c-e7a125834afd#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 139, 
+            "stage_result": 2.2401642561256887, 
+            "step_name": "T-test", 
+            "experiment_id": "8d159a21-b5d7-802a-851f-b5782f719430", 
+            "createdDate": "2018-07-23 19:26:57.077000", 
+            "knobs": {
+                "route_randomization": 0.34656286372577866
+            }, 
+            "id": "8d159a21-b5d7-802a-851f-b5782f719430#4#2"
+        }, 
+        {
+            "step_no": 3, 
+            "number": 2, 
+            "elapsed_time": 205, 
+            "stage_result": 2.2630679515600205, 
+            "step_name": "T-test", 
+            "experiment_id": "4545eb02-7d3b-07c3-47e3-9c69ced58b7f", 
+            "createdDate": "2018-08-05 21:15:19.117000", 
+            "knobs": {
+                "dynamic_info_weight": 1.5771140319657508
+            }, 
+            "id": "4545eb02-7d3b-07c3-47e3-9c69ced58b7f#3#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 218, 
+            "stage_result": 2.293765882283449, 
+            "step_name": "T-test", 
+            "experiment_id": "167bb2a3-9096-9493-9f8c-d46351e83499", 
+            "createdDate": "2018-08-06 21:32:19.195000", 
+            "knobs": {
+                "dynamic_info_weight": 1.4696149729130594
+            }, 
+            "id": "167bb2a3-9096-9493-9f8c-d46351e83499#4#2"
+        }
+    ], 
+    "optimization_percentages": [
+        1.0131822157971184, 
+        -1.5654275711368046, 
+        -3.0778478499206927, 
+        -6.855434080156633
+    ], 
+    "average_experiment_duration": 171.0, 
+    "average_optimization_percentage": -2.621381821354253, 
+    "numberOfExperiments": 4
+}

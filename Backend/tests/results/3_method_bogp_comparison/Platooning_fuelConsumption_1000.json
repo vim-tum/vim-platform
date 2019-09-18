@@ -1,0 +1,66 @@
+{
+    "average_result_SM": 6.526290866285753, 
+    "results": [
+        {
+            "3_method_duration": 202, 
+            "mean_diff": 0.5597860739541218, 
+            "effect_size": 0.7956725871787672, 
+            "3_method_average": 6.998702805916897, 
+            "sm_duration": 540, 
+            "duration_difference_percentage": -62.59259259259259, 
+            "sm_average": 6.438916731962776, 
+            "statistic": 21.831374186068768, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -7.9984261294945, 
+            "pvalue": 2.0925520608113218e-97
+        }, 
+        {
+            "3_method_duration": 202, 
+            "mean_diff": 0.38503780530816645, 
+            "effect_size": 0.5237538355023689, 
+            "3_method_average": 6.998702805916897, 
+            "sm_duration": 247, 
+            "duration_difference_percentage": -18.218623481781375, 
+            "sm_average": 6.613665000608731, 
+            "statistic": 14.073389163774428, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -5.501559588766147, 
+            "pvalue": 2.5527117072480136e-43
+        }, 
+        {
+            "3_method_duration": 52, 
+            "mean_diff": 1.2961430620664345, 
+            "effect_size": 2.562662929489556, 
+            "3_method_average": 7.73505979402921, 
+            "sm_duration": 540, 
+            "duration_difference_percentage": -90.37037037037037, 
+            "sm_average": 6.438916731962776, 
+            "statistic": 57.274226528560874, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -16.75672970320079, 
+            "pvalue": 0.0
+        }, 
+        {
+            "3_method_duration": 52, 
+            "mean_diff": 1.121394793420479, 
+            "effect_size": 2.0429789898956563, 
+            "3_method_average": 7.73505979402921, 
+            "sm_duration": 247, 
+            "duration_difference_percentage": -78.94736842105263, 
+            "sm_average": 6.613665000608731, 
+            "statistic": 45.65955206745857, 
+            "different_averages": true, 
+            "alpha": 0.05, 
+            "result_difference_percentage": -14.497558173837232, 
+            "pvalue": 2.262524524767463e-300
+        }
+    ], 
+    "average_duration_difference": -62.532238716449235, 
+    "average_experiment_duration_3M": 127.0, 
+    "average_result_difference": -11.188568398824668, 
+    "average_result_3M": 7.366881299973054, 
+    "average_experiment_duration_SM": 393.5
+}

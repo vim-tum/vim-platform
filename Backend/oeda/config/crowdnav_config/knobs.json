@@ -1,0 +1,52 @@
+[
+  {
+    "name": "route_randomization",
+    "description": "Controls the random noise introduced to avoid giving the same routes",
+    "scale": "Metric",
+    "min": 0.0,
+    "max": 0.3,
+    "default": 0.0
+  }, {
+    "name": "exploration_percentage",
+    "description": "Controls the ratio of smart cars used as explorers",
+    "scale": "Metric",
+    "min": 0.0,
+    "max": 0.3,
+    "default": 0.0
+  }, {
+    "name": "static_info_weight",
+    "description": "Controls the importance of static information (i.e. max speed, street length) on routing",
+    "scale": "Metric",
+    "min": 1.0,
+    "max": 2.5,
+    "default": 1.0
+  }, {
+    "name": "dynamic_info_weight",
+    "description": "Controls the importance of static information (i.e. observed traffic) on routing",
+    "scale": "Metric",
+    "min": 1.0,
+    "max": 2.5,
+    "default": 1.0
+  }, {
+    "name": "exploration_weight",
+    "description": "Controls the degree of exploration of the explorers",
+    "scale": "Metric",
+    "min": 5.0,
+    "max": 20.0,
+    "default": 5.0
+  }, {
+    "name": "data_freshness_threshold",
+    "description": "Threshold for considering traffic-related data as stale and disregard them",
+    "scale": "Metric",
+    "min": 100,
+    "max": 700,
+    "default": 100
+  }, {
+    "name": "re_routing_frequency",
+    "description": "Controls how often the router should be invoked to re-route a smart car",
+    "scale": "Metric",
+    "min": 10,
+    "max": 70,
+    "default": 60
+  }
+]

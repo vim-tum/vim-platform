@@ -1,0 +1,4676 @@
+{
+    "experiment": {
+        "status": "SUCCESS", 
+        "changeableVariables": [
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls the random noise introduced to avoid giving the same routes", 
+                    "min": 0, 
+                    "default": 0, 
+                    "max": 0.3, 
+                    "name": "route_randomization"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls the ratio of smart cars used as explorers", 
+                    "min": 0, 
+                    "default": 0.2, 
+                    "max": 0.3, 
+                    "name": "exploration_percentage"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls the importance of static information (i.e. max speed, street length) on routing", 
+                    "min": 1, 
+                    "default": 1, 
+                    "max": 2.5, 
+                    "name": "static_info_weight"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls the importance of static information (i.e. observed traffic) on routing", 
+                    "min": 1, 
+                    "default": 1, 
+                    "max": 2.5, 
+                    "name": "dynamic_info_weight"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Controls the degree of exploration of the explorers", 
+                    "min": 5, 
+                    "default": 5, 
+                    "max": 20, 
+                    "name": "exploration_weight"
+                }
+            ], 
+            [
+                {
+                    "scale": "Metric", 
+                    "description": "Threshold for considering traffic-related data as stale and disregard them", 
+                    "min": 100, 
+                    "default": 100, 
+                    "max": 700, 
+                    "name": "data_freshness_threshold"
+                }
+            ]
+        ], 
+        "executionStrategy": {
+            "optimizer_iterations": 26, 
+            "sample_size": 500, 
+            "acquisition_method": "gp_hedge", 
+            "stages_count": 50, 
+            "optimizer_iterations_in_design": 24, 
+            "knobs": [
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls the random noise introduced to avoid giving the same routes", 
+                        "min": 0, 
+                        "default": 0, 
+                        "max": 0.3, 
+                        "name": "route_randomization"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls the ratio of smart cars used as explorers", 
+                        "min": 0, 
+                        "default": 0.2, 
+                        "max": 0.3, 
+                        "name": "exploration_percentage"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls the importance of static information (i.e. max speed, street length) on routing", 
+                        "min": 1, 
+                        "default": 1, 
+                        "max": 2.5, 
+                        "name": "static_info_weight"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls the importance of static information (i.e. observed traffic) on routing", 
+                        "min": 1, 
+                        "default": 1, 
+                        "max": 2.5, 
+                        "name": "dynamic_info_weight"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Controls the degree of exploration of the explorers", 
+                        "min": 5, 
+                        "default": 5, 
+                        "max": 20, 
+                        "name": "exploration_weight"
+                    }
+                ], 
+                [
+                    {
+                        "scale": "Metric", 
+                        "description": "Threshold for considering traffic-related data as stale and disregard them", 
+                        "min": 100, 
+                        "default": 100, 
+                        "max": 700, 
+                        "name": "data_freshness_threshold"
+                    }
+                ]
+            ], 
+            "type": "self_optimizer"
+        }, 
+        "description": "all parameters (except re_routing_frequency), 50 iterations, 24 for design, 500 sample per stage", 
+        "targetSystemId": "2d69f82d-cf27-29d4-0063-fcf01aebd861", 
+        "considered_data_types": [
+            {
+                "is_considered": true, 
+                "scale": "Metric", 
+                "description": "overhead of the trips", 
+                "weight": 100, 
+                "disabled": true, 
+                "aggregateFunction": "avg", 
+                "dataProviderName": "Trips", 
+                "criteria": "Minimize", 
+                "name": "overhead"
+            }
+        ], 
+        "analysis": {
+            "alpha": 0.05, 
+            "type": "bayesian_opt", 
+            "method": "self_optimizer", 
+            "data_type": {
+                "disabled": true, 
+                "scale": "Metric", 
+                "description": "overhead of the trips", 
+                "weight": 100, 
+                "is_considered": true, 
+                "aggregateFunction": "avg", 
+                "dataProviderName": "Trips", 
+                "criteria": "Minimize", 
+                "name": "overhead"
+            }, 
+            "inner_type": "self_optimizer"
+        }, 
+        "createdDate": "2018-08-08 10:09:57.494000", 
+        "id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2", 
+        "name": "Experiment #41 with CrowdNav to reduce average overheads"
+    },
+    "stage_number": 27,
+    "experiment_duration": 177,
+    "stage_data": [
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 5.7888837431486175, 
+                "minimalCosts": 115.110903229367
+            }, 
+            "createdDate": "2018-08-08 11:43:10.383000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3925070091918177, 
+                "minimalCosts": 77.51473443632312
+            }, 
+            "createdDate": "2018-08-08 11:43:10.727000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.5995549123513504, 
+                "minimalCosts": 46.47039185282468
+            }, 
+            "createdDate": "2018-08-08 11:43:10.908000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1914398259152619, 
+                "minimalCosts": 143.4475222261425
+            }, 
+            "createdDate": "2018-08-08 11:43:11.440000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9714273875683357, 
+                "minimalCosts": 317.2597425594328
+            }, 
+            "createdDate": "2018-08-08 11:43:11.549000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3024571890262546, 
+                "minimalCosts": 134.24393320495506
+            }, 
+            "createdDate": "2018-08-08 11:43:11.754000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.43208899699394, 
+                "minimalCosts": 150.26363998449355
+            }, 
+            "createdDate": "2018-08-08 11:43:11.952000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.029989511053257, 
+                "minimalCosts": 258.3981107731413
+            }, 
+            "createdDate": "2018-08-08 11:43:12.233000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 4.608549801830405, 
+                "minimalCosts": 212.64823906443792
+            }, 
+            "createdDate": "2018-08-08 11:43:12.315000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5862984362361396, 
+                "minimalCosts": 179.37699996767603
+            }, 
+            "createdDate": "2018-08-08 11:43:12.504000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6928036448890702, 
+                "minimalCosts": 178.8318885307637
+            }, 
+            "createdDate": "2018-08-08 11:43:12.734000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3620399163017274, 
+                "minimalCosts": 44.71902047810319
+            }, 
+            "createdDate": "2018-08-08 11:43:13.047000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.730292229153105, 
+                "minimalCosts": 302.1034620164263
+            }, 
+            "createdDate": "2018-08-08 11:43:13.309000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.9163241207666823, 
+                "minimalCosts": 28.99041774658027
+            }, 
+            "createdDate": "2018-08-08 11:43:13.515000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9161856205771142, 
+                "minimalCosts": 72.11296061192692
+            }, 
+            "createdDate": "2018-08-08 11:43:13.629000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9414687664736374, 
+                "minimalCosts": 121.7447534800946
+            }, 
+            "createdDate": "2018-08-08 11:43:13.713000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1741704985199695, 
+                "minimalCosts": 54.97110907386402
+            }, 
+            "createdDate": "2018-08-08 11:43:13.833000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0485517894959464, 
+                "minimalCosts": 174.26633053109595
+            }, 
+            "createdDate": "2018-08-08 11:43:14.110000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.9706997249717735, 
+                "minimalCosts": 233.29984650758792
+            }, 
+            "createdDate": "2018-08-08 11:43:14.196000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.298791976404119, 
+                "minimalCosts": 30.450776198330644
+            }, 
+            "createdDate": "2018-08-08 11:43:14.352000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.7868102919431603, 
+                "minimalCosts": 261.1936782772838
+            }, 
+            "createdDate": "2018-08-08 11:43:14.428000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1296814096204892, 
+                "minimalCosts": 223.25148884089276
+            }, 
+            "createdDate": "2018-08-08 11:43:14.616000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6358738158774728, 
+                "minimalCosts": 231.1803114098771
+            }, 
+            "createdDate": "2018-08-08 11:43:14.725000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2708377646923585, 
+                "minimalCosts": 134.5118309215396
+            }, 
+            "createdDate": "2018-08-08 11:43:14.813000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1286963544800432, 
+                "minimalCosts": 178.00100984789992
+            }, 
+            "createdDate": "2018-08-08 11:43:15.009000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.963600583963733, 
+                "minimalCosts": 47.23983412526998
+            }, 
+            "createdDate": "2018-08-08 11:43:15.112000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7328402003660788, 
+                "minimalCosts": 258.64001659653064
+            }, 
+            "createdDate": "2018-08-08 11:43:15.333000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8742803279159022, 
+                "minimalCosts": 131.44439105199345
+            }, 
+            "createdDate": "2018-08-08 11:43:15.407000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.405534771399705, 
+                "minimalCosts": 179.3198875942602
+            }, 
+            "createdDate": "2018-08-08 11:43:15.583000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.172024889650021, 
+                "minimalCosts": 130.31060524054118
+            }, 
+            "createdDate": "2018-08-08 11:43:15.671000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1447589922534325, 
+                "minimalCosts": 229.5044411139326
+            }, 
+            "createdDate": "2018-08-08 11:43:15.769000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.19605129957276, 
+                "minimalCosts": 189.59649824420745
+            }, 
+            "createdDate": "2018-08-08 11:43:15.869000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.522247383539262, 
+                "minimalCosts": 247.83930086025768
+            }, 
+            "createdDate": "2018-08-08 11:43:16.001000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 5.899510499659369, 
+                "minimalCosts": 214.65571362857216
+            }, 
+            "createdDate": "2018-08-08 11:43:16.089000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.70797355446705, 
+                "minimalCosts": 306.0511512957135
+            }, 
+            "createdDate": "2018-08-08 11:43:16.298000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5500981482516951, 
+                "minimalCosts": 157.17479819658715
+            }, 
+            "createdDate": "2018-08-08 11:43:16.518000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.766793313135719, 
+                "minimalCosts": 38.076172675416736
+            }, 
+            "createdDate": "2018-08-08 11:43:16.725000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5727367176064115, 
+                "minimalCosts": 227.7442970409849
+            }, 
+            "createdDate": "2018-08-08 11:43:16.824000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1357776213739597, 
+                "minimalCosts": 98.45077039193148
+            }, 
+            "createdDate": "2018-08-08 11:43:16.940000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1990145130046983, 
+                "minimalCosts": 309.2294279908407
+            }, 
+            "createdDate": "2018-08-08 11:43:17.145000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.5359024090935085, 
+                "minimalCosts": 34.966
+            }, 
+            "createdDate": "2018-08-08 11:43:17.318000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6637135492118822, 
+                "minimalCosts": 295.06827731350717
+            }, 
+            "createdDate": "2018-08-08 11:43:17.418000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3005871156712272, 
+                "minimalCosts": 221.5782508602577
+            }, 
+            "createdDate": "2018-08-08 11:43:17.573000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.0440866841878784, 
+                "minimalCosts": 187.84556457883366
+            }, 
+            "createdDate": "2018-08-08 11:43:17.640000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.79845368914144, 
+                "minimalCosts": 97.13156336046963
+            }, 
+            "createdDate": "2018-08-08 11:43:17.793000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9993798912374132, 
+                "minimalCosts": 172.32615775295
+            }, 
+            "createdDate": "2018-08-08 11:43:17.980000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2460988664044748, 
+                "minimalCosts": 118.91658212432675
+            }, 
+            "createdDate": "2018-08-08 11:43:18.045000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.966939976079607, 
+                "minimalCosts": 260.21037146151696
+            }, 
+            "createdDate": "2018-08-08 11:43:18.233000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5143701951469495, 
+                "minimalCosts": 61.23157536012836
+            }, 
+            "createdDate": "2018-08-08 11:43:18.431000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.370144550250051, 
+                "minimalCosts": 13.270000000000001
+            }, 
+            "createdDate": "2018-08-08 11:43:18.618000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1646614839618212, 
+                "minimalCosts": 185.7738401613777
+            }, 
+            "createdDate": "2018-08-08 11:43:18.826000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3081801263568513, 
+                "minimalCosts": 89.64570314893858
+            }, 
+            "createdDate": "2018-08-08 11:43:18.903000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.228448208494018, 
+                "minimalCosts": 27.740461538461535
+            }, 
+            "createdDate": "2018-08-08 11:43:19.123000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1301801197458174, 
+                "minimalCosts": 232.1613322560094
+            }, 
+            "createdDate": "2018-08-08 11:43:19.238000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.262452505890133, 
+                "minimalCosts": 115.8104079644817
+            }, 
+            "createdDate": "2018-08-08 11:43:19.431000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2428070770786783, 
+                "minimalCosts": 277.2316483386443
+            }, 
+            "createdDate": "2018-08-08 11:43:19.584000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.279541259214907, 
+                "minimalCosts": 29.11271559370351
+            }, 
+            "createdDate": "2018-08-08 11:43:19.738000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2795542484933882, 
+                "minimalCosts": 145.64731161892536
+            }, 
+            "createdDate": "2018-08-08 11:43:19.893000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1856375678797693, 
+                "minimalCosts": 174.05288256230665
+            }, 
+            "createdDate": "2018-08-08 11:43:19.968000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1281216032719696, 
+                "minimalCosts": 146.66375058740664
+            }, 
+            "createdDate": "2018-08-08 11:43:20.157000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9479923424859997, 
+                "minimalCosts": 206.7396590549827
+            }, 
+            "createdDate": "2018-08-08 11:43:20.525000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1851676562042681, 
+                "minimalCosts": 116.59263350501189
+            }, 
+            "createdDate": "2018-08-08 11:43:20.729000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6824243761216184, 
+                "minimalCosts": 158.3213130670793
+            }, 
+            "createdDate": "2018-08-08 11:43:21.058000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4207700984064533, 
+                "minimalCosts": 116.41674771334019
+            }, 
+            "createdDate": "2018-08-08 11:43:21.257000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5954821995614428, 
+                "minimalCosts": 79.77069710192397
+            }, 
+            "createdDate": "2018-08-08 11:43:21.477000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.736270038530489, 
+                "minimalCosts": 189.3752483801296
+            }, 
+            "createdDate": "2018-08-08 11:43:21.698000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4881143764192473, 
+                "minimalCosts": 166.24491524848852
+            }, 
+            "createdDate": "2018-08-08 11:43:21.885000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6806411681853561, 
+                "minimalCosts": 296.4236671173071
+            }, 
+            "createdDate": "2018-08-08 11:43:22.082000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7963382451659087, 
+                "minimalCosts": 173.58544954287407
+            }, 
+            "createdDate": "2018-08-08 11:43:22.315000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2790964710816495, 
+                "minimalCosts": 76.75872805652581
+            }, 
+            "createdDate": "2018-08-08 11:43:22.532000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.823783464643616, 
+                "minimalCosts": 242.25363941684662
+            }, 
+            "createdDate": "2018-08-08 11:43:22.641000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.399476412488329, 
+                "minimalCosts": 111.38793691893699
+            }, 
+            "createdDate": "2018-08-08 11:43:22.731000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8449347083930996, 
+                "minimalCosts": 263.1283065173436
+            }, 
+            "createdDate": "2018-08-08 11:43:22.840000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2265856008930007, 
+                "minimalCosts": 97.17283551858996
+            }, 
+            "createdDate": "2018-08-08 11:43:22.927000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7924059297420532, 
+                "minimalCosts": 77.09292626682173
+            }, 
+            "createdDate": "2018-08-08 11:43:23.048000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7426932331887508, 
+                "minimalCosts": 326.5582824635154
+            }, 
+            "createdDate": "2018-08-08 11:43:23.147000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7920227227561345, 
+                "minimalCosts": 308.944946180632
+            }, 
+            "createdDate": "2018-08-08 11:43:23.257000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2387310731401988, 
+                "minimalCosts": 187.87554278210374
+            }, 
+            "createdDate": "2018-08-08 11:43:23.379000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0820863247123949, 
+                "minimalCosts": 22.683453237410074
+            }, 
+            "createdDate": "2018-08-08 11:43:23.554000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.982792868621214, 
+                "minimalCosts": 262.2563396456007
+            }, 
+            "createdDate": "2018-08-08 11:43:23.631000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4617578072301072, 
+                "minimalCosts": 189.68445107752348
+            }, 
+            "createdDate": "2018-08-08 11:43:23.718000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.7601649627835547, 
+                "minimalCosts": 85.6338804204187
+            }, 
+            "createdDate": "2018-08-08 11:43:23.795000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8750264232151612, 
+                "minimalCosts": 99.87738036864855
+            }, 
+            "createdDate": "2018-08-08 11:43:24.007000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7437744162393516, 
+                "minimalCosts": 209.05539796348106
+            }, 
+            "createdDate": "2018-08-08 11:43:24.204000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2366520082569474, 
+                "minimalCosts": 205.66453713042472
+            }, 
+            "createdDate": "2018-08-08 11:43:24.312000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.145204357517792, 
+                "minimalCosts": 106.37244000906557
+            }, 
+            "createdDate": "2018-08-08 11:43:24.378000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1597136786483664, 
+                "minimalCosts": 310.6472388177733
+            }, 
+            "createdDate": "2018-08-08 11:43:24.455000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.457316116946084, 
+                "minimalCosts": 255.1390034698545
+            }, 
+            "createdDate": "2018-08-08 11:43:24.576000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1271669929217412, 
+                "minimalCosts": 151.62712533488553
+            }, 
+            "createdDate": "2018-08-08 11:43:24.654000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4658610464338735, 
+                "minimalCosts": 65.62339838743272
+            }, 
+            "createdDate": "2018-08-08 11:43:24.763000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.8169702679911395, 
+                "minimalCosts": 138.76933503734105
+            }, 
+            "createdDate": "2018-08-08 11:43:24.867000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8220017797831598, 
+                "minimalCosts": 240.4947256604585
+            }, 
+            "createdDate": "2018-08-08 11:43:24.928000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0738494427166116, 
+                "minimalCosts": 65.18604677292082
+            }, 
+            "createdDate": "2018-08-08 11:43:25.043000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.5111018252291517, 
+                "minimalCosts": 244.36936705279405
+            }, 
+            "createdDate": "2018-08-08 11:43:25.137000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.238951751214866, 
+                "minimalCosts": 270.75674668171075
+            }, 
+            "createdDate": "2018-08-08 11:43:25.315000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.634220733088489, 
+                "minimalCosts": 191.91799325885862
+            }, 
+            "createdDate": "2018-08-08 11:43:25.423000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.122992460536106, 
+                "minimalCosts": 278.4767340093981
+            }, 
+            "createdDate": "2018-08-08 11:43:25.644000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6107868468049402, 
+                "minimalCosts": 277.673441498427
+            }, 
+            "createdDate": "2018-08-08 11:43:25.842000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.8403358031229455, 
+                "minimalCosts": 173.79507137628272
+            }, 
+            "createdDate": "2018-08-08 11:43:25.951000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5927989901229167, 
+                "minimalCosts": 308.77605075592624
+            }, 
+            "createdDate": "2018-08-08 11:43:26.153000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5306036063101147, 
+                "minimalCosts": 273.213663196538
+            }, 
+            "createdDate": "2018-08-08 11:43:26.270000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3808158182780765, 
+                "minimalCosts": 168.39147649776962
+            }, 
+            "createdDate": "2018-08-08 11:43:26.480000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.9450540229443587, 
+                "minimalCosts": 147.94128552915768
+            }, 
+            "createdDate": "2018-08-08 11:43:26.566000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8071635290710781, 
+                "minimalCosts": 149.9084540779462
+            }, 
+            "createdDate": "2018-08-08 11:43:26.655000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.424467331728666, 
+                "minimalCosts": 96.36776092726507
+            }, 
+            "createdDate": "2018-08-08 11:43:26.743000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3014202619643787, 
+                "minimalCosts": 229.81885086025773
+            }, 
+            "createdDate": "2018-08-08 11:43:26.808000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6763490402604249, 
+                "minimalCosts": 317.7901856551976
+            }, 
+            "createdDate": "2018-08-08 11:43:26.886000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6675793017329397, 
+                "minimalCosts": 461.7471560122028
+            }, 
+            "createdDate": "2018-08-08 11:43:26.985000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.8676816426226592, 
+                "minimalCosts": 39.62656173104231
+            }, 
+            "createdDate": "2018-08-08 11:43:27.073000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0546695754046347, 
+                "minimalCosts": 234.94155873321245
+            }, 
+            "createdDate": "2018-08-08 11:43:27.182000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7981085870322384, 
+                "minimalCosts": 258.3522807775377
+            }, 
+            "createdDate": "2018-08-08 11:43:27.281000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.670755449786584, 
+                "minimalCosts": 122.19899668826493
+            }, 
+            "createdDate": "2018-08-08 11:43:27.392000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1631782511193394, 
+                "minimalCosts": 187.57384603078623
+            }, 
+            "createdDate": "2018-08-08 11:43:27.513000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1101037900989827, 
+                "minimalCosts": 290.80861638923386
+            }, 
+            "createdDate": "2018-08-08 11:43:27.622000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.326167518735786, 
+                "minimalCosts": 211.4285312028915
+            }, 
+            "createdDate": "2018-08-08 11:43:27.699000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5715941487706921, 
+                "minimalCosts": 198.40884624194314
+            }, 
+            "createdDate": "2018-08-08 11:43:27.810000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.364820558641971, 
+                "minimalCosts": 226.4699979303227
+            }, 
+            "createdDate": "2018-08-08 11:43:27.887000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2804010112811108, 
+                "minimalCosts": 206.61140706282512
+            }, 
+            "createdDate": "2018-08-08 11:43:28.086000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3356686950216465, 
+                "minimalCosts": 135.44458411234905
+            }, 
+            "createdDate": "2018-08-08 11:43:28.306000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4959771190760565, 
+                "minimalCosts": 376.76803772538716
+            }, 
+            "createdDate": "2018-08-08 11:43:28.403000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1376769319134985, 
+                "minimalCosts": 127.05316464696043
+            }, 
+            "createdDate": "2018-08-08 11:43:28.625000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4701265062142252, 
+                "minimalCosts": 85.7519569484801
+            }, 
+            "createdDate": "2018-08-08 11:43:28.711000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.664762985469763, 
+                "minimalCosts": 167.50594285403145
+            }, 
+            "createdDate": "2018-08-08 11:43:28.777000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1692744843850593, 
+                "minimalCosts": 51.546350000000004
+            }, 
+            "createdDate": "2018-08-08 11:43:28.853000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4764838007287961, 
+                "minimalCosts": 187.79259693595333
+            }, 
+            "createdDate": "2018-08-08 11:43:28.953000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.143589686506302, 
+                "minimalCosts": 29.41296518607443
+            }, 
+            "createdDate": "2018-08-08 11:43:29.033000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.171579901393837, 
+                "minimalCosts": 118.05397360653798
+            }, 
+            "createdDate": "2018-08-08 11:43:29.130000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0997543632503852, 
+                "minimalCosts": 196.73814771160494
+            }, 
+            "createdDate": "2018-08-08 11:43:29.206000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2576092344200227, 
+                "minimalCosts": 101.92499758554362
+            }, 
+            "createdDate": "2018-08-08 11:43:29.428000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1039511217168587, 
+                "minimalCosts": 63.40860444177672
+            }, 
+            "createdDate": "2018-08-08 11:43:29.582000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4045935426365277, 
+                "minimalCosts": 62.781022057309386
+            }, 
+            "createdDate": "2018-08-08 11:43:29.679000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.159577913954566, 
+                "minimalCosts": 361.38313816387847
+            }, 
+            "createdDate": "2018-08-08 11:43:29.779000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 5.499792010364906, 
+                "minimalCosts": 133.8893607205301
+            }, 
+            "createdDate": "2018-08-08 11:43:29.855000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4041620979645903, 
+                "minimalCosts": 97.11388490068411
+            }, 
+            "createdDate": "2018-08-08 11:43:30.055000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9889270819183518, 
+                "minimalCosts": 293.89989198681485
+            }, 
+            "createdDate": "2018-08-08 11:43:30.577000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0769488734324184, 
+                "minimalCosts": 229.60488967747114
+            }, 
+            "createdDate": "2018-08-08 11:43:30.692000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1129754623888473, 
+                "minimalCosts": 142.84036288663665
+            }, 
+            "createdDate": "2018-08-08 11:43:30.867000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.805198387493219, 
+                "minimalCosts": 177.2658352771778
+            }, 
+            "createdDate": "2018-08-08 11:43:31.165000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7683403246133198, 
+                "minimalCosts": 141.37550137848442
+            }, 
+            "createdDate": "2018-08-08 11:43:31.254000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4968818005638604, 
+                "minimalCosts": 304.8762007739881
+            }, 
+            "createdDate": "2018-08-08 11:43:31.472000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.7861348982428575, 
+                "minimalCosts": 30.580758686382012
+            }, 
+            "createdDate": "2018-08-08 11:43:31.571000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6151129410550769, 
+                "minimalCosts": 401.8857707046101
+            }, 
+            "createdDate": "2018-08-08 11:43:31.693000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.520606778470803, 
+                "minimalCosts": 279.1357668049842
+            }, 
+            "createdDate": "2018-08-08 11:43:31.757000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4278795718811834, 
+                "minimalCosts": 180.17816932122577
+            }, 
+            "createdDate": "2018-08-08 11:43:31.913000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4970941533092232, 
+                "minimalCosts": 171.24082396351776
+            }, 
+            "createdDate": "2018-08-08 11:43:31.992000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.456725396729775, 
+                "minimalCosts": 208.43761241343185
+            }, 
+            "createdDate": "2018-08-08 11:43:32.065000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4375336050640026, 
+                "minimalCosts": 168.20280924464814
+            }, 
+            "createdDate": "2018-08-08 11:43:32.320000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.348713728937159, 
+                "minimalCosts": 103.80260613964808
+            }, 
+            "createdDate": "2018-08-08 11:43:32.506000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.274942259687834, 
+                "minimalCosts": 242.16398836631842
+            }, 
+            "createdDate": "2018-08-08 11:43:32.704000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1208054797682143, 
+                "minimalCosts": 90.0326530612245
+            }, 
+            "createdDate": "2018-08-08 11:43:32.780000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.242715127931912, 
+                "minimalCosts": 54.31727832973362
+            }, 
+            "createdDate": "2018-08-08 11:43:32.878000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7951202784654634, 
+                "minimalCosts": 147.3692084697511
+            }, 
+            "createdDate": "2018-08-08 11:43:32.956000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2373665107427905, 
+                "minimalCosts": 90.20345162455281
+            }, 
+            "createdDate": "2018-08-08 11:43:33.326000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.636489459567495, 
+                "minimalCosts": 24.998077848850123
+            }, 
+            "createdDate": "2018-08-08 11:43:33.406000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2353154952687113, 
+                "minimalCosts": 93.13308059755218
+            }, 
+            "createdDate": "2018-08-08 11:43:33.473000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2841234410313513, 
+                "minimalCosts": 167.07541322751734
+            }, 
+            "createdDate": "2018-08-08 11:43:33.550000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.178171851273612, 
+                "minimalCosts": 157.40873901720516
+            }, 
+            "createdDate": "2018-08-08 11:43:33.638000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2206397833885343, 
+                "minimalCosts": 149.83396911837502
+            }, 
+            "createdDate": "2018-08-08 11:43:33.748000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4133693478874916, 
+                "minimalCosts": 175.5373101125974
+            }, 
+            "createdDate": "2018-08-08 11:43:33.946000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7700284222804137, 
+                "minimalCosts": 153.56712829954742
+            }, 
+            "createdDate": "2018-08-08 11:43:34.168000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2784853147494137, 
+                "minimalCosts": 340.60191417990245
+            }, 
+            "createdDate": "2018-08-08 11:43:34.364000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.225979181953432, 
+                "minimalCosts": 218.0075577195889
+            }, 
+            "createdDate": "2018-08-08 11:43:34.564000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8874960003414625, 
+                "minimalCosts": 50.090413186756706
+            }, 
+            "createdDate": "2018-08-08 11:43:34.750000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3514775790637101, 
+                "minimalCosts": 32.28789312701322
+            }, 
+            "createdDate": "2018-08-08 11:43:34.817000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7024512032618473, 
+                "minimalCosts": 147.3810764316512
+            }, 
+            "createdDate": "2018-08-08 11:43:34.892000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3850552762816524, 
+                "minimalCosts": 51.19585631228733
+            }, 
+            "createdDate": "2018-08-08 11:43:35.103000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2211865167152665, 
+                "minimalCosts": 208.44109483793517
+            }, 
+            "createdDate": "2018-08-08 11:43:35.210000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.300520057881248, 
+                "minimalCosts": 200.61904414927125
+            }, 
+            "createdDate": "2018-08-08 11:43:35.287000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0569133821780583, 
+                "minimalCosts": 112.67802177458458
+            }, 
+            "createdDate": "2018-08-08 11:43:35.487000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.1786170696294285, 
+                "minimalCosts": 223.93958322924613
+            }, 
+            "createdDate": "2018-08-08 11:43:35.684000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7497616474513995, 
+                "minimalCosts": 307.054808325058
+            }, 
+            "createdDate": "2018-08-08 11:43:35.821000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6217166025044198, 
+                "minimalCosts": 446.2162886652641
+            }, 
+            "createdDate": "2018-08-08 11:43:35.904000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2328759625507735, 
+                "minimalCosts": 61.939431608061284
+            }, 
+            "createdDate": "2018-08-08 11:43:36.014000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.5258518303743154, 
+                "minimalCosts": 100.77608333333333
+            }, 
+            "createdDate": "2018-08-08 11:43:36.093000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0076397052986514, 
+                "minimalCosts": 28.870348139255704
+            }, 
+            "createdDate": "2018-08-08 11:43:36.211000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.196992674763234, 
+                "minimalCosts": 79.74530460132216
+            }, 
+            "createdDate": "2018-08-08 11:43:36.411000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.297045353854829, 
+                "minimalCosts": 70.5866155147588
+            }, 
+            "createdDate": "2018-08-08 11:43:36.508000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6458480362808485, 
+                "minimalCosts": 345.2213118446515
+            }, 
+            "createdDate": "2018-08-08 11:43:36.607000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5559670822143443, 
+                "minimalCosts": 257.07484725881716
+            }, 
+            "createdDate": "2018-08-08 11:43:36.718000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2392847367879305, 
+                "minimalCosts": 262.6148259503966
+            }, 
+            "createdDate": "2018-08-08 11:43:36.804000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.7567017585846716, 
+                "minimalCosts": 102.60451061192691
+            }, 
+            "createdDate": "2018-08-08 11:43:36.892000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.496087424364968, 
+                "minimalCosts": 13.9515242491381
+            }, 
+            "createdDate": "2018-08-08 11:43:36.959000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1212714236352874, 
+                "minimalCosts": 176.74740834765103
+            }, 
+            "createdDate": "2018-08-08 11:43:37.036000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6635895198727852, 
+                "minimalCosts": 308.7518630651396
+            }, 
+            "createdDate": "2018-08-08 11:43:37.102000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6581745496945461, 
+                "minimalCosts": 202.85176637501652
+            }, 
+            "createdDate": "2018-08-08 11:43:37.302000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4772914498987286, 
+                "minimalCosts": 54.31151613224788
+            }, 
+            "createdDate": "2018-08-08 11:43:37.410000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0737136115442332, 
+                "minimalCosts": 257.3904562559894
+            }, 
+            "createdDate": "2018-08-08 11:43:37.487000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5958543868530555, 
+                "minimalCosts": 240.96525203891488
+            }, 
+            "createdDate": "2018-08-08 11:43:37.623000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 5.377050321171158, 
+                "minimalCosts": 219.95837905226574
+            }, 
+            "createdDate": "2018-08-08 11:43:37.685000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.41002305032973, 
+                "minimalCosts": 301.09114489027377
+            }, 
+            "createdDate": "2018-08-08 11:43:37.761000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1415903250146364, 
+                "minimalCosts": 100.6049303351578
+            }, 
+            "createdDate": "2018-08-08 11:43:38.004000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1201589199651347, 
+                "minimalCosts": 75.89482533306371
+            }, 
+            "createdDate": "2018-08-08 11:43:38.204000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3075145253814349, 
+                "minimalCosts": 98.73
+            }, 
+            "createdDate": "2018-08-08 11:43:38.400000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5719740982788508, 
+                "minimalCosts": 274.6980260622475
+            }, 
+            "createdDate": "2018-08-08 11:43:38.764000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.1117955039994927, 
+                "minimalCosts": 115.10454903654765
+            }, 
+            "createdDate": "2018-08-08 11:43:38.929000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.252957276081733, 
+                "minimalCosts": 186.01813427184817
+            }, 
+            "createdDate": "2018-08-08 11:43:39.084000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6097473835968283, 
+                "minimalCosts": 182.41145575292748
+            }, 
+            "createdDate": "2018-08-08 11:43:39.258000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8954399315990265, 
+                "minimalCosts": 86.33160086393089
+            }, 
+            "createdDate": "2018-08-08 11:43:39.456000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5064304871445668, 
+                "minimalCosts": 123.1085981312512
+            }, 
+            "createdDate": "2018-08-08 11:43:39.654000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5164980247340918, 
+                "minimalCosts": 291.9405535031291
+            }, 
+            "createdDate": "2018-08-08 11:43:39.742000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6556137311484607, 
+                "minimalCosts": 334.9485717062634
+            }, 
+            "createdDate": "2018-08-08 11:43:40.047000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4857845550286224, 
+                "minimalCosts": 142.56318730820385
+            }, 
+            "createdDate": "2018-08-08 11:43:40.137000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2379643576827217, 
+                "minimalCosts": 221.03735211615353
+            }, 
+            "createdDate": "2018-08-08 11:43:40.214000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.710509778218486, 
+                "minimalCosts": 190.26757379516988
+            }, 
+            "createdDate": "2018-08-08 11:43:40.316000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9877711334634265, 
+                "minimalCosts": 156.41090952325746
+            }, 
+            "createdDate": "2018-08-08 11:43:40.390000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0887870404923636, 
+                "minimalCosts": 169.73748288953476
+            }, 
+            "createdDate": "2018-08-08 11:43:40.579000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.85346201865433, 
+                "minimalCosts": 231.01731455640575
+            }, 
+            "createdDate": "2018-08-08 11:43:40.766000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8450604072154995, 
+                "minimalCosts": 288.2388997879929
+            }, 
+            "createdDate": "2018-08-08 11:43:40.874000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1755174719498005, 
+                "minimalCosts": 69.60184239752057
+            }, 
+            "createdDate": "2018-08-08 11:43:40.972000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.785824288720626, 
+                "minimalCosts": 151.4159322704087
+            }, 
+            "createdDate": "2018-08-08 11:43:41.195000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.7925729632043677, 
+                "minimalCosts": 47.52866781857452
+            }, 
+            "createdDate": "2018-08-08 11:43:41.303000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.6611120145148535, 
+                "minimalCosts": 111.70996397418578
+            }, 
+            "createdDate": "2018-08-08 11:43:41.379000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9808179597491808, 
+                "minimalCosts": 113.81891220488197
+            }, 
+            "createdDate": "2018-08-08 11:43:41.489000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.423455669725221, 
+                "minimalCosts": 183.9313913223039
+            }, 
+            "createdDate": "2018-08-08 11:43:41.589000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7927056025895673, 
+                "minimalCosts": 168.35903306276543
+            }, 
+            "createdDate": "2018-08-08 11:43:41.710000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0153896380885894, 
+                "minimalCosts": 240.42271796385788
+            }, 
+            "createdDate": "2018-08-08 11:43:41.808000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2274941305785543, 
+                "minimalCosts": 86.65103458662082
+            }, 
+            "createdDate": "2018-08-08 11:43:41.896000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.892364096836517, 
+                "minimalCosts": 288.2397453885259
+            }, 
+            "createdDate": "2018-08-08 11:43:42.033000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9283265837668446, 
+                "minimalCosts": 165.47555366248613
+            }, 
+            "createdDate": "2018-08-08 11:43:42.161000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.100439443862345, 
+                "minimalCosts": 208.61435423059737
+            }, 
+            "createdDate": "2018-08-08 11:43:42.238000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7490219494451447, 
+                "minimalCosts": 260.9250481438566
+            }, 
+            "createdDate": "2018-08-08 11:43:42.404000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5282431203980105, 
+                "minimalCosts": 226.64171147940817
+            }, 
+            "createdDate": "2018-08-08 11:43:42.501000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4129895871714677, 
+                "minimalCosts": 34.09920258384131
+            }, 
+            "createdDate": "2018-08-08 11:43:42.701000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.5712028177378174, 
+                "minimalCosts": 166.88333807460182
+            }, 
+            "createdDate": "2018-08-08 11:43:42.909000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 4.315166623055716, 
+                "minimalCosts": 94.59236544909376
+            }, 
+            "createdDate": "2018-08-08 11:43:42.986000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4255037377176758, 
+                "minimalCosts": 166.44833752075343
+            }, 
+            "createdDate": "2018-08-08 11:43:43.051000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1277761126423296, 
+                "minimalCosts": 65.29342376638647
+            }, 
+            "createdDate": "2018-08-08 11:43:43.240000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1044300279100154, 
+                "minimalCosts": 101.2451481691263
+            }, 
+            "createdDate": "2018-08-08 11:43:43.427000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4142713953844646, 
+                "minimalCosts": 107.31639764536484
+            }, 
+            "createdDate": "2018-08-08 11:43:43.502000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4600105249836888, 
+                "minimalCosts": 215.44053906664038
+            }, 
+            "createdDate": "2018-08-08 11:43:43.712000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0960936745378844, 
+                "minimalCosts": 167.8446846588311
+            }, 
+            "createdDate": "2018-08-08 11:43:43.943000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3449064205766064, 
+                "minimalCosts": 29.741846263809684
+            }, 
+            "createdDate": "2018-08-08 11:43:44.175000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6946392043102139, 
+                "minimalCosts": 377.6615095249762
+            }, 
+            "createdDate": "2018-08-08 11:43:44.400000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1245903204886005, 
+                "minimalCosts": 83.26264412064427
+            }, 
+            "createdDate": "2018-08-08 11:43:44.602000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2271483798653617, 
+                "minimalCosts": 28.891816210876954
+            }, 
+            "createdDate": "2018-08-08 11:43:44.800000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.139601896839694, 
+                "minimalCosts": 11.16817439718868
+            }, 
+            "createdDate": "2018-08-08 11:43:44.909000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2165816765283695, 
+                "minimalCosts": 137.3941947505568
+            }, 
+            "createdDate": "2018-08-08 11:43:45.120000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8206535437690265, 
+                "minimalCosts": 117.8398027893397
+            }, 
+            "createdDate": "2018-08-08 11:43:45.206000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8292015699454567, 
+                "minimalCosts": 257.43969316795005
+            }, 
+            "createdDate": "2018-08-08 11:43:45.483000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1196604176351581, 
+                "minimalCosts": 194.86427736959868
+            }, 
+            "createdDate": "2018-08-08 11:43:45.670000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1972858335048775, 
+                "minimalCosts": 88.12525010799138
+            }, 
+            "createdDate": "2018-08-08 11:43:45.867000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.144018883875349, 
+                "minimalCosts": 295.1127331414208
+            }, 
+            "createdDate": "2018-08-08 11:43:46.103000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6170161044657545, 
+                "minimalCosts": 326.6398007559263
+            }, 
+            "createdDate": "2018-08-08 11:43:46.219000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.203303858189024, 
+                "minimalCosts": 187.36293739958185
+            }, 
+            "createdDate": "2018-08-08 11:43:46.328000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8186606784449553, 
+                "minimalCosts": 221.94154655693805
+            }, 
+            "createdDate": "2018-08-08 11:43:46.405000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6868410267114171, 
+                "minimalCosts": 63.59385714127485
+            }, 
+            "createdDate": "2018-08-08 11:43:46.514000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4367748153721271, 
+                "minimalCosts": 238.5393097515464
+            }, 
+            "createdDate": "2018-08-08 11:43:46.634000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1125569037491956, 
+                "minimalCosts": 137.2759201912266
+            }, 
+            "createdDate": "2018-08-08 11:43:46.824000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1896768048990087, 
+                "minimalCosts": 239.94293599661935
+            }, 
+            "createdDate": "2018-08-08 11:43:47"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2384120270862151, 
+                "minimalCosts": 74.87594653408294
+            }, 
+            "createdDate": "2018-08-08 11:43:47.155000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7574698509680282, 
+                "minimalCosts": 130.86995482358583
+            }, 
+            "createdDate": "2018-08-08 11:43:47.342000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3662522065363938, 
+                "minimalCosts": 161.02444259374718
+            }, 
+            "createdDate": "2018-08-08 11:43:47.417000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.874005839504726, 
+                "minimalCosts": 226.0592548357933
+            }, 
+            "createdDate": "2018-08-08 11:43:47.573000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3902568284559997, 
+                "minimalCosts": 73.40405573399462
+            }, 
+            "createdDate": "2018-08-08 11:43:47.648000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.243664527975185, 
+                "minimalCosts": 76.02167016806723
+            }, 
+            "createdDate": "2018-08-08 11:43:47.736000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2959670530622516, 
+                "minimalCosts": 190.10023116058517
+            }, 
+            "createdDate": "2018-08-08 11:43:47.846000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.283624042975173, 
+                "minimalCosts": 117.03884800779925
+            }, 
+            "createdDate": "2018-08-08 11:43:48.135000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6901079467532902, 
+                "minimalCosts": 307.6726554649505
+            }, 
+            "createdDate": "2018-08-08 11:43:48.376000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.367673631656793, 
+                "minimalCosts": 165.4770587132477
+            }, 
+            "createdDate": "2018-08-08 11:43:48.489000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.8299484965939032, 
+                "minimalCosts": 99.90544812655084
+            }, 
+            "createdDate": "2018-08-08 11:43:48.660000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0485922405453585, 
+                "minimalCosts": 157.53611984850582
+            }, 
+            "createdDate": "2018-08-08 11:43:49.303000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1569276313577688, 
+                "minimalCosts": 103.68283125734094
+            }, 
+            "createdDate": "2018-08-08 11:43:49.397000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0636157776926545, 
+                "minimalCosts": 41.881152460984396
+            }, 
+            "createdDate": "2018-08-08 11:43:49.750000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 6.185061450349871, 
+                "minimalCosts": 173.43841792656588
+            }, 
+            "createdDate": "2018-08-08 11:43:49.937000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1514937206221865, 
+                "minimalCosts": 78.1593493635122
+            }, 
+            "createdDate": "2018-08-08 11:43:50.157000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1151193566177133, 
+                "minimalCosts": 204.6254661688594
+            }, 
+            "createdDate": "2018-08-08 11:43:50.366000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6433049605491936, 
+                "minimalCosts": 169.83512847039464
+            }, 
+            "createdDate": "2018-08-08 11:43:50.564000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8934416978192727, 
+                "minimalCosts": 79.70094409714169
+            }, 
+            "createdDate": "2018-08-08 11:43:50.663000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.934845160142449, 
+                "minimalCosts": 194.9885887741794
+            }, 
+            "createdDate": "2018-08-08 11:43:50.871000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 6.397036562676694, 
+                "minimalCosts": 179.0601842324403
+            }, 
+            "createdDate": "2018-08-08 11:43:50.969000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.621624448953256, 
+                "minimalCosts": 288.17100924758677
+            }, 
+            "createdDate": "2018-08-08 11:43:51.083000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2973919300544825, 
+                "minimalCosts": 171.73624116286413
+            }, 
+            "createdDate": "2018-08-08 11:43:51.168000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 4.090834408633399, 
+                "minimalCosts": 172.66981886944845
+            }, 
+            "createdDate": "2018-08-08 11:43:51.277000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3901767011990263, 
+                "minimalCosts": 220.9802387902355
+            }, 
+            "createdDate": "2018-08-08 11:43:51.354000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.698350757897085, 
+                "minimalCosts": 168.07749761185855
+            }, 
+            "createdDate": "2018-08-08 11:43:51.554000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6787354765186762, 
+                "minimalCosts": 132.13408837834496
+            }, 
+            "createdDate": "2018-08-08 11:43:51.763000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.764605795850501, 
+                "minimalCosts": 157.181705687545
+            }, 
+            "createdDate": "2018-08-08 11:43:51.849000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5503169976597861, 
+                "minimalCosts": 318.9963441618547
+            }, 
+            "createdDate": "2018-08-08 11:43:52.059000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3121455495898096, 
+                "minimalCosts": 118.47355310784093
+            }, 
+            "createdDate": "2018-08-08 11:43:52.306000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2105150066764467, 
+                "minimalCosts": 247.0774070881484
+            }, 
+            "createdDate": "2018-08-08 11:43:52.536000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5155128920960101, 
+                "minimalCosts": 149.96423221342624
+            }, 
+            "createdDate": "2018-08-08 11:43:52.686000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1055995255179043, 
+                "minimalCosts": 161.9853346147342
+            }, 
+            "createdDate": "2018-08-08 11:43:52.763000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6762263529089811, 
+                "minimalCosts": 242.42766238486755
+            }, 
+            "createdDate": "2018-08-08 11:43:52.917000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8503386573194731, 
+                "minimalCosts": 254.4988664892739
+            }, 
+            "createdDate": "2018-08-08 11:43:53.015000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.872234197820206, 
+                "minimalCosts": 130.61691471621046
+            }, 
+            "createdDate": "2018-08-08 11:43:53.191000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.722478470207709, 
+                "minimalCosts": 192.6399589645778
+            }, 
+            "createdDate": "2018-08-08 11:43:53.334000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3033953997809422, 
+                "minimalCosts": 8.369747899159663
+            }, 
+            "createdDate": "2018-08-08 11:43:53.399000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1112883096875275, 
+                "minimalCosts": 103.89252226275016
+            }, 
+            "createdDate": "2018-08-08 11:43:53.586000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3874533511215557, 
+                "minimalCosts": 172.1118826116782
+            }, 
+            "createdDate": "2018-08-08 11:43:53.775000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.229394148619193, 
+                "minimalCosts": 234.87832510939583
+            }, 
+            "createdDate": "2018-08-08 11:43:53.971000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.128024005364458, 
+                "minimalCosts": 150.37424352043192
+            }, 
+            "createdDate": "2018-08-08 11:43:54.215000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7080391948495532, 
+                "minimalCosts": 34.59575709333409
+            }, 
+            "createdDate": "2018-08-08 11:43:54.412000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2207280587824652, 
+                "minimalCosts": 280.01173509446966
+            }, 
+            "createdDate": "2018-08-08 11:43:54.610000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6970265161151903, 
+                "minimalCosts": 227.1352520389149
+            }, 
+            "createdDate": "2018-08-08 11:43:54.841000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 4.033931027947067, 
+                "minimalCosts": 64.22789762540006
+            }, 
+            "createdDate": "2018-08-08 11:43:55.263000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.114549175324402, 
+                "minimalCosts": 119.51827636664005
+            }, 
+            "createdDate": "2018-08-08 11:43:55.480000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1745553707930791, 
+                "minimalCosts": 124.61195104391649
+            }, 
+            "createdDate": "2018-08-08 11:43:55.632000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9101881026412055, 
+                "minimalCosts": 217.01813238825275
+            }, 
+            "createdDate": "2018-08-08 11:43:55.776000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.9481991833848205, 
+                "minimalCosts": 191.4882338096645
+            }, 
+            "createdDate": "2018-08-08 11:43:55.929000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.110924478768381, 
+                "minimalCosts": 143.2058723445217
+            }, 
+            "createdDate": "2018-08-08 11:43:56.105000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3110239215341601, 
+                "minimalCosts": 199.7051140850292
+            }, 
+            "createdDate": "2018-08-08 11:43:56.216000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3399626199557313, 
+                "minimalCosts": 133.653660500489
+            }, 
+            "createdDate": "2018-08-08 11:43:56.371000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0116962346020952, 
+                "minimalCosts": 190.7029287213659
+            }, 
+            "createdDate": "2018-08-08 11:43:56.524000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7029490981462598, 
+                "minimalCosts": 212.9994802088438
+            }, 
+            "createdDate": "2018-08-08 11:43:56.700000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.509923284778085, 
+                "minimalCosts": 126.43628509719221
+            }, 
+            "createdDate": "2018-08-08 11:43:56.810000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.717670413271923, 
+                "minimalCosts": 98.97125705051509
+            }, 
+            "createdDate": "2018-08-08 11:43:56.898000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3083924312655715, 
+                "minimalCosts": 79.20892933943303
+            }, 
+            "createdDate": "2018-08-08 11:43:57.096000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.800264765650633, 
+                "minimalCosts": 79.78624387755102
+            }, 
+            "createdDate": "2018-08-08 11:43:57.342000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9208155213944182, 
+                "minimalCosts": 194.51965036450864
+            }, 
+            "createdDate": "2018-08-08 11:43:57.537000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4526133959907461, 
+                "minimalCosts": 378.00209650166755
+            }, 
+            "createdDate": "2018-08-08 11:43:57.632000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0642584186014687, 
+                "minimalCosts": 93.10794010079192
+            }, 
+            "createdDate": "2018-08-08 11:43:57.699000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3663104440282077, 
+                "minimalCosts": 60.54793263774891
+            }, 
+            "createdDate": "2018-08-08 11:43:57.776000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.407991107141725, 
+                "minimalCosts": 61.338197326372175
+            }, 
+            "createdDate": "2018-08-08 11:43:57.879000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4563512289800464, 
+                "minimalCosts": 214.1091898803582
+            }, 
+            "createdDate": "2018-08-08 11:43:57.952000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.5371453120902356, 
+                "minimalCosts": 183.8143184551858
+            }, 
+            "createdDate": "2018-08-08 11:43:58.052000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7691443188860199, 
+                "minimalCosts": 224.5564270996719
+            }, 
+            "createdDate": "2018-08-08 11:43:58.127000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2697215958012735, 
+                "minimalCosts": 103.10062563477082
+            }, 
+            "createdDate": "2018-08-08 11:43:58.238000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5728831428816352, 
+                "minimalCosts": 340.42868847430975
+            }, 
+            "createdDate": "2018-08-08 11:43:58.448000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3575202432656015, 
+                "minimalCosts": 59.6006514897037
+            }, 
+            "createdDate": "2018-08-08 11:43:58.637000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3891353633378791, 
+                "minimalCosts": 92.27453390418118
+            }, 
+            "createdDate": "2018-08-08 11:43:58.860000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 5.913917772273247, 
+                "minimalCosts": 277.61937940964714
+            }, 
+            "createdDate": "2018-08-08 11:43:59.020000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8862248119921834, 
+                "minimalCosts": 205.31631479478816
+            }, 
+            "createdDate": "2018-08-08 11:43:59.207000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3336612433914383, 
+                "minimalCosts": 184.0456462769856
+            }, 
+            "createdDate": "2018-08-08 11:43:59.438000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6516605098267183, 
+                "minimalCosts": 125.49354182626367
+            }, 
+            "createdDate": "2018-08-08 11:43:59.771000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.11332030479967, 
+                "minimalCosts": 75.9399196987318
+            }, 
+            "createdDate": "2018-08-08 11:43:59.966000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7534124389401893, 
+                "minimalCosts": 259.2347610013502
+            }, 
+            "createdDate": "2018-08-08 11:44:00.225000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.017182232097909, 
+                "minimalCosts": 274.00958819294453
+            }, 
+            "createdDate": "2018-08-08 11:44:00.366000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4970334893457156, 
+                "minimalCosts": 206.79083342968553
+            }, 
+            "createdDate": "2018-08-08 11:44:00.561000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2949507538036573, 
+                "minimalCosts": 112.32438378625748
+            }, 
+            "createdDate": "2018-08-08 11:44:00.768000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.147042349940678, 
+                "minimalCosts": 86.38818705868515
+            }, 
+            "createdDate": "2018-08-08 11:44:00.879000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5323492128835892, 
+                "minimalCosts": 208.8296827573794
+            }, 
+            "createdDate": "2018-08-08 11:44:01.078000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.897361421070421, 
+                "minimalCosts": 331.5609256648632
+            }, 
+            "createdDate": "2018-08-08 11:44:01.166000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1733291672134853, 
+                "minimalCosts": 320.7656017428207
+            }, 
+            "createdDate": "2018-08-08 11:44:01.275000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4399485466917676, 
+                "minimalCosts": 244.3269119764536
+            }, 
+            "createdDate": "2018-08-08 11:44:01.389000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.234902281850842, 
+                "minimalCosts": 250.97700935925127
+            }, 
+            "createdDate": "2018-08-08 11:44:01.460000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6676251025350635, 
+                "minimalCosts": 230.59466660755012
+            }, 
+            "createdDate": "2018-08-08 11:44:01.671000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3664034015623985, 
+                "minimalCosts": 270.7838692269996
+            }, 
+            "createdDate": "2018-08-08 11:44:01.867000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5182630244108002, 
+                "minimalCosts": 55.685644177671065
+            }, 
+            "createdDate": "2018-08-08 11:44:01.977000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.721913257665158, 
+                "minimalCosts": 279.8155944693213
+            }, 
+            "createdDate": "2018-08-08 11:44:02.275000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2382164740279753, 
+                "minimalCosts": 220.25815230843952
+            }, 
+            "createdDate": "2018-08-08 11:44:02.439000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5930587788822015, 
+                "minimalCosts": 194.5942008602577
+            }, 
+            "createdDate": "2018-08-08 11:44:02.583000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.157235844231116, 
+                "minimalCosts": 56.561111359313614
+            }, 
+            "createdDate": "2018-08-08 11:44:02.649000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.7157978860455585, 
+                "minimalCosts": 118.41332965186075
+            }, 
+            "createdDate": "2018-08-08 11:44:02.726000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7211840877288715, 
+                "minimalCosts": 293.1385771821827
+            }, 
+            "createdDate": "2018-08-08 11:44:02.929000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3084185320747077, 
+                "minimalCosts": 125.75903696850065
+            }, 
+            "createdDate": "2018-08-08 11:44:03.122000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0021668602017715, 
+                "minimalCosts": 66.74586733639983
+            }, 
+            "createdDate": "2018-08-08 11:44:03.211000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4650070105697666, 
+                "minimalCosts": 433.1347563303938
+            }, 
+            "createdDate": "2018-08-08 11:44:03.451000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.944184432267246, 
+                "minimalCosts": 103.13089095527229
+            }, 
+            "createdDate": "2018-08-08 11:44:03.650000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.08184478043242, 
+                "minimalCosts": 147.59636749138602
+            }, 
+            "createdDate": "2018-08-08 11:44:03.727000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1507374590791635, 
+                "minimalCosts": 119.29109128208519
+            }, 
+            "createdDate": "2018-08-08 11:44:03.882000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2128138429880648, 
+                "minimalCosts": 194.1390649651931
+            }, 
+            "createdDate": "2018-08-08 11:44:03.957000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9286971917087208, 
+                "minimalCosts": 169.68590439164865
+            }, 
+            "createdDate": "2018-08-08 11:44:04.113000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0887617947271424, 
+                "minimalCosts": 213.75407720436877
+            }, 
+            "createdDate": "2018-08-08 11:44:04.298000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.328123228283787, 
+                "minimalCosts": 158.11785798774403
+            }, 
+            "createdDate": "2018-08-08 11:44:04.508000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3667911603708, 
+                "minimalCosts": 93.78303130599953
+            }, 
+            "createdDate": "2018-08-08 11:44:04.893000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.890239158331666, 
+                "minimalCosts": 91.64824125589759
+            }, 
+            "createdDate": "2018-08-08 11:44:05.069000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5961589512410268, 
+                "minimalCosts": 159.47375062335948
+            }, 
+            "createdDate": "2018-08-08 11:44:05.179000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.41219920275532, 
+                "minimalCosts": 101.75550392943354
+            }, 
+            "createdDate": "2018-08-08 11:44:05.288000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.002692096273046, 
+                "minimalCosts": 226.96721847125218
+            }, 
+            "createdDate": "2018-08-08 11:44:05.385000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.1809430056546835, 
+                "minimalCosts": 160.61560675587725
+            }, 
+            "createdDate": "2018-08-08 11:44:05.552000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2269799764392673, 
+                "minimalCosts": 67.42349045283505
+            }, 
+            "createdDate": "2018-08-08 11:44:05.628000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6418068952609912, 
+                "minimalCosts": 149.5026888747026
+            }, 
+            "createdDate": "2018-08-08 11:44:05.717000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8130735861059055, 
+                "minimalCosts": 115.32400598256558
+            }, 
+            "createdDate": "2018-08-08 11:44:05.938000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2929831459512835, 
+                "minimalCosts": 145.54081294181725
+            }, 
+            "createdDate": "2018-08-08 11:44:06.023000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7497289996749588, 
+                "minimalCosts": 224.96990317328462
+            }, 
+            "createdDate": "2018-08-08 11:44:06.201000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.330127734211237, 
+                "minimalCosts": 51.943063296759135
+            }, 
+            "createdDate": "2018-08-08 11:44:06.276000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0510215176082682, 
+                "minimalCosts": 246.44039134409704
+            }, 
+            "createdDate": "2018-08-08 11:44:06.365000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 4.595913640499628, 
+                "minimalCosts": 11.868250539956803
+            }, 
+            "createdDate": "2018-08-08 11:44:06.453000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0503274289622602, 
+                "minimalCosts": 294.28052678420073
+            }, 
+            "createdDate": "2018-08-08 11:44:06.653000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.58080742131785, 
+                "minimalCosts": 93.17350094006868
+            }, 
+            "createdDate": "2018-08-08 11:44:06.738000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5760395988891784, 
+                "minimalCosts": 119.97852669703464
+            }, 
+            "createdDate": "2018-08-08 11:44:06.805000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.449963408864994, 
+                "minimalCosts": 191.85437127656485
+            }, 
+            "createdDate": "2018-08-08 11:44:06.881000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8245011431030373, 
+                "minimalCosts": 110.11727324401282
+            }, 
+            "createdDate": "2018-08-08 11:44:06.947000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2420748642999224, 
+                "minimalCosts": 84.90192377734283
+            }, 
+            "createdDate": "2018-08-08 11:44:07.030000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.489075643829317, 
+                "minimalCosts": 347.3784084887086
+            }, 
+            "createdDate": "2018-08-08 11:44:07.135000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1663962763389146, 
+                "minimalCosts": 22.60264105642257
+            }, 
+            "createdDate": "2018-08-08 11:44:07.223000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5846274663975175, 
+                "minimalCosts": 325.28436896678096
+            }, 
+            "createdDate": "2018-08-08 11:44:07.332000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4144765897131357, 
+                "minimalCosts": 102.19006493049787
+            }, 
+            "createdDate": "2018-08-08 11:44:07.420000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.109809644566081, 
+                "minimalCosts": 333.5070372100221
+            }, 
+            "createdDate": "2018-08-08 11:44:07.630000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9430528729438752, 
+                "minimalCosts": 342.47886648927386
+            }, 
+            "createdDate": "2018-08-08 11:44:07.830000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.3191897412370066, 
+                "minimalCosts": 68.98961182652498
+            }, 
+            "createdDate": "2018-08-08 11:44:08.071000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1010323260177275, 
+                "minimalCosts": 103.8450553473194
+            }, 
+            "createdDate": "2018-08-08 11:44:08.235000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 0.9900494092026284, 
+                "minimalCosts": 129.47012239020876
+            }, 
+            "createdDate": "2018-08-08 11:44:08.730000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1526482242098202, 
+                "minimalCosts": 185.34394028396537
+            }, 
+            "createdDate": "2018-08-08 11:44:08.929000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4769311110428072, 
+                "minimalCosts": 30.776347735306118
+            }, 
+            "createdDate": "2018-08-08 11:44:09.128000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1124907780175632, 
+                "minimalCosts": 234.5269696293805
+            }, 
+            "createdDate": "2018-08-08 11:44:09.215000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.379492940150073, 
+                "minimalCosts": 114.99776234642057
+            }, 
+            "createdDate": "2018-08-08 11:44:09.324000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1768857857297585, 
+                "minimalCosts": 100.41910575760457
+            }, 
+            "createdDate": "2018-08-08 11:44:09.535000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8949249915316144, 
+                "minimalCosts": 157.837861882418
+            }, 
+            "createdDate": "2018-08-08 11:44:09.799000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6963130642000384, 
+                "minimalCosts": 275.99965363858547
+            }, 
+            "createdDate": "2018-08-08 11:44:09.962000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.104307572684274, 
+                "minimalCosts": 141.70068199747752
+            }, 
+            "createdDate": "2018-08-08 11:44:10.138000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7946934390228941, 
+                "minimalCosts": 171.71836230125473
+            }, 
+            "createdDate": "2018-08-08 11:44:10.357000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3841877100186288, 
+                "minimalCosts": 148.42968476564525
+            }, 
+            "createdDate": "2018-08-08 11:44:10.466000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.395509013074145, 
+                "minimalCosts": 213.0210012888916
+            }, 
+            "createdDate": "2018-08-08 11:44:10.553000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6730163630690043, 
+                "minimalCosts": 203.76913127360126
+            }, 
+            "createdDate": "2018-08-08 11:44:10.856000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7581929612752714, 
+                "minimalCosts": 206.30686205464926
+            }, 
+            "createdDate": "2018-08-08 11:44:10.950000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1015937338610446, 
+                "minimalCosts": 82.52506174890624
+            }, 
+            "createdDate": "2018-08-08 11:44:11.060000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.622939169684977, 
+                "minimalCosts": 92.88677619833064
+            }, 
+            "createdDate": "2018-08-08 11:44:11.193000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0556566748898288, 
+                "minimalCosts": 37.02994545550401
+            }, 
+            "createdDate": "2018-08-08 11:44:11.403000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4920964966061914, 
+                "minimalCosts": 360.6883465016675
+            }, 
+            "createdDate": "2018-08-08 11:44:11.557000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1448733931320825, 
+                "minimalCosts": 84.96374171698918
+            }, 
+            "createdDate": "2018-08-08 11:44:11.842000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.17331766663663, 
+                "minimalCosts": 96.0756629962035
+            }, 
+            "createdDate": "2018-08-08 11:44:12.111000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 4.6136782408606045, 
+                "minimalCosts": 64.43291268991398
+            }, 
+            "createdDate": "2018-08-08 11:44:12.349000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.650274166804574, 
+                "minimalCosts": 163.6240731461483
+            }, 
+            "createdDate": "2018-08-08 11:44:12.551000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3695365920451636, 
+                "minimalCosts": 225.02634830778962
+            }, 
+            "createdDate": "2018-08-08 11:44:12.733000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4234413321400026, 
+                "minimalCosts": 161.5802455688271
+            }, 
+            "createdDate": "2018-08-08 11:44:12.876000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8070918157516802, 
+                "minimalCosts": 286.24595760097657
+            }, 
+            "createdDate": "2018-08-08 11:44:12.952000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1866271204084051, 
+                "minimalCosts": 131.7715006461509
+            }, 
+            "createdDate": "2018-08-08 11:44:13.130000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.1607444040679824, 
+                "minimalCosts": 156.51171769559195
+            }, 
+            "createdDate": "2018-08-08 11:44:13.327000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.124995088113764, 
+                "minimalCosts": 169.6977106177244
+            }, 
+            "createdDate": "2018-08-08 11:44:13.537000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4836074634357355, 
+                "minimalCosts": 459.5677755888532
+            }, 
+            "createdDate": "2018-08-08 11:44:13.611000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9286681248528645, 
+                "minimalCosts": 277.62917764578833
+            }, 
+            "createdDate": "2018-08-08 11:44:13.777000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.371771797764326, 
+                "minimalCosts": 148.71889153069432
+            }, 
+            "createdDate": "2018-08-08 11:44:13.853000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.634138390182698, 
+                "minimalCosts": 176.90723798404153
+            }, 
+            "createdDate": "2018-08-08 11:44:13.963000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2238272950440132, 
+                "minimalCosts": 147.0795762841084
+            }, 
+            "createdDate": "2018-08-08 11:44:14.163000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2355122469526334, 
+                "minimalCosts": 287.698115766369
+            }, 
+            "createdDate": "2018-08-08 11:44:14.371000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.97459953693115, 
+                "minimalCosts": 220.98842231160282
+            }, 
+            "createdDate": "2018-08-08 11:44:14.559000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6595314760671935, 
+                "minimalCosts": 390.03341401312446
+            }, 
+            "createdDate": "2018-08-08 11:44:14.780000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3141685146068982, 
+                "minimalCosts": 81.62783241296518
+            }, 
+            "createdDate": "2018-08-08 11:44:14.975000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0866618336903286, 
+                "minimalCosts": 172.08869367004488
+            }, 
+            "createdDate": "2018-08-08 11:44:15.175000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3444677249925527, 
+                "minimalCosts": 104.13042827099139
+            }, 
+            "createdDate": "2018-08-08 11:44:15.394000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9349966781543082, 
+                "minimalCosts": 322.2932476717312
+            }, 
+            "createdDate": "2018-08-08 11:44:15.493000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.234971831158947, 
+                "minimalCosts": 250.1556848709775
+            }, 
+            "createdDate": "2018-08-08 11:44:15.692000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2380554837190667, 
+                "minimalCosts": 90.31758534947456
+            }, 
+            "createdDate": "2018-08-08 11:44:15.803000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7935571940903732, 
+                "minimalCosts": 185.51249652009
+            }, 
+            "createdDate": "2018-08-08 11:44:15.900000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.987988871055694, 
+                "minimalCosts": 154.56461137508998
+            }, 
+            "createdDate": "2018-08-08 11:44:16.109000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0765967593263552, 
+                "minimalCosts": 154.52734268653464
+            }, 
+            "createdDate": "2018-08-08 11:44:16.296000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5310640341324848, 
+                "minimalCosts": 259.4749262056996
+            }, 
+            "createdDate": "2018-08-08 11:44:16.383000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4575029211497195, 
+                "minimalCosts": 120.59543604732946
+            }, 
+            "createdDate": "2018-08-08 11:44:16.493000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3312205603048366, 
+                "minimalCosts": 288.86682343412525
+            }, 
+            "createdDate": "2018-08-08 11:44:16.586000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8541470240414581, 
+                "minimalCosts": 209.84900552428311
+            }, 
+            "createdDate": "2018-08-08 11:44:16.690000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.0690938115293265, 
+                "minimalCosts": 101.8956382344797
+            }, 
+            "createdDate": "2018-08-08 11:44:16.801000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2673545218923326, 
+                "minimalCosts": 86.79497180927325
+            }, 
+            "createdDate": "2018-08-08 11:44:16.888000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.13641119900547, 
+                "minimalCosts": 108.93374498112094
+            }, 
+            "createdDate": "2018-08-08 11:44:16.999000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2039819327750243, 
+                "minimalCosts": 104.9547612997683
+            }, 
+            "createdDate": "2018-08-08 11:44:17.086000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6167200178415082, 
+                "minimalCosts": 245.72759840205867
+            }, 
+            "createdDate": "2018-08-08 11:44:17.185000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.764310442259614, 
+                "minimalCosts": 215.381596627247
+            }, 
+            "createdDate": "2018-08-08 11:44:17.251000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1406010021452624, 
+                "minimalCosts": 93.25227328714053
+            }, 
+            "createdDate": "2018-08-08 11:44:17.366000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.862345701776273, 
+                "minimalCosts": 126.42902186740784
+            }, 
+            "createdDate": "2018-08-08 11:44:17.572000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.768763211114112, 
+                "minimalCosts": 358.7509343015823
+            }, 
+            "createdDate": "2018-08-08 11:44:17.658000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 3.2515339331497692, 
+                "minimalCosts": 152.65522260221582
+            }, 
+            "createdDate": "2018-08-08 11:44:17.858000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.627180246761944, 
+                "minimalCosts": 317.8951614623454
+            }, 
+            "createdDate": "2018-08-08 11:44:18.111000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9672401899279095, 
+                "minimalCosts": 212.57283189051896
+            }, 
+            "createdDate": "2018-08-08 11:44:18.175000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.10708506830509, 
+                "minimalCosts": 114.14085509896256
+            }, 
+            "createdDate": "2018-08-08 11:44:18.397000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8506014486237699, 
+                "minimalCosts": 329.1313262203861
+            }, 
+            "createdDate": "2018-08-08 11:44:18.595000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.640252714971968, 
+                "minimalCosts": 435.63131950533983
+            }, 
+            "createdDate": "2018-08-08 11:44:18.815000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7946652338815154, 
+                "minimalCosts": 162.60312859966382
+            }, 
+            "createdDate": "2018-08-08 11:44:19.040000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.790354772947979, 
+                "minimalCosts": 98.39087746372847
+            }, 
+            "createdDate": "2018-08-08 11:44:19.221000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4136287417621274, 
+                "minimalCosts": 230.8694119764536
+            }, 
+            "createdDate": "2018-08-08 11:44:19.388000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6598915230110471, 
+                "minimalCosts": 312.17812188222706
+            }, 
+            "createdDate": "2018-08-08 11:44:19.490000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1, 
+                "minimalCosts": 3.9164866810655146
+            }, 
+            "createdDate": "2018-08-08 11:44:19.583000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.226880687953246, 
+                "minimalCosts": 322.3251856007823
+            }, 
+            "createdDate": "2018-08-08 11:44:19.682000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5878378474484254, 
+                "minimalCosts": 159.7369429403288
+            }, 
+            "createdDate": "2018-08-08 11:44:19.770000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8556400532500534, 
+                "minimalCosts": 59.76864463279912
+            }, 
+            "createdDate": "2018-08-08 11:44:19.971000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.283414904110176, 
+                "minimalCosts": 42.5002502080746
+            }, 
+            "createdDate": "2018-08-08 11:44:20.168000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.5100650524267434, 
+                "minimalCosts": 148.40439796092994
+            }, 
+            "createdDate": "2018-08-08 11:44:20.388000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0638189957102389, 
+                "minimalCosts": 102.54649478041758
+            }, 
+            "createdDate": "2018-08-08 11:44:20.462000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2823540963651325, 
+                "minimalCosts": 169.43270808631775
+            }, 
+            "createdDate": "2018-08-08 11:44:20.551000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8047845588987002, 
+                "minimalCosts": 229.692487394958
+            }, 
+            "createdDate": "2018-08-08 11:44:20.617000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1871333027220812, 
+                "minimalCosts": 129.41795439827814
+            }, 
+            "createdDate": "2018-08-08 11:44:20.704000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0714618677217296, 
+                "minimalCosts": 164.60094537815127
+            }, 
+            "createdDate": "2018-08-08 11:44:20.782000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.053906730785336, 
+                "minimalCosts": 145.62049221025148
+            }, 
+            "createdDate": "2018-08-08 11:44:20.979000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5631849815298493, 
+                "minimalCosts": 318.6966507919365
+            }, 
+            "createdDate": "2018-08-08 11:44:21.085000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9714616081949836, 
+                "minimalCosts": 145.7156081957621
+            }, 
+            "createdDate": "2018-08-08 11:44:21.156000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.474254624773018, 
+                "minimalCosts": 219.52541860683797
+            }, 
+            "createdDate": "2018-08-08 11:44:21.343000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.323274326286952, 
+                "minimalCosts": 77.47686012080858
+            }, 
+            "createdDate": "2018-08-08 11:44:21.488000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.5124286522483466, 
+                "minimalCosts": 329.39194681430484
+            }, 
+            "createdDate": "2018-08-08 11:44:21.552000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8558678260744683, 
+                "minimalCosts": 154.79158765329024
+            }, 
+            "createdDate": "2018-08-08 11:44:21.628000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2486250525080282, 
+                "minimalCosts": 90.96467831189221
+            }, 
+            "createdDate": "2018-08-08 11:44:21.737000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.2695500692539916, 
+                "minimalCosts": 101.34167257019439
+            }, 
+            "createdDate": "2018-08-08 11:44:21.826000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.365336454853641, 
+                "minimalCosts": 209.738511958456
+            }, 
+            "createdDate": "2018-08-08 11:44:21.925000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9595692700997487, 
+                "minimalCosts": 213.40496840947668
+            }, 
+            "createdDate": "2018-08-08 11:44:22.146000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 7.485576930748386, 
+                "minimalCosts": 166.13767718128688
+            }, 
+            "createdDate": "2018-08-08 11:44:22.423000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 3.1361322027157663, 
+                "minimalCosts": 95.36935618718758
+            }, 
+            "createdDate": "2018-08-08 11:44:22.630000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.667434876495055, 
+                "minimalCosts": 228.98536380668904
+            }, 
+            "createdDate": "2018-08-08 11:44:22.784000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2536718241524558, 
+                "minimalCosts": 24.65485010799136
+            }, 
+            "createdDate": "2018-08-08 11:44:22.927000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6805957021122926, 
+                "minimalCosts": 313.7415659280892
+            }, 
+            "createdDate": "2018-08-08 11:44:23.175000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.0459947417741466, 
+                "minimalCosts": 232.05400852739933
+            }, 
+            "createdDate": "2018-08-08 11:44:23.278000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.0499371747049615, 
+                "minimalCosts": 210.2059986160843
+            }, 
+            "createdDate": "2018-08-08 11:44:23.377000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1831831163819657, 
+                "minimalCosts": 176.7189762902334
+            }, 
+            "createdDate": "2018-08-08 11:44:23.865000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.1996478819657843, 
+                "minimalCosts": 119.73210289088838
+            }, 
+            "createdDate": "2018-08-08 11:44:24.036000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9938508106761617, 
+                "minimalCosts": 215.20712923621113
+            }, 
+            "createdDate": "2018-08-08 11:44:24.280000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.6882004616780701, 
+                "minimalCosts": 147.00968505548542
+            }, 
+            "createdDate": "2018-08-08 11:44:24.560000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.7557125317567857, 
+                "minimalCosts": 238.70132582101124
+            }, 
+            "createdDate": "2018-08-08 11:44:24.699000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.4078681735405838, 
+                "minimalCosts": 175.6362789641535
+            }, 
+            "createdDate": "2018-08-08 11:44:24.986000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.2864961747164316, 
+                "minimalCosts": 373.10643391986855
+            }, 
+            "createdDate": "2018-08-08 11:44:25.072000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.116816463938335, 
+                "minimalCosts": 185.59247106888267
+            }, 
+            "createdDate": "2018-08-08 11:44:25.241000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.103155134823757, 
+                "minimalCosts": 274.04713367087646
+            }, 
+            "createdDate": "2018-08-08 11:44:25.322000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.530142751895992, 
+                "minimalCosts": 41.67928682107832
+            }, 
+            "createdDate": "2018-08-08 11:44:25.422000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.3738886656448301, 
+                "minimalCosts": 176.01002749715911
+            }, 
+            "createdDate": "2018-08-08 11:44:25.532000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 2.6682521752782744, 
+                "minimalCosts": 93.69429258459323
+            }, 
+            "createdDate": "2018-08-08 11:44:25.743000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.887648928890366, 
+                "minimalCosts": 228.7597949010685
+            }, 
+            "createdDate": "2018-08-08 11:44:25.867000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.9677959434441743, 
+                "minimalCosts": 314.14935082132195
+            }, 
+            "createdDate": "2018-08-08 11:44:26.085000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.8530978207788165, 
+                "minimalCosts": 189.36350093035642
+            }, 
+            "createdDate": "2018-08-08 11:44:26.216000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.158756351711332, 
+                "minimalCosts": 233.00843149748022
+            }, 
+            "createdDate": "2018-08-08 11:44:26.314000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.801049553810368, 
+                "minimalCosts": 368.9767742034178
+            }, 
+            "createdDate": "2018-08-08 11:44:26.403000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 2.4571960136535687, 
+                "minimalCosts": 123.94023629097069
+            }, 
+            "createdDate": "2018-08-08 11:44:26.490000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.155107863844355, 
+                "minimalCosts": 114.9046568564934
+            }, 
+            "createdDate": "2018-08-08 11:44:26.578000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 0, 
+                "overhead": 1.624299286750494, 
+                "minimalCosts": 111.93637976774573
+            }, 
+            "createdDate": "2018-08-08 11:44:26.664000"
+        }, 
+        {
+            "stage_id": "5743e5b2-5545-3a9a-4d27-25a3b68771d2#27", 
+            "payload": {
+                "complaint": 1, 
+                "overhead": 13.970756281568127, 
+                "minimalCosts": 67.80396910384023
+            }, 
+            "createdDate": "2018-08-08 11:44:26.775000"
+        }
+    ]
+}

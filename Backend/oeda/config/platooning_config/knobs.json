@@ -1,0 +1,38 @@
+[
+  {
+    "name": "maxVehiclesInPlatoon",
+    "description": "Controls maximum number of cars allowed for a platoon",
+    "scale": "Metric",
+    "min": 2,
+    "max": 250,
+    "default": 10
+  }, {
+    "name": "catchupDistance",
+    "description": "Cars try to catchup the platoon-ahead if it's closer than this value (in m.)",
+    "scale": "Metric",
+    "min": 10.0,
+    "max": 3000.0,
+    "default": 500.0
+  }, {
+    "name": "maxPlatoonGap",
+    "description": "Gap (in m.) below which cars are considered as a platoon",
+    "scale": "Metric",
+    "min": 10.0,
+    "max": 3000.0,
+    "default": 500.0
+  }, {
+    "name": "platoonSplitTime",
+    "description": "Time (in secs.) until a car which maintains a distance larger than maxPlatoonGap from its leader within the platoon is split off",
+    "scale": "Metric",
+    "min": 1.0,
+    "max": 350.0,
+    "default": 10.0
+  }, {
+    "name": "joinDistance",
+    "description": "Distance (in m.) that is used to determine a car's joining condition to a platoon (if car's arrival position is within the arrival interval of a platoon)",
+    "scale": "Metric",
+    "min": 5.0,
+    "max": 3000.0,
+    "default": 3000.0
+  }
+]

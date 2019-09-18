@@ -1,0 +1,88 @@
+{
+    "experiment_durations": [
+        94, 
+        40, 
+        73, 
+        110, 
+        72
+    ], 
+    "best_results": [
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 94, 
+            "stage_result": 1.3655383851528167, 
+            "step_name": "T-test", 
+            "experiment_id": "f66e9002-3b23-8a63-b080-982320ff3aaf", 
+            "createdDate": "2018-08-05 22:17:03.833000", 
+            "knobs": {
+                "joinDistance": 5.0
+            }, 
+            "id": "f66e9002-3b23-8a63-b080-982320ff3aaf#5#2"
+        }, 
+        {
+            "step_no": 3, 
+            "number": 2, 
+            "elapsed_time": 40, 
+            "stage_result": 1.3682469236850738, 
+            "step_name": "T-test", 
+            "experiment_id": "5b601376-e3fc-ccfe-3521-70cdff26c41c", 
+            "createdDate": "2018-07-22 22:49:04.002000", 
+            "knobs": {
+                "joinDistance": 5.0
+            }, 
+            "id": "5b601376-e3fc-ccfe-3521-70cdff26c41c#3#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 73, 
+            "stage_result": 1.399978449702263, 
+            "step_name": "T-test", 
+            "experiment_id": "38f5120a-91d2-66ce-6481-9c8c1ad62af7", 
+            "createdDate": "2018-07-23 15:47:15.239000", 
+            "knobs": {
+                "platoonSplitTime": 8.049408531858544, 
+                "joinDistance": 196.50905465686924
+            }, 
+            "id": "38f5120a-91d2-66ce-6481-9c8c1ad62af7#5#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 110, 
+            "stage_result": 1.401617823958397, 
+            "step_name": "T-test", 
+            "experiment_id": "943b240b-213b-a1ef-1639-dc5f4ffb2c70", 
+            "createdDate": "2018-08-04 23:53:05.472000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 2.3346677214898452, 
+                "joinDistance": 2246.2718884352334
+            }, 
+            "id": "943b240b-213b-a1ef-1639-dc5f4ffb2c70#5#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 72, 
+            "stage_result": 1.4207074179649353, 
+            "step_name": "T-test", 
+            "experiment_id": "adb65df7-a0e1-3df2-8d57-a9ac92083050", 
+            "createdDate": "2018-07-30 23:38:46.008000", 
+            "knobs": {
+                "joinDistance": 101.02273711786407
+            }, 
+            "id": "adb65df7-a0e1-3df2-8d57-a9ac92083050#5#2"
+        }
+    ], 
+    "optimization_percentages": [
+        14.068994061832669, 
+        11.208493417753408, 
+        12.853106598161604, 
+        10.936911411786255, 
+        11.31382300167357
+    ], 
+    "average_experiment_duration": 77.8, 
+    "average_optimization_percentage": 12.076265698241501, 
+    "numberOfExperiments": 5
+}

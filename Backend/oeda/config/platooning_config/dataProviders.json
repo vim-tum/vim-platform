@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Performance",
+    "description": "Provides speed & fuel consumption of cars, overheads & durations of trips ",
+    "type": "kafka_consumer",
+    "kafka_uri": "kafka:9092",
+    "topic": "platooning-car-data",
+    "serializer": "JSON",
+    "incomingDataTypes": [
+      {
+        "name": "fuelConsumption",
+        "description": "average fuel consumption of a car during its trip",
+        "scale": "Metric",
+        "dataProviderName": "Performance",
+        "criteria": "Minimize"
+      }, {
+        "name": "speed",
+        "description": "average speed of a car during its trip",
+        "scale": "Metric",
+        "dataProviderName": "Performance",
+        "criteria": "Maximize"
+      }, {
+        "name": "overhead",
+        "description": "overhead of the trip",
+        "scale": "Metric",
+        "dataProviderName": "Performance",
+        "criteria": "Minimize"
+      }, {
+        "name": "tripDuration",
+        "description": "number of simulation ticks for the trip",
+        "scale": "Metric",
+        "dataProviderName": "Performance",
+        "criteria": "Minimize"
+      }
+    ]
+  }
+]

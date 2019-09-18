@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="card-title">
+          <div class="title pull-left">All Experiments</div>
+        </div>
+      </div>
+
+      <div class="panel-body" *ngIf="!is_db_configured" style="padding-top: 20px">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="sub-title">Experiments database is not configured yet.
+              <a (click)="navigateToConfigurationPage()"> please configure it here </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body" *ngIf="is_db_configured">
+        <div class="table-responsive">
+          <table style="margin-top: 20px" class="table table-striped table-bordered table-hover" [mfData]="experiments" #mf="mfDataTable"
+                [mfRowsOnPage]="10"
+                [mfSortBy]="'createdDate'"
+                [mfSortOrder]="'desc'">
+            <thead>
+            <tr>
+              <th style="width:5%">
+                <div>
+                  <a routerLink="/control/experiments/create" class="btn btn-orange btn-sm">Create an Experiment</a>
+                </div>
+              </th>
+              <th>
+                <mfDefaultSorter by="status">Status</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="name">Name</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="description">Description</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="createdDate">Created on</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="user">Created by</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="target">Target System</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="target">Target System Status</mfDefaultSorter>
+              </th>
+            </tr>
+            </thead>
+            <tbody class="bigTable">
+            <tr *ngFor="let item of mf.data">
+              <td style="padding-right: 0">
+                <a class="btn btn-xs btn-primary" type="button" *ngIf="item.status == 'SUCCESS'"
+                   routerLink="/control/experiments/show/{{item.id}}/success" data-toggle="tooltip" title="Click to see results"><i class="fa fa-search"></i> Details
+                </a>
+                <a class="btn btn-xs btn-primary" type="button" *ngIf="item.status == 'INTERRUPTED'"
+                   routerLink="/control/experiments/show/{{item.id}}/interrupted" data-toggle="tooltip" title="Click to see results"><i class="fa fa-search"></i> Details
+                </a>
+                <a class="btn btn-xs btn-primary" type="button" *ngIf="item.status !== 'INTERRUPTED' && item.status !== 'SUCCESS'"
+                   routerLink="/control/experiments/show/{{item.id}}/running" data-toggle="tooltip" title="Click to see results in real-time"><i class="fa fa-search"></i> Details
+                </a>
+                <a class="btn btn-xs btn-orange" type="button"  *ngIf="item.status != 'RUNNING'"
+                   data-target="#deleteExperimentModal" (click)="modalExperimentDeletion(item.id)"
+                   data-toggle="modal" title="Delete this experiment"><i class="fa fa-trash-o"></i> Delete
+                </a>
+              </td>
+              <td>
+                <label *ngIf="item.status == 'SUCCESS'" class="label label-success">SUCCESS</label>
+                <label *ngIf="item.status == 'RUNNING'" class="label label-info">RUNNING</label>
+                <label *ngIf="item.status == 'ERROR'" class="label label-danger" data-toggle="tooltip" title="Please restart experiment">ERROR</label>
+                <label *ngIf="item.status == 'INTERRUPTED'" class="label label-warning">INTERRUPTED</label>
+                <!--<label *ngIf="item.status == 'FAILURE'" class="label label-danger">Failure</label>-->
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.createdDate}}</td>
+              <td>{{item.user}}</td>
+              <td><a routerLink="/control/targets/edit/{{item.targetSystemId}}" data-toggle="tooltip" title="Click to see target system definition">{{item.targetSystem?.name}}</a></td>
+              <td>
+                <label *ngIf="item.targetSystem?.status == 'READY'" class="label label-success">READY</label>
+                <label *ngIf="item.targetSystem?.status == 'WORKING'" class="label label-info">WORKING</label>
+                <label *ngIf="item.targetSystem?.status == 'ERROR'" class="label label-danger">ERROR</label>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="experiments.length > 10">
+            <tr>
+              <td colspan="12">
+                <mfBootstrapPaginator [rowsOnPageSet]="[10,25,100]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for deleting experiments-->
+  <div class="modal fade bd-example-modal-lg" id="deleteExperimentModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="col-md-12">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modalTitle">Deleting Experiment</h4>
+          </div>
+          <div class="modal-body">
+            Please confirm that you want to delete experiment <span style="color:red;">{{experimentToBeDeletedName}}</span>.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelExperimentDeletion()">Cancel</button>
+            <button type="button" class="btn btn-orange" data-dismiss="modal" (click)="deleteExperiment(experimentToBeDeleted)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <debug-element [element]="experiments"></debug-element>
+</div>

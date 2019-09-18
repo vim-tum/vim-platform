@@ -1,0 +1,26 @@
+{
+    "experiment_durations": [
+        61
+    ], 
+    "best_results": [
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 61, 
+            "stage_result": 293.467, 
+            "step_name": "T-test", 
+            "experiment_id": "31423455-6194-2754-e966-ec7e95f91b86", 
+            "createdDate": "2018-07-31 10:44:38.727000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 2.0076634126048543
+            }, 
+            "id": "31423455-6194-2754-e966-ec7e95f91b86#4#2"
+        }
+    ], 
+    "optimization_percentages": [
+        12.495080090168537
+    ], 
+    "average_experiment_duration": 61.0, 
+    "average_optimization_percentage": 12.495080090168537, 
+    "numberOfExperiments": 1
+}

@@ -1,0 +1,163 @@
+{
+    "experiment_durations": [
+        202, 
+        52, 
+        118, 
+        80, 
+        68, 
+        125, 
+        64, 
+        115, 
+        139, 
+        151
+    ], 
+    "best_results": [
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 202, 
+            "stage_result": 6.998702802181244, 
+            "step_name": "T-test", 
+            "experiment_id": "cf8c3fff-307d-de69-31a6-badfd3d1af65", 
+            "createdDate": "2018-08-05 20:24:52.468000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 230.37018196985022
+            }, 
+            "id": "cf8c3fff-307d-de69-31a6-badfd3d1af65#5#2"
+        }, 
+        {
+            "step_no": 3, 
+            "number": 2, 
+            "elapsed_time": 52, 
+            "stage_result": 7.735059795379638, 
+            "step_name": "T-test", 
+            "experiment_id": "050ab1eb-57a8-599f-20e2-8e7ef232b49c", 
+            "createdDate": "2018-07-28 20:27:04.134000", 
+            "knobs": {
+                "joinDistance": 5.0
+            }, 
+            "id": "050ab1eb-57a8-599f-20e2-8e7ef232b49c#3#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 118, 
+            "stage_result": 7.9945236926078795, 
+            "step_name": "T-test", 
+            "experiment_id": "00484963-8e6a-d960-33dd-ee99ed482b15", 
+            "createdDate": "2018-07-30 16:38:34.877000", 
+            "knobs": {
+                "joinDistance": 41.98690306116399
+            }, 
+            "id": "00484963-8e6a-d960-33dd-ee99ed482b15#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 80, 
+            "stage_result": 8.068448325157165, 
+            "step_name": "T-test", 
+            "experiment_id": "672d71d4-36e5-a92e-fcb6-eb56673524a1", 
+            "createdDate": "2018-07-30 18:04:16.914000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 226.12156901318602
+            }, 
+            "id": "672d71d4-36e5-a92e-fcb6-eb56673524a1#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 68, 
+            "stage_result": 8.092487007141113, 
+            "step_name": "T-test", 
+            "experiment_id": "d58b1b4f-f8ea-08f4-3603-f2735fef0a9f", 
+            "createdDate": "2018-07-30 14:18:32.396000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 137.84879954586398
+            }, 
+            "id": "d58b1b4f-f8ea-08f4-3603-f2735fef0a9f#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 125, 
+            "stage_result": 8.118625263690948, 
+            "step_name": "T-test", 
+            "experiment_id": "1a0d9dba-ff77-0237-aa8c-de3f897e864e", 
+            "createdDate": "2018-07-30 01:59:20.462000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 128.23522131688932
+            }, 
+            "id": "1a0d9dba-ff77-0237-aa8c-de3f897e864e#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 64, 
+            "stage_result": 8.124017436504364, 
+            "step_name": "T-test", 
+            "experiment_id": "2dbf39e7-f8df-9feb-d4f6-0049c5c80365", 
+            "createdDate": "2018-07-28 15:53:33.105000", 
+            "knobs": {
+                "catchupDistance": 521.6552921683726, 
+                "joinDistance": 83.44756073703573
+            }, 
+            "id": "2dbf39e7-f8df-9feb-d4f6-0049c5c80365#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 115, 
+            "stage_result": 8.174147492408752, 
+            "step_name": "T-test", 
+            "experiment_id": "0dfe8544-3290-1806-57b9-4f004237a1fa", 
+            "createdDate": "2018-07-29 19:23:52.677000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 117.8877424494574
+            }, 
+            "id": "0dfe8544-3290-1806-57b9-4f004237a1fa#4#2"
+        }, 
+        {
+            "step_no": 4, 
+            "number": 2, 
+            "elapsed_time": 139, 
+            "stage_result": 8.29971283864975, 
+            "step_name": "T-test", 
+            "experiment_id": "8795e81e-d2ec-1f87-e61c-b5753703494f", 
+            "createdDate": "2018-07-28 22:51:55.865000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 149.9959969339433
+            }, 
+            "id": "8795e81e-d2ec-1f87-e61c-b5753703494f#4#2"
+        }, 
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 151, 
+            "stage_result": 8.424501432418824, 
+            "step_name": "T-test", 
+            "experiment_id": "7b06fbc3-590e-5f2e-679b-0b2ad180b54d", 
+            "createdDate": "2018-08-06 23:04:58.987000", 
+            "knobs": {
+                "maxVehiclesInPlatoon": 194.54907789755532, 
+                "joinDistance": 2533.3060029483463
+            }, 
+            "id": "7b06fbc3-590e-5f2e-679b-0b2ad180b54d#5#2"
+        }
+    ], 
+    "optimization_percentages": [
+        21.897038275925006, 
+        15.781999173359543, 
+        13.27650405243975, 
+        11.981454240228077, 
+        11.336007775750646, 
+        11.423345327820144, 
+        10.120369215474827, 
+        9.800339450205263, 
+        7.1090497585173855, 
+        9.716197957778778
+    ], 
+    "average_experiment_duration": 111.4, 
+    "average_optimization_percentage": 12.244230522749941, 
+    "numberOfExperiments": 10
+}

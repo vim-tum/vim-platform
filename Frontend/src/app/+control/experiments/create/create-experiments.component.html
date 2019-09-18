@@ -1,0 +1,723 @@
+<div class="row">
+  <!--Target System Selection, Description, Details Button, Status, Create Experiment Button-->
+  <div class="col-md-12">
+    <div class="panel panel-default chartJs">
+      <div class="panel-heading">
+        <div class="card-title">
+          <div class="title pull-left">Target System Selection</div>
+          <div class="pull-right">
+            <div *ngIf="hasChanges() && !hasErrors()" (click)="saveExperiment()" class="btn btn-sm btn-orange"><i
+              class="fa fa-send"></i> Create Experiment
+            </div>
+            <div *ngIf="hasChanges() && hasErrors()" class="btn btn-m btn-danger"><i
+              class="fa fa-close"></i> {{errorButtonLabel}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body" *ngIf="availableTargetSystems.length > 0" style="padding-top: 20px">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="sub-title">Name</div>
+            <div>
+                <select class="form-control" required (change)="targetSystemChanged($event.target.value)">
+                  <option disabled>Select target system</option>
+                  <option *ngFor="let i of availableTargetSystems;" [ngValue]="i">{{ i.name }}</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="targetSystem.name !== ''">
+            <div class="sub-title">Description</div>
+            <span>{{targetSystem.description}}</span>
+          </div>
+
+          <div class="col-md-3" *ngIf="targetSystem.name !== ''">
+            <div class="sub-title">Details</div>
+            <button type="button" class="btn btn-orange"
+                    (click)="is_collapsed = !is_collapsed">
+              <span *ngIf="is_collapsed">Show Details</span>
+              <i *ngIf="is_collapsed" class="fa fa-angle-double-down" aria-hidden="true"></i>
+
+              <span *ngIf="!is_collapsed">Hide Details</span>
+              <i *ngIf="!is_collapsed" class="fa fa-angle-double-up" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="col-md-2" *ngIf="targetSystem.name !== ''">
+            <div class="sub-title">Status</div>
+            <label *ngIf="targetSystem.status == 'READY'" class="label label-success">READY</label>
+            <label *ngIf="targetSystem.status == 'WORKING'" class="label label-info">WORKING</label>
+            <label *ngIf="targetSystem.status == 'ERROR'" class="label label-danger">ERROR</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body" *ngIf="availableTargetSystems.length == 0" style="padding-top: 20px">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="sub-title">There is no available target system
+              <a (click)="navigateToTargetSystemPage()"> please create one here </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Data Provider & Secondary Data Provider(s) & Default variables -->
+  <div class="col-md-12" *ngIf="targetSystem.name !== ''" [hidden]="is_collapsed"
+       style="border-radius: 25px; border: 2px solid #73AD21;">
+
+    <!-- Primary Data Provider -->
+    <div class="col-sm-6" style="padding-left: 0">
+      <div class="panel panel-default chartJs">
+        <div class="panel-heading">
+          <div class="card-title">
+            <div class="title pull-left">Primary Data Provider</div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding-top: 20px">
+          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'http_request'">
+            <div class="col-md-3">
+              <div class="sub-title">Name</div>
+              <span>{{targetSystem.primaryDataProvider.name}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">URL</div>
+              <span>{{targetSystem.primaryDataProvider.url}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Port</div>
+              <span>{{targetSystem.primaryDataProvider.port}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Ignore First N Samples</div>
+              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'kafka_consumer'">
+            <div class="col-md-3">
+              <div class="sub-title">Name</div>
+              <span>{{targetSystem.primaryDataProvider.name}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Kafka URI</div>
+              <span>{{targetSystem.primaryDataProvider.kafka_uri}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Topic</div>
+              <span>{{targetSystem.primaryDataProvider.topic}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Ignore First N Samples</div>
+              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'mqtt_listener'">
+            <div class="col-md-2">
+              <div class="sub-title">Name</div>
+              <span>{{targetSystem.primaryDataProvider.name}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Host</div>
+              <span>{{targetSystem.primaryDataProvider.host}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Port</div>
+              <span>{{targetSystem.primaryDataProvider.port}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Topic</div>
+              <span>{{targetSystem.primaryDataProvider.topic}}</span>
+            </div>
+            <div class="col-md-1">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Ignore First N Samples</div>
+              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Data Provider(s) -->
+      <div class="panel panel-default chartJs" *ngIf="targetSystem.secondaryDataProviders.length > 0">
+        <div class="panel-heading">
+          <div class="card-title">
+            <div class="title pull-left" *ngIf="targetSystem.secondaryDataProviders.length > 1">Secondary Data Providers</div>
+            <div class="title pull-left" *ngIf="targetSystem.secondaryDataProviders.length == 1">Secondary Data Provider</div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding-top: 20px">
+          <div class="row" *ngFor="let secondaryDataProvider of targetSystem.secondaryDataProviders">
+            <div *ngIf="secondaryDataProvider.type == 'http_request'">
+              <div class="col-md-3">
+                <div class="sub-title">Name</div>
+                <span>{{secondaryDataProvider.name}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">URL</div>
+                <span>{{secondaryDataProvider.url}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Port</div>
+                <span>{{secondaryDataProvider.port}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Serializer</div>
+                <span>{{secondaryDataProvider.serializer}}</span>
+              </div>
+            </div>
+
+            <div *ngIf="secondaryDataProvider.type == 'kafka_consumer'">
+              <div class="col-md-3">
+                <div class="sub-title">Name</div>
+                <span>{{secondaryDataProvider.name}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Kafka URI</div>
+                <span>{{secondaryDataProvider.kafka_uri}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Topic</div>
+                <span>{{secondaryDataProvider.topic}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Serializer</div>
+                <span>{{secondaryDataProvider.serializer}}</span>
+              </div>
+            </div>
+
+            <div *ngIf="secondaryDataProvider.type == 'mqtt_listener'">
+              <div class="col-md-2">
+                <div class="sub-title">Name</div>
+                <span>{{secondaryDataProvider.name}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Host</div>
+                <span>{{secondaryDataProvider.host}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Port</div>
+                <span>{{secondaryDataProvider.port}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Topic</div>
+                <span>{{secondaryDataProvider.topic}}</span>
+              </div>
+              <div class="col-md-1">
+                <div class="sub-title">Serializer</div>
+                <span>{{secondaryDataProvider.serializer}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Provider -->
+    <div class="col-sm-6" style="padding-right: 0">
+      <div class="panel panel-default chartJs">
+        <div class="panel-heading">
+          <div class="card-title">
+            <div class="title pull-left">Change Provider</div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding-top: 20px">
+
+          <div class="row" *ngIf="targetSystem.changeProvider.type == 'http_request'">
+            <div class="col-md-4">
+              <div class="sub-title">URL</div>
+              <span>{{targetSystem.changeProvider.url}}</span>
+            </div>
+            <div class="col-md-4">
+              <div class="sub-title">Port</div>
+              <span>{{targetSystem.changeProvider.port}}</span>
+            </div>
+            <div class="col-md-4">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.changeProvider.serializer}}</span>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="targetSystem.changeProvider.type == 'kafka_producer'">
+            <div class="col-md-4">
+              <div class="sub-title">Kafka URI</div>
+              <span>{{targetSystem.changeProvider.kafka_uri}}</span>
+            </div>
+            <div class="col-md-4">
+              <div class="sub-title">Topic</div>
+              <span>{{targetSystem.changeProvider.topic}}</span>
+            </div>
+            <div class="col-md-4">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.changeProvider.serializer}}</span>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="targetSystem.changeProvider.type == 'mqtt_listener'">
+            <div class="col-md-3">
+              <div class="sub-title">Host</div>
+              <span>{{targetSystem.changeProvider.host}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Port</div>
+              <span>{{targetSystem.changeProvider.port}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Topic</div>
+              <span>{{targetSystem.changeProvider.topic}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.changeProvider.serializer}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Variables -->
+    <div class="col-sm-12" style="padding-right: 0; padding-left: 0">
+      <div class="panel panel-default chartJs">
+        <div class="panel-heading">
+          <div class="card-title">
+            <div class="title pull-left">Default variables of Target System</div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding-top: 20px">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+              <th>Name</th>
+              <th>Min</th>
+              <th>Max</th>
+              <th>Default Value</th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let changeableVariable of targetSystem.defaultVariables" style="padding-top: 1%">
+                <td>{{changeableVariable.name}}</td>
+                <td>{{changeableVariable.min}}</td>
+                <td>{{changeableVariable.max}}</td>
+                <td>{{changeableVariable.default}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!--Step #0: Basics-->
+  <div class="col-md-12" *ngIf="targetSystem.name !== ''">
+    <div class="panel panel-default chartJs">
+      <div class="panel-heading">
+        <div class="card-title">
+          <div class="title pull-left">Step #0: Basics</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <labeled-input name="Experiment Name (required)" [model]="experiment" key="name" [colSize]="6"
+                         tooltipTitle="Please provide a unique name"></labeled-input>
+          <labeled-input name="Experiment Description" [model]="experiment" key="description" [required]="false" [colSize]="6"></labeled-input>
+        </div>
+        <div class="row">
+          <incoming-data-types [experiment]="experiment" [targetSystem]="targetSystem" (incomingDataTypesChanged)="incomingDataTypesChanged($event)"></incoming-data-types>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12" style="padding-left: 0; padding-right: 0" *ngIf="targetSystem.name !== ''">
+
+    <div class="panel-body">
+      <labeled-input-select name="Type" [model]="experiment.analysis" key="type" [colSize]="6"
+                            [options]="[
+                                      {key:'factorial_experiment',label:'Factorial Experiment'},
+                                      {key:'t_test',label:'T-test'},
+                                      {key:'bayesian_opt',label:'Bayesian Optimization'}]"
+                            (modelChanged)="experimentTypeChanged($event)">
+      </labeled-input-select>
+    </div>
+
+    <!-- Step #1: Factorial ANOVA -->
+    <div *ngIf="experiment.analysis.type == 'factorial_experiment'">
+      <div class="col-md-12">
+
+        <!--Factorial ANOVA Properties-->
+        <div class="panel panel-default chartJs">
+          <div class="panel-heading">
+            <div class="card-title">
+              <div class="title pull-left">Step #1: Factorial ANOVA. We will here profile the target system to determine the factors (variables) and combination of factors that have a significant effect on the optimization output.</div>
+              <div class="title pull-right">
+                <a data-toggle="modal" data-target="#analysisModal"><i class="fa fa-info fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-body" style="padding-top: 20px">
+
+            <!-- changeable variable selection-->
+            <div class="panel-body">
+              <div class="col-md-12">
+                <div class="panel panel-default chartJs">
+                  <div class="panel-heading">
+                    <div class="card-title">
+                      <div class="title pull-left">Please select the variables you want to consider in the factorial design, and provide their values in comma separated manner.</div>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <th style="padding-left: 1%">Name</th>
+                        <th style="padding-left: 1%">Scale</th>
+                        <th style="padding-left: 1%">Description</th>
+                        <th style="padding-left: 1%">Default</th>
+                        <th style="padding-left: 1%">Min</th>
+                        <th style="padding-left: 1%">Max</th>
+                        <th style="padding-left: 1%">Factor values</th>
+                        <th style="padding-left: 1%">Select</th>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let changeableVariable of targetSystem.changeableVariables; let i = index" style="padding-top: 1%">
+                        <td>{{changeableVariable.name}}</td>
+                        <td>{{changeableVariable.scale}}</td>
+                        <td>{{changeableVariable.description}}</td>
+                        <td>{{changeableVariable.default}}</td>
+                        <td>{{changeableVariable.min}}</td>
+                        <td>{{changeableVariable.max}}</td>
+                        <td>
+                          <input type="text" class="form-control" name="factorValues" id="factorValues" placeholder="Enter comma separated values"
+                                 [(ngModel)]="changeableVariable.factorValues"/>
+                        </td>
+                        <td>
+                          <input type="checkbox" class="form-check-input" (change)="changeable_variable_checkbox_clicked(i)" data-toggle="tooltip"
+                                 title="Select input parameter(s) suitable for the process"
+                                [checked]="changeableVariable.is_selected == true">
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sample Size for ANOVA -->
+            <labeled-input inputType="number" name="How many samples do you want to collect for each configuration?"
+                           [model]="experiment.analysis" key="sample_size" [colSize]="6" [minNumber]="1" tooltipTitle='Number of samples to be collected from each experiment'></labeled-input>
+
+            <!-- Alpha -->
+            <labeled-input inputType="number" name="Significance level (alpha) for factorial analysis"
+                           [model]="experiment.analysis" key="anovaAlpha" [colSize]="6"
+                           [minNumber]="0"
+                           [maxNumber]="1"
+                           tooltipTitle='Alpha value that will be used as significance threshold for analysis phase'>
+            </labeled-input>
+
+            <!--error label for anova-->
+            <div class="col-md-12">
+              <div class="sub-title"></div>
+                <div class="row">
+                  <div *ngIf="hasChanges() && hasErrorsAnova()" class="pull-right btn btn-xs btn-danger"><i class="fa fa-close"></i>
+                    {{errorButtonLabelAnova}}
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="experiment.analysis.type == 't_test'">
+      <!-- T-test properties -->
+      <div class="col-md-12" style="padding-left: 0; padding-right: 0" *ngIf="targetSystem.name !== ''">
+        <div class="col-md-12">
+          <div class="panel panel-default chartJs">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Step #3: T-test. We will here compare the result of the previous step to the default configration of the target system.</div>
+                <div class="title pull-right">
+                  <a data-toggle="modal" data-target="#analysisModal"><i class="fa fa-info fa-lg"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+
+              <labeled-input inputType="number" name="Significance level (alpha) for t-test"
+                             [model]="experiment.analysis" key="tTestAlpha" [colSize]="6"
+                             [minNumber]="0"
+                             [maxNumber]="1"
+                             tooltipTitle='Alpha value that will be used as significance threshold for step #3'>
+              </labeled-input>
+
+              <labeled-input inputType="number" name="Minimum effect size (Cohen's d coefficient)"
+                             [model]="experiment.analysis" key="tTestEffectSize" [colSize]="6"
+                             [minNumber]="0"
+                             [maxNumber]="1"
+                             tooltipTitle='Alpha value that will be used as significance threshold for step #3'>
+              </labeled-input>
+
+              <!-- sample size for optimization -->
+              <labeled-input inputType="number" name="How many samples do you want to collect default & best configurations of target system?"
+                             [model]="experiment.analysis" key="tTestSampleSize" [colSize]="6" [minNumber]="1"
+                             tooltipTitle='Number of samples to be collected for both default configuration of target system and best knobs of optimization process'></labeled-input>
+
+
+              <!--error label for ttest-->
+              <div class="col-md-12">
+                <div class="sub-title"></div>
+                <div class="row">
+                  <div *ngIf="hasChanges() && hasErrorsTtest()" class="pull-right btn btn-xs btn-danger"><i class="fa fa-close"></i>
+                    {{errorButtonLabelTtest}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Selection among Changeable Variables if user has selected an Analysis option-->
+        <div class="col-md-12" style="padding-left: 0; padding-right: 0">
+          <div class="panel panel-default chartJs">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Changeable Variables</div>
+                <div *ngIf="hasErrorsTtest()" class="pull-right btn btn-xs btn-danger"><i
+                  class="fa fa-close"></i> {{errorButtonLabelTtest}}
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="padding-top: 20px">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                  <th style="padding-left: 1%">Name</th>
+                  <th style="padding-left: 1%">Scale</th>
+                  <th style="padding-left: 1%">Description</th>
+                  <th style="padding-left: 1%">Experiment Min</th>
+                  <th style="padding-left: 1%">Experiment Max</th>
+                  <th style="padding-left: 1%">Default</th>
+                  <th style="padding-left: 1%">Select</th>
+                  <th style="padding-left: 1%" *ngIf="is_changeable_variable_selected(null)">Experiment Value</th>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let changeableVariable of targetSystem.changeableVariables; let i = index" style="padding-top: 1%">
+                    <td>{{changeableVariable.name}}</td>
+                    <td>{{changeableVariable.scale}}</td>
+                    <td>{{changeableVariable.description}}</td>
+                    <td>{{changeableVariable.min}}</td>
+                    <td>{{changeableVariable.max}}</td>
+                    <td>{{changeableVariable.default}}</td>
+                    <td>
+                      <input type="checkbox" class="form-check-input"
+                             (change)="changeable_variable_checkbox_clicked(i)" data-toggle="tooltip"
+                             title="Select changeable variable(s) suitable for the analysis">
+                    </td>
+                    <td *ngIf="is_changeable_variable_selected(i)">
+                      <input type="number" class="form-check-input"
+                             data-toggle="tooltip"
+                             title="Please provide experiment value for this variable to be used in the analysis"
+                             [(ngModel)]="changeableVariable['target']"
+                             [min]="changeableVariable.min"
+                             [max]="changeableVariable.max"
+                             required>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="btn btn-xs btn-orange pull-right"
+                   *ngIf="targetSystem.changeableVariables.length > 0 && !hasErrors2FactorAndSequential()"
+                   (click)="addVariablesFor2FactorAndSeqTest()">
+                <i class="fa fa-plus push-5-r"></i> Add as Configuration
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Added Variables -->
+        <div class="col-md-12" *ngIf="targetSystem.name !== '' && experiment.changeableVariables.length > 0">
+          <div class="panel panel-default chartJs">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Configuration (Click 'Show Details' at top of this page for default values of other variables) </div>
+                <div class="pull-right">
+                  <div class="btn btn-xs btn-primary" (click)="removeAllVariables()"
+                       *ngIf="targetSystem.changeableVariables.length > 1 && experiment.changeableVariables.length > 1">
+                    <i class="fa fa-remove"></i> Remove All
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Regular changeable variable summary, structure of experiment.changeableVariables is [ [knob, knob, knob], [knob] ]-->
+            <div class="panel-body" style="padding-top: 20px" *ngIf="experiment.changeableVariables.length > 0">
+              <div class="row" style="padding-left: 1%" *ngFor="let knobArr of experiment.changeableVariables; let i = index">
+                <div class="row" *ngFor="let knobKey of get_keys(knobArr)">
+                  <labeled-input name="Name" [model]="knobArr[knobKey]" key="name" [colSize]="3" disabled="true"></labeled-input>
+                  <span>
+                    <labeled-input inputType="number" name="Experiment Min" [model]="knobArr[knobKey]" key="min" [colSize]="2" disabled="true" (modelChanged)="strategyParametesChanged($event)"></labeled-input>
+                    <labeled-input inputType="number" name="Experiment Max" [model]="knobArr[knobKey]" key="max" [colSize]="2" disabled="true" (modelChanged)="strategyParametesChanged($event)"></labeled-input>
+                    <labeled-input inputType="number" name="Default" [model]="knobArr[knobKey]" key="default" [colSize]="2" disabled="true"></labeled-input>
+                    <labeled-input inputType="number" name="Experiment Value" [model]="knobArr[knobKey]" key="target" [colSize]="2" disabled="true"></labeled-input>
+                  </span>
+                </div>
+                <div class="col-sm-1">
+                  <div class="sub-title">
+                    <div>
+                      <div (click)="removeChangeableVariable(i)" class="btn btn-xs btn-primary"><i class="fa fa-remove"></i> Remove</div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="col-md-12">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Info modal for Execution Strategies -->
+  <div class="modal fade bd-example-modal-sm" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="col-md-12">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Bayesian Optimization with Gaussian Processes</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>OEDA supports following libraries for <b><a target="_blank" href="https://en.wikipedia.org/wiki/Bayesian_optimization">Bayesian Optimization</a></b>
+              and acquisition functions of these libraries to be used as a function to be minimized over gaussian prior.
+            </p>
+
+            <hr>
+            <p>
+              <b>Self Optimizer: </b>Runs multiple experiments and tries to find the best value for the knobs
+              using <a target="_blank" href="http://scikit-learn.org">scikit-learn's</a> Bayesian optimization with Gaussian Processes</p>
+
+              Supported acquisition functions:
+              <ul>
+                <li>LCB: lower confidence bound</li>
+                <li>EI: expected improvement</li>
+                <li>PI: negative probability of improvement</li>
+                <li>GP_HEDGE (default): Probabilistically choose one of the above three acquisition functions at every iteration</li>
+                <li>EIps: for negated expected improvement per second to take into account the function compute time</li>
+                <li>PIps: for negated probability of improvement per second</li>
+              </ul>
+
+
+
+
+            <hr>
+            <p><b>mlr-MBO:</b> Optimizes expensive black-box functions by using model-based optimization
+              using  <a target="_blank" href="https://mlr-org.github.io/mlrMBO/articles/mlrMBO.html">mlrMBO</a>, which is a library written in R.</p>
+              Supported <a target="_blank" href="https://mlr-org.github.io/mlrMBO/reference/infillcrits.html">acquisition functions:</a>
+              <ul>
+                <li>Expected improvement (default)</li>
+                <li>Mean response</li>
+                <li>Standard error</li>
+                <li>Upper/Lower confidence bound (LCB, aka. statistical lower or upper bound)</li>
+                <li>Augmented expected improvement (AEI)</li>
+                <li>Expected quantile improvement (EQI)</li>
+              </ul>
+            <hr>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info modal for Analysis Types -->
+  <div class="modal fade bd-example-modal-sm" id="analysisModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="col-md-12">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="analysisModalTitle">Analysis Types</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Different types of analysis can be performed (i) to test a statistical hypothesis or (ii) to optimize output of experiments with respect to different criteria</p>
+            <p>OEDA supports following analysis types</p>
+            <hr>
+            <ul>
+              <li>
+                <b>Two Sample Tests</b>
+                <ul>
+                  <li>
+                    <p>
+                      <b><a target="_blank" href="https://www.investopedia.com/terms/t/t-test.asp">T-test:</a></b>
+                      Analysis of two populations means through the use of statistical examination
+                      testing the difference between the samples when the variances of two normal distributions are not known.
+                    </p>
+                  </li>
+                </ul>
+                <hr>
+              </li>
+
+              <li>
+                <b>Factorial Tests</b>
+                <ul>
+                  <li>
+                    <p>
+                      <b><a target="_blank" href="https://en.wikipedia.org/wiki/Analysis_of_variance">Analysis of Variance(ANOVA):</a></b>
+                      Collection of statistical models and their associated procedures
+                      (such as "variation" among and between groups) used to analyze the differences among group means
+                    </p>
+                  </li>
+                </ul>
+                <hr>
+              </li>
+            </ul>
+            <hr>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <debug-element [element]="experiment"></debug-element>
+  <debug-element [element]="targetSystem"></debug-element>
+</div>

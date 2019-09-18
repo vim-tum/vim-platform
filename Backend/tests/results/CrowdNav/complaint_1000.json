@@ -1,0 +1,26 @@
+{
+    "experiment_durations": [
+        334
+    ], 
+    "best_results": [
+        {
+            "step_no": 5, 
+            "number": 2, 
+            "elapsed_time": 334, 
+            "stage_result": 0.102, 
+            "step_name": "T-test", 
+            "experiment_id": "9fe9f1db-6a91-ae89-7fa7-562d7e1b9769", 
+            "createdDate": "2018-08-03 22:52:01.157000", 
+            "knobs": {
+                "data_freshness_threshold": 700.0
+            }, 
+            "id": "9fe9f1db-6a91-ae89-7fa7-562d7e1b9769#5#2"
+        }
+    ], 
+    "optimization_percentages": [
+        26.08695652173914
+    ], 
+    "average_experiment_duration": 334.0, 
+    "average_optimization_percentage": 26.08695652173914, 
+    "numberOfExperiments": 1
+}

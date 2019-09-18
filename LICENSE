@@ -199,3 +199,134 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+   
+=======================================================================
+
+Vim Platform subcomponents:
+
+Vim Platform contains subcomponents in the source code
+release with separate copyright notices and license terms. Your use of
+the source code for the these subcomponents is subject to the terms and
+conditions of their respective licenses.
+
+-----------------------------------------------------------------------
+ The MIT License
+-----------------------------------------------------------------------
+
+Vim Platform bundles the following files under the MIT License:
+Tempita v0.5.2, (https://pypi.org/project/Tempita/) - Copyright (c) 2013 Ian Bicking
+pyjwt v1.6.4, (https://github.com/jpadilla/pyjwt) - Copyright (c) 2015 José Padilla
+pypng v0.0.18, (https://github.com/drj11/pypng) - Copyright (c) 2016 David Jones <drj@pobox.com>
+flask_cors v3.0.6, (https://github.com/corydolphin/flask-cors) - Copyright (c) 2016 Cory Dolphin, Olin College
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+-----------------------------------------------------------------------
+ BSD-style Licenses (BSD- 2 | 3-clause)
+-----------------------------------------------------------------------
+
+Vim Platform bundles the following projects under BSD licenses:
+colorama v0.3.9, (https://github.com/tartley/colorama) - Copyright (c) 2010 Jonathan Hartley
+flask_restful v0.3.6, (https://github.com/flask-restful/flask-restful/) - Copyright (c) 2013, Twilio, Inc.
+scipy v1.1.0, (https://github.com/scipy/scipy/) - Copyright (c) 2001, 2002 Enthought, Inc., Copyright (c) 2003-2017 SciPy Developers.
+seaborn v0.9.0, (https://github.com/mwaskom/seaborn/) - Copyright (c) 2012-2016, Michael L. Waskom 
+pandas v0.23.0, (https://github.com/pandas-dev/pandas) - Copyright (c) 2008-2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team
+scikit-optimize v0.5.2, (https://github.com/scikit-optimize/scikit-optimize), Copyright (c) 2016 - scikit-optimize developers.
+matplotlib v2.2.2, (https://github.com/matplotlib/matplotlib), Copyright (c) 2012 - Matplotlib Development Team
+numpy v1.14.2, (https://github.com/numpy/numpy), Copyright (c) 2005-2017, NumPy Developers.
+statsmodels v0.9.0, (https://github.com/statsmodels/statsmodels) - Copyright (c) 2006, Jonathan E. Taylor, Copyright (c) 2006-2008 Scipy Developers., Copyright (c) 2009-2012 Statsmodels Developers.
+freetype-py v2.0.0.post6, (https://github.com/rougier/freetype-py) - Copyright (c) 2011-2014, Nicolas P. Rougier
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list
+   of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this
+   list of conditions and the following disclaimer in the documentation and/or
+   other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may
+   be used to endorse or promote products derived from this software without
+   specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+
+-----------------------------------------------------------------------
+ Apache 2.0 License
+-----------------------------------------------------------------------
+
+Vim Platform bundles the following projects under the [Apache 2.0 License](https://apache.org/licenses/LICENSE-2.0):
+tornado v5.1,  (https://github.com/tornadoweb/tornado/) - Copyright (c) Facebook <python-tornado@googlegroups.com>
+kafka v1.3.5, (https://github.com/dpkp/kafka-python) - Copyright (c) 2015 David Arthur
+requests v2.19.1, (https://github.com/requests/requests) - Copyright (c) 2018 Kenneth Reitz
+elasticsearch v6.3.0, (https://github.com/elastic/elasticsearch-py) - Copyright (c) 2018 Honza Král <honza.kral@gmail.com>, Nick Lang<nick@nicklang.com>
+
+These projects are licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+
+-----------------------------------------------------------------------
+ Eclipse Public License v1.0
+-----------------------------------------------------------------------
+
+Vim Platform contains or reuses code that is licensed under the Eclipse Public License v1.0:
+  - paho-mqtt v1.3.1, (https://github.com/eclipse/paho.mqtt.python) - Copyright (c) 2007, Eclipse Foundation, Inc. and its licensors. & Eclipse Public License - v 1.0 
+  All rights reserved.
+
+EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Each Recipient is solely responsible for determining the appropriateness of using and distributing the Program and assumes all risks associated with its exercise of rights under this Agreement , including but not limited to the risks and costs of program errors, compliance with applicable laws, damage to or loss of data, programs or equipment, and unavailability or interruption of operations.
+
+EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, NEITHER RECIPIENT NOR ANY CONTRIBUTORS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION LOST PROFITS), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OR DISTRIBUTION OF THE PROGRAM OR THE EXERCISE OF ANY RIGHTS GRANTED HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+-----------------------------------------------------------------------
+Python Software Foundation License
+-----------------------------------------------------------------------
+Vim Platform contains or reuses code that is licensed under the Python Software Foundation License:
+   - backports.ssl_match_hostname v3.5.0.1, (https://bitbucket.org/brandon/backports.ssl_match_hostname) - Copyright (c), 2001-2013 Python Software Foundation
+   - python v2.7, (https://github.com/python/cpython/tree/2.7) - Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 Python Software Foundation
+All rights reserved.
