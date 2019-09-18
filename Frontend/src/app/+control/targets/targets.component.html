@@ -65,7 +65,7 @@
             <tr *ngFor="let item of mf.data">
               <td>
                 <a class="btn btn-xs btn-primary" type="button"
-                   routerLink="/control/targets/edit/{{item.id}}"><i class="fa fa-search"></i> Details
+                   routerLink="/control/targets/edit/{{item.id}}"><i class="fa fa-pencil"></i> Clone & Edit
                 </a>
                 <a class="btn btn-xs btn-orange" type="button" *ngIf="item.status != 'WORKING'"
                    data-target="#deleteTargetSystemModal"
