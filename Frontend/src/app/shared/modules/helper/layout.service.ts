@@ -18,7 +18,7 @@ export class LayoutService {
 
   /** sets the UI header with a name and a description*/
   setHeader(name: string, description: string) {
-    this.titleService.setTitle(name + " | OEDA ");
+    this.titleService.setTitle(name + " | ViM Platform ");
     this.header.name = name;
     this.header.description = description
   }

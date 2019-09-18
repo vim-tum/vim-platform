@@ -11,7 +11,7 @@ export class DashboardComponent {
 
   is_cleared: Boolean;
   constructor(private layout: LayoutService, private api: OEDAApiService, private notify: NotificationsService) {
-    this.layout.setHeader("Dashboard", "OEDA Control Overview");
+    this.layout.setHeader("Dashboard", "Control Overview");
     this.is_cleared = false;
   }
 
