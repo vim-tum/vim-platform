@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ~
-cd OEDA
+cd vim-platform
 cd Backend
 python setup.py install
 
