@@ -40,7 +40,7 @@ cd ~/vim-platform/Frontend/
 bash ./serve.sh
 ```
 
-### [Instructions to use (legacy)](https://github.com/alinaciuysal/OEDA/wiki/Instructions-to-use)
+### [Instructions to use (legacy)](https://github.com/vim-tum/vim-platform/wiki/Usage-Instructions)
 
 
 ### _Contact_
