@@ -109,4 +109,3 @@ python setup.py install
 
 ### ViM Frontend 
 > Instructions to be added soon
-%this is a trial 
