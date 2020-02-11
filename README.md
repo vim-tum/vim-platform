@@ -4,6 +4,8 @@ This is a prototype implementation of a a platform that supports the [Virtual Mo
 
 ## Getting Started
 
+These instructions are for Linux-based operating system. If you are using a macOS, please refer to this [README](https://github.com/vim-tum/vim-platform/blob/master/macOS_README.md).
+
 ### Required Dependencies
 - Python v3
 - [Node.js v1.5/1.6](https://nodejs.org/en/download/)
