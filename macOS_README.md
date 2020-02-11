@@ -25,14 +25,14 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 
 Do ```brew -v``` to check if Homebrew was installed correctly
 
-### Install Python3
+### Install ```Python3```
 In your terminal, type:
 ```
 brew install python
 ```
 After installation, check your python version by ```python --version```
 
-### Install Anaconda2
+### Install ```Anaconda2```
 
 - Downlad the graphical installer for Mac from [https://www.anaconda.com/distribution/#macos](https://www.anaconda.com/distribution/#macos). 
 - Pick the distribution corresponding to the Python version in your machine (preferably v2.7). 
@@ -40,7 +40,7 @@ After installation, check your python version by ```python --version```
 
 After installation, check your Anaconda version by ```conda --version```
 
-### Install Zookeeper
+### Install ```Zookeeper```
 
 - In your terminal, type:
 ```
@@ -51,7 +51,7 @@ brew install zookeeper
 brew services start zookeeper
 ```
 
-### Install Java Development Kit (JDK)
+### Install ```Java Development Kit (JDK)```
 
 - Open a browser and navigate to the URL [http://www.oracle.com/technetwork/java/javase/downloads/index.html](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 - Click on JDK, check “Accept License Agreement” and download .dmg file for installation on Mac.
@@ -59,7 +59,7 @@ brew services start zookeeper
 
 After installation, you can check your machine's java version by ```java -version```
 
-### Apache Kafka
+### Install ```Apache Kafka```
 
 - Download the latest Apache Kafka from [https://kafka.apache.org/downloads](https://kafka.apache.org/downloads) under Binary downloads
 - Extract the contents. Navigate to root of Apache Kafka folder and open a Terminal. **OR** Open a Terminal and navigate to the root directory of Apache Kafka.
@@ -68,7 +68,7 @@ After installation, you can check your machine's java version by ```java -versio
 ./bin/kafka-server-start.sh -daemon ./config/server.properties
 ```
 
-### ElasticSearch
+### Install ```ElasticSearch```
 
 - In your terminal, type:
 ```
@@ -80,7 +80,7 @@ brew install elasticsearch
 brew services start elasticsearch
 ```
 
-### Install Node and NPM
+### Install ```Node``` and ```NPM```
 
 - Run the following command:
 ```
@@ -88,7 +88,7 @@ brew install node
 ```
 After completion, you can check if the packages were installed correctly by running ```node -v``` and ```npm -v```
 
-### Install Angular v1.7
+### Install ```Angular v1.7```
 
 - In your terminal, run:
 ```
