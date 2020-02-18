@@ -227,14 +227,13 @@
           <labeled-input name="Description" [model]="input" key="description" [colSize]="12"></labeled-input>
           <labeled-input-select name="Type" [model]="input" key="scale" [colSize]="6"
                                 [options]="[ {key:'Boolean',label:'Boolean'},
-                                {key:'Enum', label:'Enum'},
                                 {key:'Number', label:'Number'}]">
           </labeled-input-select>
           <labeled-input-select *ngIf="input['scale'] == 'Boolean'" name="Value" [model]="input" key="value" [colSize]="3"
                                 [options]="[{key:'true',label:'True'},
                                 {key:'false',label:'False'}]">
           </labeled-input-select>
-          <labeled-input *ngIf="input['scale'] == 'Enum'" name="Enum Types" [model]="input" key="enum" [colSize]="6"></labeled-input>
+          <!-- <labeled-input *ngIf="input['scale'] == 'Enum'" name="Enum Types" [model]="input" key="enum" [colSize]="6"></labeled-input> -->
           <labeled-input *ngIf="input['scale'] == 'Number'" name="Number" [model]="input" key="number" [colSize]="7"></labeled-input>
           <labeled-input *ngIf="input['scale'] == 'Number'" name="Discretization Step" [model]="input" key="discretization_step" [colSize]="4"></labeled-input>
           <!--

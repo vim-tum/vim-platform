@@ -351,10 +351,14 @@
     <div class="panel-body">
       <labeled-input-select name="Type" [model]="experiment.analysis" key="type" [colSize]="6"
                             [options]="[
+                                      {key:'factorial_experiment',label:'Factorial Experiment'}]"
+                            (modelChanged)="experimentTypeChanged($event)">
+                            <!--
+                            [options]="[
                                       {key:'factorial_experiment',label:'Factorial Experiment'},
                                       {key:'t_test',label:'T-test'},
                                       {key:'bayesian_opt',label:'Bayesian Optimization'}]"
-                            (modelChanged)="experimentTypeChanged($event)">
+                            (modelChanged)="experimentTypeChanged($event)"> -->
       </labeled-input-select>
     </div>
 
