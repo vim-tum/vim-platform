@@ -82,17 +82,17 @@ export class ExperimentsComponent {
     this.router.navigate(["control/configuration"]);
   }
 
-  modalExperimentDeletion(experimentId){
+  modalExperimentDeletion(experimentId) {
     this.experimentToBeDeleted = this.experiments.find(e => e.id == experimentId);
     this.experimentToBeDeletedName = this.experimentToBeDeleted.name;
     // console.log("deleting experiment: ", this.experimentToBeDeleted.id);
   }
 
-  cancelExperimentDeletion(){
+  cancelExperimentDeletion() {
     this.experimentToBeDeleted = null;
   }
 
-  deleteExperiment(experiment){
+  deleteExperiment(experiment) {
     console.log("deleting experiment: ", experiment.id);
 
     this.api.deleteExperiment(experiment).subscribe(

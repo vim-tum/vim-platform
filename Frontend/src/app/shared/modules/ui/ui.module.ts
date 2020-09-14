@@ -13,6 +13,7 @@ import {IncomingDataTypesComponent} from "./incoming-data-types-optimization.com
 import {IncomingDataTypesAnalysisComponent} from "./incoming-data-types-analysis.component";
 import {ExperimentStagesPaginatorRunningComponent} from "./experiment-stages-paginator-running.component";
 import {AnovaAnalysisComponent} from "./anova-analysis.component";
+import {IncomingDataTypesSimulationComponent} from "./incoming-data-types-simulation.component";
 
 const uiElements = [
   DebugElementComponent,
@@ -25,7 +26,8 @@ const uiElements = [
   AnovaAnalysisComponent,
   TtestAnalysisComponent,
   IncomingDataTypesComponent,
-  IncomingDataTypesAnalysisComponent
+  IncomingDataTypesAnalysisComponent,
+  IncomingDataTypesSimulationComponent
 ];
 
 @NgModule({
