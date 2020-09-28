@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "RadioMsg11p",
+  "namespace": "eu.fau.cs7.datamodel",
+  "fields": [
+    { "name": "Sender", "type": "string"}, 
+    { "name": "Params", "type": "string"}, 
+    { "name": "Type", "type": "string"}, 
+    { "name": "Payload", "type": "string"}
+  ]
+}

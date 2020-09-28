@@ -1,0 +1,36 @@
+##############################
+### SendScenarioObject.jar ###
+
+This tool allows to start a simulation run. 
+
+Run it like this:
+java -jar SendScenarioObject.jar PathToSCEFile 
+(e.g., "java -jar SendCustomObject.jar ExampleScenario/RingRoad_Sumo_With_SpeedObserver.sce")
+
+Following steps are performed
+1.  Connect to KafkaBroker, while channel/topic names, ips, etc..., are read from config.properties file
+2.  Send given .sce file to orchestrationChannel
+3.  Wait for the simulation service to repost the sce file on provisionChannel.runID.scenario
+    This is some kind of an ACK that the request was accepted
+4.  Provide the needed resources. They need to be in the same directory as the *.sce file (e.g., the "traffic.xml") and are sent to
+    provisionChannel.runID.resource. After that, the simulation service can start the simulators.
+5.  Listen to some of the provisionChannel topics.
+
+
+############################
+### SendCustomObject.jar ###
+
+Allows to send different avro objects to a certain topic. May be helpful for some testing.
+
+Run it like this:
+java -jar SendCustomObject.jar ObjectType Topic [Repetitions=1] [micro-custom values] 
+
+Implemented ObjectTypes are: micro micro-custom s1 d1 i1 s1d1 s1d2 s1d3 s2 s1i1
+ 
+
+############################
+### SendOrchestrationObject.jar ###
+java -jar SendOrchestrationObject.jar ScenarioID (statusRequest|terminate|die|pause) 
+
+Allows to send some control commands. Currently, only "terminate" and "die" is implemented in the backend.
+

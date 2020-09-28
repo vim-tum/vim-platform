@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "ResourceFile",
+  "namespace": "eu.fau.cs7.datamodel",
+  "fields": [
+    { "name": "ID", "type": "string"},
+    { "name": "Type", "type": "string"},
+    { "name": "File", "type": "bytes"}
+  ]
+}

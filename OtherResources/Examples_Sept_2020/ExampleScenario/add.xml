@@ -1,0 +1,5 @@
+<additionals>
+    <e1Detector id="e1Detector_2_0_2" lane="2_0" pos="11.19" freq="100.00" file="e1Detector_2_0_2.txt" friendlyPos="0"/>
+    <e1Detector id="e1Detector_2_1_1" lane="2_1" pos="10.79" freq="100.00" file="e1Detector_2_1_1.txt" friendlyPos="0"/>
+    <e1Detector id="e1Detector_2_2_0" lane="2_2" pos="10.11" freq="100.00" file="e1Detector_2_2_0.txt" friendlyPos="0"/>
+</additionals>
