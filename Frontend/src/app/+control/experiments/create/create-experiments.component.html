@@ -125,6 +125,29 @@
             </div>
           </div>
 
+          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'kafka_producer'">
+            <div class="col-md-3">
+              <div class="sub-title">Name</div>
+              <span>{{targetSystem.primaryDataProvider.name}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Kafka URI</div>
+              <span>{{targetSystem.primaryDataProvider.kafka_uri}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Topic</div>
+              <span>{{targetSystem.primaryDataProvider.topic}}</span>
+            </div>
+            <div class="col-md-3">
+              <div class="sub-title">Serializer</div>
+              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+            </div>
+            <div class="col-md-2">
+              <div class="sub-title">Ignore First N Samples</div>
+              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+            </div>
+          </div>
+
           <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'mqtt_listener'">
             <div class="col-md-2">
               <div class="sub-title">Name</div>
@@ -184,6 +207,25 @@
             </div>
 
             <div *ngIf="secondaryDataProvider.type == 'kafka_consumer'">
+              <div class="col-md-3">
+                <div class="sub-title">Name</div>
+                <span>{{secondaryDataProvider.name}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Kafka URI</div>
+                <span>{{secondaryDataProvider.kafka_uri}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Topic</div>
+                <span>{{secondaryDataProvider.topic}}</span>
+              </div>
+              <div class="col-md-3">
+                <div class="sub-title">Serializer</div>
+                <span>{{secondaryDataProvider.serializer}}</span>
+              </div>
+            </div>
+
+            <div *ngIf="secondaryDataProvider.type == 'kafka_producer'">
               <div class="col-md-3">
                 <div class="sub-title">Name</div>
                 <span>{{secondaryDataProvider.name}}</span>
@@ -351,14 +393,10 @@
     <div class="panel-body">
       <labeled-input-select name="Type" [model]="experiment.analysis" key="type" [colSize]="6"
                             [options]="[
-                                      {key:'factorial_experiment',label:'Factorial Experiment'}]"
-                            (modelChanged)="experimentTypeChanged($event)">
-                            <!--
-                            [options]="[
                                       {key:'factorial_experiment',label:'Factorial Experiment'},
                                       {key:'t_test',label:'T-test'},
                                       {key:'bayesian_opt',label:'Bayesian Optimization'}]"
-                            (modelChanged)="experimentTypeChanged($event)"> -->
+                            (modelChanged)="experimentTypeChanged($event)">
       </labeled-input-select>
     </div>
 

@@ -1,5 +1,6 @@
 from flask import jsonify
 from flask_restful import Resource
+from oeda.config.simulation_config import Config as SimulationConfig
 from oeda.config.crowdnav_config import Config as CrowdNavConfig
 from oeda.config.platooning_config import Config as PlatooningConfig
 from oeda.config.R_config import Config as mlrMBOConfig
@@ -12,47 +13,67 @@ class ConfigController(Resource):
     @staticmethod
     def get():
         try:
-            crowd_nav_knobs = json.loads(open('oeda/config/crowdnav_config/knobs.json').read())
-            crowd_nav_data_providers = json.loads(open('oeda/config/crowdnav_config/dataProviders.json').read())
+            # crowd_nav_knobs = json.loads(open('oeda/config/crowdnav_config/knobs.json').read())
+            # crowd_nav_data_providers = json.loads(open('oeda/config/crowdnav_config/dataProviders.json').read())
 
-            black_box_knobs = json.loads(open('oeda/config/black_box_config/knobs.json').read())
-            black_box_data_providers = json.loads(open('oeda/config/black_box_config/dataProviders.json').read())
+            # black_box_knobs = json.loads(open('oeda/config/black_box_config/knobs.json').read())
+            # black_box_data_providers = json.loads(open('oeda/config/black_box_config/dataProviders.json').read())
 
-            platooning_knobs = json.loads(open('oeda/config/platooning_config/knobs.json').read())
-            platooning_data_providers = json.loads(open('oeda/config/platooning_config/dataProviders.json').read())
+            # platooning_knobs = json.loads(open('oeda/config/platooning_config/knobs.json').read())
+            # platooning_data_providers = json.loads(open('oeda/config/platooning_config/dataProviders.json').read())
+
+            simulation_knobs = json.loads(open('oeda/config/simulation_config/knobs.json').read())
+            simulation_provision = json.loads(open('oeda/config/simulation_config/provisionChannel.json').read())
+            # Make something similar for interaction channel. This will feed into changeProvider
+            # simulation_interation = json.loads(open('oeda/config/simulation_config/interactionChannel.json').read())
 
             data = [
                 {
-                    "name": "CrowdNav",
+                    "name": "Simulation",
                     "description": "Simulation based on SUMO",
-                    "kafkaTopicRouting": CrowdNavConfig.kafkaTopicRouting,
-                    "kafkaTopicTrips": CrowdNavConfig.kafkaTopicTrips,
-                    "kafkaTopicPerformance": CrowdNavConfig.kafkaTopicPerformance,
-                    "kafkaHost": CrowdNavConfig.kafkaHost,
-                    "kafkaCommandsTopic": CrowdNavConfig.kafkaCommandsTopic, # for now, kafkaHost and kafkaCommandsTopic are only fetched & used for populating change provider entity in OEDA
+                    "kafkaTopicRouting": SimulationConfig.kafkaTopicRouting,
+                    "kafkaTopicTrips": SimulationConfig.kafkaTopicTrips,
+                    "kafkaTopicPerformance": SimulationConfig.kafkaTopicPerformance,
+                    "kafkaTopicProvision": SimulationConfig.kafkaTopicProvision,
+                    "kafkaHost": SimulationConfig.kafkaHost,
+                    "kafkaCommandsTopic": SimulationConfig.kafkaCommandsTopic, # for now, kafkaHost and kafkaCommandsTopic are only fetched & used for populating change provider entity in OEDA
                     "changesApplicable": True, # if we can change target system's default configuration on-the-fly
-                    "knobs": crowd_nav_knobs, # used to populate changeableVariables in OEDA
-                    "dataProviders": crowd_nav_data_providers # used to populate dataProviders in OEDA
-                },
-                {
-                    "name": "Platooning",
-                    "description": "Car Platooning Simulation based on SUMO",
-                    "kafkaTopicCarData": PlatooningConfig.kafkaTopicCarData,
-                    # "kafkaTopicPlatooningData": PlatooningConfig.kafkaTopicPlatooningData,
-                    "kafkaHost": PlatooningConfig.kafkaHost,
-                    "kafkaCommandsTopic": PlatooningConfig.kafkaPlatooningCommandsTopic, # for now, kafkaHost and kafkaCommandsTopic are only fetched & used for populating change provider entity in OEDA
-                    "changesApplicable": True, # if we can change target system's default configuration on-the-fly
-                    "knobs": platooning_knobs, # used to populate changeableVariables in OEDA
-                    "dataProviders": platooning_data_providers # used to populate dataProviders in OEDA
-                },
-                {
-                    "name": "Black-box function",
-                    "description": "Three-hump camel function with randomness",
-                    "changesApplicable": True, # yes, we can change internal x & y values of black-box fcn (although it won't effect the last result)
-                    "url": "http://localhost:3003",
-                    "knobs": black_box_knobs,
-                    "dataProviders": black_box_data_providers
+                    "knobs": simulation_knobs, # used to populate changeableVariables in OEDA
+                    "dataProviders": simulation_provision # used to populate dataProviders in OEDA
                 }
+                # ,
+                # {
+                #     "name": "CrowdNav",
+                #     "description": "Simulation based on SUMO",
+                #     "kafkaTopicRouting": CrowdNavConfig.kafkaTopicRouting,
+                #     "kafkaTopicTrips": CrowdNavConfig.kafkaTopicTrips,
+                #     "kafkaTopicPerformance": CrowdNavConfig.kafkaTopicPerformance,
+                #     "kafkaTopicProvision": CrowdNavConfig.kafkaTopicProvision,
+                #     "kafkaHost": CrowdNavConfig.kafkaHost,
+                #     "kafkaCommandsTopic": CrowdNavConfig.kafkaCommandsTopic, # for now, kafkaHost and kafkaCommandsTopic are only fetched & used for populating change provider entity in OEDA
+                #     "changesApplicable": True, # if we can change target system's default configuration on-the-fly
+                #     "knobs": crowd_nav_knobs, # used to populate changeableVariables in OEDA
+                #     "dataProviders": crowd_nav_data_providers # used to populate dataProviders in OEDA
+                # },
+                # {
+                #     "name": "Platooning",
+                #     "description": "Car Platooning Simulation based on SUMO",
+                #     "kafkaTopicCarData": PlatooningConfig.kafkaTopicCarData,
+                #     # "kafkaTopicPlatooningData": PlatooningConfig.kafkaTopicPlatooningData,
+                #     "kafkaHost": PlatooningConfig.kafkaHost,
+                #     "kafkaCommandsTopic": PlatooningConfig.kafkaPlatooningCommandsTopic, # for now, kafkaHost and kafkaCommandsTopic are only fetched & used for populating change provider entity in OEDA
+                #     "changesApplicable": True, # if we can change target system's default configuration on-the-fly
+                #     "knobs": platooning_knobs, # used to populate changeableVariables in OEDA
+                #     "dataProviders": platooning_data_providers # used to populate dataProviders in OEDA
+                # },
+                # {
+                #     "name": "Black-box function",
+                #     "description": "Three-hump camel function with randomness",
+                #     "changesApplicable": True, # yes, we can change internal x & y values of black-box fcn (although it won't effect the last result)
+                #     "url": "http://localhost:3003",
+                #     "knobs": black_box_knobs,
+                #     "dataProviders": black_box_data_providers
+                # }
             ]
             resp = jsonify(data)
             resp.status_code = 200

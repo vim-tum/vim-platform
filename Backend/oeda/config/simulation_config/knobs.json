@@ -1,0 +1,55 @@
+[
+  {
+    "name": "vehicle_edge",
+    "description": "Controls the edge of a vehicle",
+    "scale": "Text",
+    "topic": "vehicle"
+  }, {
+    "name": "vehicle_lane",
+    "description": "Controls the lane of the vehicle",
+    "scale": "Text",
+    "topic": "vehicle"
+  }, {
+    "name": "vehicle_speed",
+    "description": "Controls the speed of the vehicle",
+    "scale": "Metric",
+    "topic": "vehicle",
+    "min": 0.0,
+    "max": 200,
+    "default": 50.0
+  }, {
+    "name": "vehicle_speed_mode",
+    "description": "Controls the speed mode of the vehicle",
+    "scale": "Metric",
+    "topic": "vehicle",
+    "min": 0.0,
+    "max": 0.3,
+    "default": 0.0
+  }, {
+    "name": "road_speed",
+    "description": "Controls the speed of the vehicles on the road",
+    "scale": "Metric",
+    "topic": "road",
+    "min": 1.0,
+    "max": 2.5,
+    "default": 1.0
+  }, {
+    "name": "vehicle_attribute",
+    "description": "Controls which vehicle information should be monitored",
+    "scale": "Text",
+    "topic": "vehicle"
+  }, {
+    "name": "road_attribute",
+    "description": "Controls which road information should be monitored",
+    "scale": "Text",
+    "topic": "road"
+  }, {
+    "name": "test_attribute",
+    "description": "Test if you can add knobs without channel coupling",
+    "scale": "Metric",
+    "topic": "",
+    "min": 1.0,
+    "max": 2.5,
+    "default": 1.0
+  }
+]

@@ -18,7 +18,7 @@ kafkaTopicRouting = "crowd-nav-routing"
 kafkaTopicProvision = "simulation-provision"
 
 # where we receive system changes
-kafkaCommandsTopic = "crowd-nav-commands"
+kafkaCommandsTopic = "interaction"
 
 # True if we want to use the SUMO GUI (always of in parallel mode)
 sumoUseGUI = True  # False

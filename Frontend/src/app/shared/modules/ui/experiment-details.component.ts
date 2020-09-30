@@ -108,6 +108,29 @@ import {isNullOrUndefined} from "util";
               </div> -->
             </div>
 
+            <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'kafka_producer'">
+              <div class="col-md-3">
+                <div class="sub-title">Name</div>
+                <span>{{targetSystem.primaryDataProvider.name}}</span>
+              </div>
+              <div class="col-md-2">
+                <div class="sub-title">Kafka URI</div>
+                <span>{{targetSystem.primaryDataProvider.kafka_uri}}</span>
+              </div>
+              <div class="col-md-2">
+                <div class="sub-title">Topic</div>
+                <span>{{targetSystem.primaryDataProvider.topic}}</span>
+              </div>
+              <div class="col-md-2">
+                <div class="sub-title">Serializer</div>
+                <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+              </div>
+              <!-- <div class="col-md-2">
+                <div class="sub-title">Ignore First N Samples</div>
+                <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+              </div> -->
+            </div>
+
             <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'mqtt_listener'">
               <div class="col-md-3">
                 <div class="sub-title">Name</div>
@@ -190,6 +213,25 @@ import {isNullOrUndefined} from "util";
                 </div>
               </div>
 
+              <div *ngIf="secondaryDataProvider.type == 'kafka_producer'">
+                <div class="col-md-3">
+                  <div class="sub-title">Name</div>
+                  <span>{{secondaryDataProvider.name}}</span>
+                </div>
+                <div class="col-md-3">
+                  <div class="sub-title">Kafka URI</div>
+                  <span>{{secondaryDataProvider.kafka_uri}}</span>
+                </div>
+                <div class="col-md-3">
+                  <div class="sub-title">Topic</div>
+                  <span>{{secondaryDataProvider.topic}}</span>
+                </div>
+                <div class="col-md-3">
+                  <div class="sub-title">Serializer</div>
+                  <span>{{secondaryDataProvider.serializer}}</span>
+                </div>
+              </div>
+
               <div *ngIf="secondaryDataProvider.type == 'mqtt_listener'">
                 <div class="col-md-2">
                   <div class="sub-title">Name</div>
@@ -242,7 +284,7 @@ import {isNullOrUndefined} from "util";
               </div>
             </div>
 
-            <div class="row" *ngIf="targetSystem.changeProvider.type == 'kafka_producer'">
+            <div class="row" *ngIf="targetSystem.changeProvider.type == 'kafka_'">
               <div class="col-md-4">
                 <div class="sub-title">Kafka URI</div>
                 <span>{{targetSystem.changeProvider.kafka_uri}}</span>

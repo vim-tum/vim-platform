@@ -7,14 +7,26 @@ from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
 
 class KafkaConsumerDataProvider(DataProvider):
-    """ implements a data provider for kafaka """
+    """ implements a data provider for kafka """
 
     def __init__(self, wf, cp):
         self.callBackFunction = None
         # load config
         try:
             self.kafka_uri = cp["kafka_uri"]
-            self.topic = cp["topic"]
+            #self.topic = cp["topic"] #old ways
+            
+            # changes to topic format to make it accessible to new channel guidelines
+            ## Get the channel name
+            channelName = str(cp["channel"])
+            # Check what simulator does the experiment refer to (can be replicated in if-else ladder for analysis module)
+            #if wf._oeda_target["name"] == "CrowdNav":
+            channelName = channelName + ".simulator"     #We need to add some logic here to make it compatible to analysis module and multiplen simulators 
+            ## Get SimID to append with topic (should be same as experiment ID)
+            channelName = channelName + "." + str(wf.id) + "." + cp["topic"]
+            #print("Kafka topic selected as >> ", channelName)
+            self.topic = channelName
+            
             self.serializer = cp["serializer"]
             info(
                 "> KafkaConsumer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +

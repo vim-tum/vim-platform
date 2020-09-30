@@ -38,6 +38,8 @@ class RTXDefinition:
         self.considered_data_types = oeda_experiment["considered_data_types"]
         self.analysis = oeda_experiment["analysis"]
 
+        # print("\nChangeProvider ==>", oeda_target["changeProvider"])
+
         # set-up primary data provider
         primary_data_provider = oeda_target["primaryDataProvider"]
         primary_data_provider["data_reducer"] = RTXDefinition.primary_data_reducer

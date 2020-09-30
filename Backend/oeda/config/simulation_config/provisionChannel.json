@@ -1,0 +1,106 @@
+[
+    {
+      "name": "Vehicle",
+      "description": "Provides acceleration, edge, position and speed of vehicles",
+      "type": "kafka_consumer",
+      "kafka_uri": "kafka:9092",
+      "topic": "vehicle",
+      "serializer": "JSON",
+      "channel": "provision",
+      "incomingDataTypes": [
+        {
+          "name": "acceleration",
+          "description": "acceleration value of vehicles",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Vehicle"
+        }, {
+          "name": "edge",
+          "description": "edge value of the vehicle",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Vehicle"
+        }, {
+          "name": "position",
+          "description": "current position of the car",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Vehicle"
+        }, {
+          "name": "speed",
+          "description": "current speed of the car",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Vehicle"
+        }
+      ]
+    }, {
+      "name": "Road",
+      "description": "Provides statistics of the road",
+      "type": "kafka_consumer",
+      "kafka_uri": "kafka:9092",
+      "topic": "road",
+      "serializer": "JSON",
+      "channel": "provision",
+      "incomingDataTypes": [
+        {
+          "name": "emission",
+          "description": "Provides fuel emission by vehicles on the road",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Road"
+        }
+      ]
+    }, {
+      "name": "Scenario",
+      "description": "[Used for ACK purposes. Will be hidden from user] Scenario description file",
+      "type": "kafka_consumer",
+      "kafka_uri": "kafka:9092",
+      "topic": "scenario",
+      "serializer": "JSON",
+      "channel": "provision",
+      "incomingDataTypes": [
+        {
+          "name": "scenarioFile",
+          "description": "Gets ACK from Simulator service denoting successful post",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Scenario"
+        }
+      ]
+    }, {
+      "name": "Results",
+      "description": "Choose if you want all simulation results in an archived file",
+      "type": "kafka_consumer",
+      "kafka_uri": "kafka:9092",
+      "topic": "result",
+      "serializer": "JSON",
+      "channel": "provision",
+      "incomingDataTypes": [
+        {
+          "name": "resultFile",
+          "description": "Archived result file",
+          "scale": "Metric",
+          "criteria": "Minimize",
+          "dataProviderName": "Results"
+        }
+      ]
+    }, {
+      "name": "Resource",
+      "description": "Choose if you want to send external resources for simualtion (mapfile, traffic input, etc.)",
+      "type": "kafka_producer",
+      "kafka_uri": "kafka:9092",
+      "topic": "resource",
+      "serializer": "JSON",
+      "channel": "provision",
+      "incomingDataTypes": [
+        {
+          "name": "resourceFile",
+          "description": "Resources for simulation",
+          "scale": "Text",
+          "criteria": "Minimize",
+          "dataProviderName": "Resource"
+        }
+      ]
+    }
+]

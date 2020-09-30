@@ -153,7 +153,9 @@ export class EditTargetsComponent implements OnInit {
           pushedDataType["disabled"] = true;
         }
       } else {
-        this.notify.error("", "Data provider is already added");
+        if  (dataProvider.name != "Scenario") {
+          this.notify.error("", "Data provider is already added");
+        }
       }
     }
   }
@@ -334,7 +336,16 @@ export class EditTargetsComponent implements OnInit {
           this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
           return true;
         }
-      } else if (dataProvider.type === "mqtt_listener") {
+      } else if (dataProvider.type === "kafka_producer") {
+        if (dataProvider.serializer == null
+          || dataProvider.kafka_uri == null
+          || dataProvider.kafka_uri.length === 0
+          || dataProvider.topic == null
+          || dataProvider.topic.length === 0) {
+          this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+          return true;
+        }
+      }else if (dataProvider.type === "mqtt_listener") {
         if (dataProvider.serializer == null
           || dataProvider.host == null
           || dataProvider.host.length === 0

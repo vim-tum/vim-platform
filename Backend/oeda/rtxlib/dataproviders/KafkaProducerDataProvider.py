@@ -4,23 +4,28 @@ from kafka import KafkaProducer
 from flask import json
 
 from oeda.log import *
-from oeda.rtxlib.changeproviders.ChangeProvider import ChangeProvider
+from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
 
-class KafkaProducerChangeProvider(ChangeProvider):
-    """ implements a change provider based on kafka publish """
+class KafkaProducerDataProvider(DataProvider):
+    """ implements a data provider based on kafka publish. Required for Provision channel configuration publishing """ 
 
     def __init__(self, wf, cp):
         # load config
         try:
             self.kafka_uri = cp["kafka_uri"]
-            # self.topic = cp["topic"]
-            topicName = cp["topic"] # should be "interaction" as specified in config.py
-            topicName = topicName + ".simulator"     #We need to add some logic here to make it compatible to analysis module and multiplen simulators 
+            #self.topic = cp["topic"] #old ways
+            
+            # changes to topic format to make it accessible to new channel guidelines
+            ## Get the channel name
+            channelName = str(cp["channel"])
+            # Check what simulator does the experiment refer to (can be replicated in if-else ladder for analysis module)
+            #if wf._oeda_target["name"] == "CrowdNav":
+            channelName = channelName + ".simulator"     #We need to add some logic here to make it compatible to analysis module and multiplen simulators 
             ## Get SimID to append with topic (should be same as experiment ID)
-            topicName = topicName + "." + str(wf.id)
+            channelName = channelName + "." + str(wf.id) + "." + cp["topic"]
             #print("Kafka topic selected as >> ", channelName)
-            self.topic = topicName
+            self.topic = channelName
 
             self.serializer = cp["serializer"]
             info("> KafkaProducer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +
@@ -46,7 +51,7 @@ class KafkaProducerChangeProvider(ChangeProvider):
             error("connection to kafka failed")
             exit(1)
 
-    def applyChange(self, message):
+    def sendData(self, message):
         """ send out a message through kafka """
         debug("Sending out Kafka Message:" + str(message))
         self.producer.send(self.topic, message)

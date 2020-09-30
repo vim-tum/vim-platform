@@ -58,7 +58,8 @@
           <labeled-input-select name="Type" [model]="dataProvider" key="type" [colSize]="6"
                                 [options]="[{key:'http_request',label:'HTTP Request'},
                                 {key:'mqtt_listener',label:'MQTT Listener'},
-                                {key:'kafka_consumer',label:'Kafka Consumer'}]"></labeled-input-select>
+                                {key:'kafka_consumer',label:'Kafka Consumer'},
+                                {key:'kafka_producer',label:'Kafka Producer'}]"></labeled-input-select>
           <labeled-input name="Description" [model]="dataProvider" key="description" [colSize]="12"></labeled-input>
 
           <div *ngIf="dataProvider.type == 'http_request'">
@@ -83,8 +84,16 @@
             <labeled-input name="Kafka URI" [model]="dataProvider" key="kafka_uri"
                            [colSize]="10"></labeled-input>
           </div>
+
+          <div *ngIf="dataProvider.type == 'kafka_producer'">
+            <labeled-input name="Topic" [model]="dataProvider" key="topic"></labeled-input>
+            <labeled-input-select name="Serializer" [model]="dataProvider" key="serializer" [colSize]="12"
+                                  [options]="[{key:'JSON',label:'JSON'}]"></labeled-input-select>
+            <labeled-input name="Kafka URI" [model]="dataProvider" key="kafka_uri"
+                           [colSize]="10"></labeled-input>
+          </div>
           <!-- See https://getbootstrap.com/docs/4.0/components/tooltips/ -->
-          <labeled-input *ngIf="target.dataProviders.length > 1"
+          <labeled-input *ngIf="target.dataProviders.length > 1 && dataProvider.type == 'kafka_consumer'"
                          name="Primary Data Provider?"
                          [model]="dataProvider"
                          key="is_primary"
@@ -185,9 +194,11 @@
                                 {key:'Nominal',label:'Nominal'},
                                 {key:'Ordinal',label:'Ordinal'},
                                 {key:'Metric',label:'Metric'},
-                                {key:'Ratio',label:'Ratio'}]"
+                                {key:'Ratio',label:'Ratio'},
+                                {key:'Text',label:'Text'}]"
                                 data-toggle="tooltip" title="Select Boolean scale for boolean values">
           </labeled-input-select>
+          <labeled-input *ngIf="input['scale'] == 'Text'" name = "Filename" [model]="input" key="filename" [colSize]="6"></labeled-input>
           <!-- Remove Optimization Criteria
           <labeled-input-select name="Optimization Criteria" [model]="input" key="criteria" [colSize]="5"
                                 [options]="[{key:'Minimize',label:'Minimize'},
@@ -227,13 +238,15 @@
           <labeled-input name="Description" [model]="input" key="description" [colSize]="12"></labeled-input>
           <labeled-input-select name="Type" [model]="input" key="scale" [colSize]="6"
                                 [options]="[ {key:'Boolean',label:'Boolean'},
+                                {key:'Enum', label:'Enum'},
                                 {key:'Number', label:'Number'}]">
           </labeled-input-select>
           <labeled-input-select *ngIf="input['scale'] == 'Boolean'" name="Value" [model]="input" key="value" [colSize]="3"
                                 [options]="[{key:'true',label:'True'},
                                 {key:'false',label:'False'}]">
           </labeled-input-select>
-          <!-- <labeled-input *ngIf="input['scale'] == 'Enum'" name="Enum Types" [model]="input" key="enum" [colSize]="6"></labeled-input> -->
+          <labeled-input *ngIf="input['scale'] == 'Text'" name="Filename" [model]="input" key="filename" [colSize]="6"></labeled-input>
+          <labeled-input *ngIf="input['scale'] == 'Enum'" name="Enum Types" [model]="input" key="enum" [colSize]="6"></labeled-input>
           <labeled-input *ngIf="input['scale'] == 'Number'" name="Number" [model]="input" key="number" [colSize]="7"></labeled-input>
           <labeled-input *ngIf="input['scale'] == 'Number'" name="Discretization Step" [model]="input" key="discretization_step" [colSize]="4"></labeled-input>
           <!--
@@ -274,6 +287,7 @@
                   </thead>
                   <tbody class="bigTable">
                   <tr *ngFor="let dataProvider of selectedConfiguration.dataProviders; let i = index;">
+                  <ng-container *ngIf="dataProvider.name != 'Scenario'; else elseBlock">
                     <td>{{dataProvider.name}}</td>
                     <td>{{dataProvider.description}}</td>
                     <td>
@@ -281,6 +295,8 @@
                         <i class="fa fa-plus push-5-r"></i> Add
                       </div>
                     </td>
+                    </ng-container>
+                    <ng-template #elseBlock>{{addDataProvider(dataProvider)}}</ng-template>
                   </tr>
                   </tbody>
                 </table>
@@ -296,7 +312,10 @@
                     </tr>
                     </thead>
                     <tbody class="bigTable">
-                    <tr *ngFor="let knob of selectedConfiguration.knobs">
+                    <ng-container *ngFor="let dataProvider of target.dataProviders">
+                    <ng-container *ngFor="let knob of selectedConfiguration.knobs">
+                    <!-- need to handle knobs which are not coupled with channels -->
+                    <tr *ngIf="dataProvider.topic == knob.topic">
                       <td>{{knob.name}}</td>
                       <td>{{knob.description}}</td>
                       <td>
@@ -305,6 +324,8 @@
                         </div>
                       </td>
                     </tr>
+                    </ng-container>
+                    </ng-container>
                     </tbody>
                   </table>
                 </div>
