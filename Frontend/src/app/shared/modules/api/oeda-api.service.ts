@@ -115,8 +115,9 @@ export interface Experiment {
   changeableVariables: any,
   executionStrategy: ExecutionStrategy,
   considered_data_types: object[],
-  analysis: any
-  numberOfSteps: number
+  analysis: any,
+  numberOfSteps: number,
+  simulation: any
 }
 
 export interface StageEntity {
@@ -139,6 +140,7 @@ export interface Target {
   user: string,
   status: string,
   description: string,
+  type: string,
   dataProviders: any, // generic one
   primaryDataProvider: any,
   secondaryDataProviders: any,
@@ -154,6 +156,7 @@ export interface ExecutionStrategy {
   knobs: any,
   stages_count: number,
   optimizer_iterations: number,
+  optimizer_iterations_in_design: number,
   acquisition_method: any
 }
 

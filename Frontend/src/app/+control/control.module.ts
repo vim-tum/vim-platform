@@ -13,8 +13,9 @@ import {ExperimentsComponent} from "./experiments/experiments.component";
 import {ShowRunningExperimentComponent} from "./experiments/show/running/show-running-experiment.component";
 import {ShowSuccessfulExperimentComponent} from "./experiments/show/successful/show-successful-experiment.component";
 import {GraphsModule} from "../shared/modules/graphs/graphs.module";
-import {EditTargetsComponent} from "./targets/edit/edit-targets.component-new";
-import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component-new";
+import {EditTargetsComponent} from "./targets/edit/edit-targets.component";
+import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component";
+import {CreateSimulationsComponent} from "./experiments/create/simulation/create-simulations.component";
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import {CreateExperimentsComponent} from "./experiments/create/create-experiment
     TargetsComponent,
     ExperimentsComponent,
     CreateExperimentsComponent,
+    CreateSimulationsComponent,
     ShowRunningExperimentComponent,
     ShowSuccessfulExperimentComponent,
     EditTargetsComponent

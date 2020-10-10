@@ -17,14 +17,14 @@ outer_key = "payload" # this is by default, see: data_point_type properties in e
 
 def run_analysis(wf):
     """ we run the correct analysis """
-    if wf.analysis["type"] == "two_sample_tests":
+    if wf.analysis["type"] == "one_sample_tests":
+        start_one_sample_tests(wf)
+
+    elif wf.analysis["type"] == "two_sample_tests":
         start_two_sample_tests(wf)
 
     elif wf.analysis["type"] == "factorial_tests":
         start_factorial_tests(wf)
-
-    elif wf.analysis["type"] == "one_sample_tests":
-        start_one_sample_tests(wf)
 
     elif wf.analysis["type"] == "n_sample_tests":
         start_n_sample_tests(wf)

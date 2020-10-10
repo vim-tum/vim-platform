@@ -7,43 +7,97 @@ from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
 
 class KafkaConsumerDataProvider(DataProvider):
-    """ implements a data provider for kafaka """
+    """ implements a data provider for kafka """
 
     def __init__(self, wf, cp):
-        self.callBackFunction = None
-        # load config
-        try:
-            self.kafka_uri = cp["kafka_uri"]
-            self.topic = cp["topic"]
-            self.serializer = cp["serializer"]
-            info(
-                "> KafkaConsumer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +
-                self.topic, Fore.CYAN)
-        except KeyError as e:
-            error("system.kafkaConsumer was incomplete: " + str(e))
-            exit(1)
-        # look at the serializer
-        if self.serializer == "JSON":
-            self.serialize_function = lambda m: json.loads(m.decode('utf-8'))
+
+        if "incomingDataTypes" in cp:
+
+            for idt in cp["incomingDataTypes"]:
+                self.callBackFunction = None
+                # load config
+                try:
+                    self.kafka_uri = cp["kafka_uri"]
+
+                    # changes to topic naming
+                    channel_name = str(cp["channel"]) + ".simulation"
+
+                    # include SimID in the topic name (should be same as experiment ID)
+                    channel_name += "." + str(wf.id) + "." + cp["topic"] + "." + idt["name"]
+
+                    self.topic = channel_name
+
+                    self.serializer = cp["serializer"]
+                    info(
+                        "> KafkaConsumer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +
+                        self.topic, Fore.CYAN)
+                except KeyError as e:
+                    error("system.kafkaConsumer was incomplete: " + str(e))
+                    exit(1)
+                # look at the serializer
+                if self.serializer == "JSON":
+                    self.serialize_function = lambda m: json.loads(m.decode('utf-8'))
+                else:
+                    error("serializer not implemented")
+                    exit(1)
+                # try to connect
+                try:
+                    # disable annoying logging
+                    logging.getLogger("kafka.coordinator.consumer").setLevel("ERROR")
+                    logging.getLogger("kafka.conn").setLevel("ERROR")
+                    # connect to kafka
+                    self.consumer = KafkaConsumer(bootstrap_servers=self.kafka_uri,
+                                                  value_deserializer=self.serialize_function,
+                                                  enable_auto_commit=False,
+                                                  group_id=None,
+                                                  consumer_timeout_ms=3000)
+                    # subscribe to the requested topic
+                    self.consumer.subscribe([self.topic])
+                except RuntimeError as e:
+                    error("connection to kafka failed: " + str(e))
+                    exit(1)
         else:
-            error("serializer not implemented")
-            exit(1)
-        # try to connect
-        try:
-            # disable annoying logging
-            logging.getLogger("kafka.coordinator.consumer").setLevel("ERROR")
-            logging.getLogger("kafka.conn").setLevel("ERROR")
-            # connect to kafka
-            self.consumer = KafkaConsumer(bootstrap_servers=self.kafka_uri,
-                                          value_deserializer=self.serialize_function,
-                                          enable_auto_commit=False,
-                                          group_id=None,
-                                          consumer_timeout_ms=3000)
-            # subscribe to the requested topic
-            self.consumer.subscribe([self.topic])
-        except RuntimeError as e:
-            error("connection to kafka failed: " + str(e))
-            exit(1)
+            self.callBackFunction = None
+            try:
+                self.kafka_uri = cp["kafka_uri"]
+                channel_name = str(cp["channel"])
+
+                channel_name += ".simulation"
+
+                if cp["topic"] != "":
+                    channel_name += "." + str(wf.id) + "." + cp["topic"]
+
+                self.topic = channel_name
+
+                self.serializer = cp["serializer"]
+                info(
+                    "> KafkaConsumer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +
+                    self.topic, Fore.CYAN)
+            except KeyError as e:
+                error("system.kafkaConsumer was incomplete: " + str(e))
+                exit(1)
+            # look at the serializer
+            if self.serializer == "JSON":
+                self.serialize_function = lambda m: json.loads(m.decode('utf-8'))
+            else:
+                error("serializer not implemented")
+                exit(1)
+            # try to connect
+            try:
+                logging.getLogger("kafka.coordinator.consumer").setLevel("ERROR")
+                logging.getLogger("kafka.conn").setLevel("ERROR")
+                # connect to kafka
+                self.consumer = KafkaConsumer(bootstrap_servers=self.kafka_uri,
+                                              value_deserializer=self.serialize_function,
+                                              enable_auto_commit=False,
+                                              group_id=None,
+                                              consumer_timeout_ms=3000)
+                # subscribe to the requested topic
+                self.consumer.subscribe([self.topic])
+            except RuntimeError as e:
+                error("connection to kafka failed: " + str(e))
+                exit(1)
+
 
     def reset(self):
         """ creates a new consumer to get to the current position of the queue """

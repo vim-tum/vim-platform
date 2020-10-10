@@ -3,11 +3,12 @@ import {UserLayoutComponent} from "./layout/user-layout.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {TargetsComponent} from "./targets/targets.component";
 import {ConfigurationComponent} from "./configuration/configuration.component";
-import {EditTargetsComponent} from "./targets/edit/edit-targets.component-new";
+import {EditTargetsComponent} from "./targets/edit/edit-targets.component";
 import {ExperimentsComponent} from "./experiments/experiments.component";
 import {ShowRunningExperimentComponent} from "./experiments/show/running/show-running-experiment.component";
 import {ShowSuccessfulExperimentComponent} from "./experiments/show/successful/show-successful-experiment.component";
-import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component-new";
+import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component";
+import {CreateSimulationsComponent} from "./experiments/create/simulation/create-simulations.component";
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'experiments/create',
         component: CreateExperimentsComponent,
+      },
+      {
+        path: 'experiments/create/simulation',
+        component: CreateSimulationsComponent,
       },
       {
         path: 'experiments/show/:id/running',

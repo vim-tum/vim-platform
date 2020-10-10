@@ -8,8 +8,7 @@ import {isNullOrUndefined} from "util";
       <div class="panel panel-default chartJs">
         <div class="panel-heading">
           <div class="card-title">
-            <div class="title pull-left">Please select the output to optimize, along with the function to apply in the
-              optimization process.
+            <div class="title pull-left">Please select the output to analyse.
             </div>
           </div>
         </div>

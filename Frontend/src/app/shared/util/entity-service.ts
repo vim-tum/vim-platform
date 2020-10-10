@@ -196,7 +196,14 @@ export class EntityService {
         "changeableVariables": [], // used while creating an experiment
         "considered_data_types": [],
         "analysis": {},
-        "numberOfSteps": 0
+        "numberOfSteps": 0,
+        "simulation": {
+          "startTime" : 0,
+          "endTime" : 500,
+          "updateInterval" : 1,
+          "resourcePath": "http://",
+          "resultsFilename": ""
+        }
       }
   }
 
@@ -216,6 +223,7 @@ export class EntityService {
       "name": "",
       "status": "",
       "description": "",
+      "type": "",
       "incomingDataTypes": [],
       "changeableVariables": [], // used while creating a target system
       "defaultVariables": []
@@ -230,6 +238,7 @@ export class EntityService {
       stages_count: 0,
       acquisition_method: "",
       optimizer_iterations: 15,
+      optimizer_iterations_in_design: 0
     }
   }
 

@@ -1,0 +1,39 @@
+[
+  {
+    "name": "OrchestrationBootstrap",
+    "description": "Bootstrap topic for sending sce-files to start, stop or interrupt the simulation",
+    "type": "kafka_producer",
+    "kafka_uri": "kafka:9092",
+    "topic": "bootstrap",
+    "serializer": "JSON",
+    "channel": "orchestration"
+  },
+
+  {
+  "name": "OrchestrationSync",
+  "description": "",
+  "type": "kafka_producer",
+  "kafka_uri": "kafka:9092",
+  "topic": "sync",
+  "serializer": "JSON",
+  "channel": "orchestration"
+},
+  {
+    "name": "OrchestrationStatus",
+    "description": "",
+    "type": "kafka_consumer",
+    "kafka_uri": "kafka:9092",
+    "topic": "status",
+    "serializer": "JSON",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationControl",
+    "description": "",
+    "type": "kafka_consumer",
+    "kafka_uri": "kafka:9092",
+    "topic": "ctrl",
+    "serializer": "JSON",
+    "channel": "orchestration"
+  }
+]

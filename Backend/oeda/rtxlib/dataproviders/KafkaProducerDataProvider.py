@@ -1,26 +1,31 @@
 import logging
+import pickle
+
 from colorama import Fore
 from kafka import KafkaProducer
 from flask import json
 
 from oeda.log import *
-from oeda.rtxlib.changeproviders.ChangeProvider import ChangeProvider
+from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
 
-class KafkaProducerChangeProvider(ChangeProvider):
-    """ implements a change provider based on kafka publish """
+class KafkaProducerDataProvider(DataProvider):
+    """ implements a data provider based on kafka publish. Required for Provision channel configuration publishing """ 
 
     def __init__(self, wf, cp):
         # load config
         try:
             self.kafka_uri = cp["kafka_uri"]
-            # self.topic = cp["topic"]
-            topicName = cp["topic"] # should be "interaction" as specified in config.py
-            topicName = topicName + ".simulator"     #We need to add some logic here to make it compatible to analysis module and multiplen simulators
-            ## Get SimID to append with topic (should be same as experiment ID)
-            topicName = topicName + "." + str(wf.id)
-            #print("Kafka topic selected as >> ", channelName)
-            self.topic = topicName
+
+            # Get the channel name
+            channel_name = str(cp["channel"])
+
+            channel_name += ".simulation"
+
+            if cp["topic"] != "bootstrap":
+                channel_name += "." + str(wf.id) + "." + cp["topic"]
+            # print("Kafka topic selected as >> ", channel_name)
+            self.topic = channel_name
 
             self.serializer = cp["serializer"]
             info("> KafkaProducer  | " + self.serializer + " | URI: " + self.kafka_uri + " | Topic: " +
@@ -32,8 +37,11 @@ class KafkaProducerChangeProvider(ChangeProvider):
         if self.serializer == "JSON":
             self.serialize_function = lambda v: json.dumps(v).encode('utf-8')
         else:
-            error("serializer not implemented")
-            exit(1)
+            if self.serializer == "pickle":
+                self.serialize_function = lambda v: pickle.dumps(v).encode('ascii')
+            else:
+                error("serializer not implemented")
+                exit(1)
         # try to connect
         try:
             # stop annoying logging
@@ -46,7 +54,11 @@ class KafkaProducerChangeProvider(ChangeProvider):
             error("connection to kafka failed")
             exit(1)
 
-    def applyChange(self, message):
+    def sendData(self, message):
         """ send out a message through kafka """
         debug("Sending out Kafka Message:" + str(message))
         self.producer.send(self.topic, message)
+
+    def sendFile(self, filename):
+        """ serialize and send a file through kafka """
+        self.producer.send(self.topic, filename)
