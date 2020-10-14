@@ -15,7 +15,6 @@ import {ShowSuccessfulExperimentComponent} from "./experiments/show/successful/s
 import {GraphsModule} from "../shared/modules/graphs/graphs.module";
 import {EditTargetsComponent} from "./targets/edit/edit-targets.component";
 import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component";
-import {CreateSimulationsComponent} from "./experiments/create/simulation/create-simulations.component";
 
 @NgModule({
   imports: [
@@ -34,7 +33,6 @@ import {CreateSimulationsComponent} from "./experiments/create/simulation/create
     TargetsComponent,
     ExperimentsComponent,
     CreateExperimentsComponent,
-    CreateSimulationsComponent,
     ShowRunningExperimentComponent,
     ShowSuccessfulExperimentComponent,
     EditTargetsComponent
