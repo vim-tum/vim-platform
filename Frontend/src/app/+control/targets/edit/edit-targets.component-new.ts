@@ -104,6 +104,7 @@ export class EditTargetsComponent implements OnInit {
         "changesApplicable": false
       },
       "name": "",
+      "type": "",
       "status": "READY",
       "description": "",
       "incomingDataTypes": [],
