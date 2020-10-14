@@ -34,6 +34,7 @@ export class EditTargetsComponent implements OnInit {
   selectedConfiguration: any;
   configsAvailable = false;
   targetCreatedFromConfig: boolean = false;
+  scenarioDataProvider= [];
 
   /* tslint:disable */
   ngOnInit(): void {
@@ -60,7 +61,7 @@ export class EditTargetsComponent implements OnInit {
         this.api.getConfigFromAPI().subscribe((configs) => {
             for (let idx in configs) {
               if (configs.hasOwnProperty(idx)) {
-                console.log(configs);
+                //console.log(configs);
                 if (!isNullOrUndefined(configs[idx])) {
                   // open the modal in UI
                   this.availableConfigurations.push(configs[idx]);
@@ -241,6 +242,7 @@ export class EditTargetsComponent implements OnInit {
         this.target.secondaryDataProviders.push(dataProvider);
       }
     }
+    this.target.secondaryDataProviders.push(this.scenarioDataProvider);
     return primary_exists;
   }
 
@@ -250,8 +252,11 @@ export class EditTargetsComponent implements OnInit {
       this.target.defaultVariables = _(this.target.changeableVariables);
       ctrl.target.name = ctrl.target.name.trim();
       ctrl.target.user = this.userService.getAuthToken()["value"].user.name;
-      console.log("user creating this experiment: ", ctrl.target.user);
-      console.log(ctrl.target);
+      if (ctrl.target.name.match('Simulation')) {
+        ctrl.target.type = "simulation";
+      }
+
+      console.log("user creating this experiment: ", ctrl.target.user, " ", ctrl.target.type);
 
       // new ts will be created in first case
       if (ctrl.router.url.indexOf("/create") !== -1) {
@@ -259,7 +264,7 @@ export class EditTargetsComponent implements OnInit {
         ctrl.checkValidityOfTargetSystemDefinition();
         let primary_data_provider_exists = this.refreshDataProvidersAndCheckValidity();
         if (!primary_data_provider_exists) {
-          return ctrl.notify.error("", "Provide at least one primary data provider!");
+          return ctrl.notify.error("", "Choose a single primary data provider!");
           //return ctrl.notify.error("", "Provide at least one primary data provider and number of samples to ignore");
         }
         // and perform save operation
@@ -275,7 +280,7 @@ export class EditTargetsComponent implements OnInit {
         ctrl.checkValidityOfTargetSystemDefinition();
         let primary_exists = this.refreshDataProvidersAndCheckValidity();
         if (!primary_exists) {
-          return ctrl.notify.error("", "Provide at least one primary data provider!");
+          return ctrl.notify.error("", "Choose a single primary data provider!");
         }
         // everything is OK, create new uuid for edit operation
         ctrl.target.id = UUID.UUID();
@@ -288,9 +293,7 @@ export class EditTargetsComponent implements OnInit {
           }
         );
       }
-      console.log("primary data provider: ", this.target.primaryDataProvider)
     }
-    console.log("primary data provider: ",this.target.primaryDataProvider);
   }
 
   hasErrors(): boolean {
@@ -301,76 +304,82 @@ export class EditTargetsComponent implements OnInit {
       return true;
     }
 
+    if (this.target.type === '') {
+      this.errorButtonLabel = "Please select the experiment type!";
+      return true;
+    }
+
     // automatically add is_primary attribute if there's only one data provider
     if (this.target.dataProviders.length == 1) {
       this.target.dataProviders[0]["is_primary"] = true;
     }
 
-    for (let i = 0; i < this.target.dataProviders.length; i++) {
-      let dataProvider = this.target.dataProviders[i];
-      // indicate error if user has selected more than one primary_data_provider
-      if (dataProvider.hasOwnProperty("is_primary")) {
-        if (dataProvider["is_primary"]) {
-          nr_of_selected_primary_data_providers += 1;
-          /*
-          if (isNullOrUndefined(dataProvider["ignore_first_n_samples"])) {
-            this.errorButtonLabel = "Provide sample size to ignore";
+    if (this.target.name) {
+      for (let i = 0; i < this.target.dataProviders.length; i++) {
+        let dataProvider = this.target.dataProviders[i];
+        // indicate error if user has selected more than one primary_data_provider
+        if (dataProvider.hasOwnProperty("is_primary")) {
+          if (dataProvider["is_primary"]) {
+            nr_of_selected_primary_data_providers += 1;
+            /*
+            if (isNullOrUndefined(dataProvider["ignore_first_n_samples"])) {
+              this.errorButtonLabel = "Provide sample size to ignore";
+              return true;
+            }
+            */
+          }
+          if (nr_of_selected_primary_data_providers > 1) {
+            this.errorButtonLabel = "Only one primary data provider is allowed";
             return true;
           }
-          */
         }
-        if (nr_of_selected_primary_data_providers > 1) {
-          this.errorButtonLabel = "Only one primary data provider is allowed";
-          return true;
-        }
-      }
 
-      // check for attributes of data providers
-      if (dataProvider.type === "kafka_consumer") {
-        if (dataProvider.serializer == null
-          || dataProvider.kafka_uri == null
-          || dataProvider.kafka_uri.length === 0
-          || dataProvider.topic == null
-          || dataProvider.topic.length === 0) {
-          this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+        // check for attributes of data providers
+        if (dataProvider.type === "kafka_consumer") {
+          if (dataProvider.serializer == null
+            || dataProvider.kafka_uri == null
+            || dataProvider.kafka_uri.length === 0
+            || dataProvider.topic == null
+            || dataProvider.topic.length === 0) {
+            this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+            return true;
+          }
+        } else if (dataProvider.type === "kafka_producer") {
+          if (dataProvider.serializer == null
+            || dataProvider.kafka_uri == null
+            || dataProvider.kafka_uri.length === 0
+            || dataProvider.topic == null
+            || dataProvider.topic.length === 0) {
+            this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+            return true;
+          }
+        } else if (dataProvider.type === "mqtt_listener") {
+          if (dataProvider.serializer == null
+            || dataProvider.host == null
+            || dataProvider.host.length === 0
+            || dataProvider.port == null
+            || dataProvider.port < 1
+            || dataProvider.port > 65535
+            || dataProvider.topic.length === 0
+            || dataProvider.topic == null
+          ) {
+            this.errorButtonLabel = "Provide valid inputs for MQTT data provider";
+            return true;
+          }
+        } else if (dataProvider.type === "http_request") {
+          if (dataProvider.serializer == null
+            || dataProvider.url == null
+            || dataProvider.url.length === 0
+          ) {
+            this.errorButtonLabel = "Provide valid inputs for HTTP data provider";
+            return true;
+          }
+        } else {
+          this.errorButtonLabel = "Please select data provider type";
           return true;
         }
-      } else if (dataProvider.type === "kafka_producer") {
-        if (dataProvider.serializer == null
-          || dataProvider.kafka_uri == null
-          || dataProvider.kafka_uri.length === 0
-          || dataProvider.topic == null
-          || dataProvider.topic.length === 0) {
-          this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
-          return true;
-        }
-      }else if (dataProvider.type === "mqtt_listener") {
-        if (dataProvider.serializer == null
-          || dataProvider.host == null
-          || dataProvider.host.length === 0
-          || dataProvider.port == null
-          || dataProvider.port < 1
-          || dataProvider.port > 65535
-          || dataProvider.topic.length === 0
-          || dataProvider.topic == null
-        ) {
-          this.errorButtonLabel = "Provide valid inputs for MQTT data provider";
-          return true;
-        }
-      } else if (dataProvider.type === "http_request") {
-        if (dataProvider.serializer == null
-          || dataProvider.url == null
-          || dataProvider.url.length === 0
-        ) {
-          this.errorButtonLabel = "Provide valid inputs for HTTP data provider";
-          return true;
-        }
-      } else {
-        this.errorButtonLabel = "Please select data provider type";
-        return true;
       }
     }
-
     // check for attributes of change provider
     if (this.target.changeProvider.type === "kafka_producer") {
       if (this.target.changeProvider.serializer == null
@@ -440,7 +449,7 @@ export class EditTargetsComponent implements OnInit {
           || isNullOrUndefined(this.target.changeableVariables[i].scale)
           || isNullOrUndefined(this.target.changeableVariables[i].default)
           || isNullOrUndefined(this.target.changeableVariables[i].value)) {
-          this.errorButtonLabel = "Provide valid inputs for input parameter(s)!";
+          this.errorButtonLabel = "1 Provide valid inputs for input parameter(s)!";
           return true;
         }
       }
@@ -473,10 +482,15 @@ export class EditTargetsComponent implements OnInit {
       return true;
     }
 
-    if (this.target.changeableVariables.length === 0) {
+    /**
+     * not checking for input parameters
+
+     if (this.target.changeableVariables.length === 0) {
       this.errorButtonLabel = "Provide at least one input parameter";
       return true;
     }
+     */
+
 
     if (this.target.incomingDataTypes.length === 0) {
       this.errorButtonLabel = "Provide at least one output parameter";
@@ -520,6 +534,17 @@ export class EditTargetsComponent implements OnInit {
       this.target.changeProvider['url'] = this.selectedConfiguration['url'];
       this.target.changeProvider['type'] = 'http_request';
       this.target.changeProvider['serializer'] = 'JSON';
+    }
+
+    // add provision topic for scenario ACK kafka consumer
+    // TODO: might need to move this furhter in the workflow
+    if (this.selectedConfiguration['name'] == "Simulation") {
+      let tempConfiguration = this.availableConfigurations.filter(config => config.name === this.selectedConfiguration['name'])[0];
+      // this.scenarioDataProvider = tempConfiguration.filter(dataProvider => dataProvider['name']=="Scenario");
+      for (let dataProviderFromConfig of tempConfiguration.dataProviders) {
+        if (dataProviderFromConfig['name'] == 'Scenario')
+          this.scenarioDataProvider=dataProviderFromConfig;
+      }
     }
 
     // push each knob into defaultVariables array
