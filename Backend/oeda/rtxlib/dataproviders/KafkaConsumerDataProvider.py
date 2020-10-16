@@ -20,7 +20,7 @@ class KafkaConsumerDataProvider(DataProvider):
                     self.kafka_uri = cp["kafka_uri"]
 
                     # changes to topic naming
-                    channel_name = str(cp["channel"]) + ".simulation"
+                    channel_name = str(cp["channel"]) + "." + wf._oeda_target["type"]
 
                     # include SimID in the topic name (should be same as experiment ID)
                     channel_name += "." + str(wf.id) + "." + cp["topic"] + "." + idt["name"]
@@ -62,7 +62,7 @@ class KafkaConsumerDataProvider(DataProvider):
                 self.kafka_uri = cp["kafka_uri"]
                 channel_name = str(cp["channel"])
 
-                channel_name += ".simulation"
+                channel_name += "." + wf._oeda_target["type"]
 
                 if cp["topic"] != "":
                     channel_name += "." + str(wf.id) + "." + cp["topic"]

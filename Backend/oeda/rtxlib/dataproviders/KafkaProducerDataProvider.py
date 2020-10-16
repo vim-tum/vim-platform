@@ -20,7 +20,7 @@ class KafkaProducerDataProvider(DataProvider):
             # Get the channel name
             channel_name = str(cp["channel"])
 
-            channel_name += ".simulation"
+            channel_name += "." + wf._oeda_target["type"]
 
             if cp["topic"] != "bootstrap":
                 channel_name += "." + str(wf.id) + "." + cp["topic"]

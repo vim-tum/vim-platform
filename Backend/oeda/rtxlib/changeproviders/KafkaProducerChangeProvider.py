@@ -16,7 +16,7 @@ class KafkaProducerChangeProvider(ChangeProvider):
             self.kafka_uri = cp["kafka_uri"]
             # self.topic = cp["topic"]
             topicName = cp["topic"] # should be "interaction" as specified in config.py
-            topicName = topicName + ".simulator"     #We need to add some logic here to make it compatible to analysis module and multiplen simulators
+            topicName = topicName + "." + wf._oeda_target["type"]     #We need to add some logic here to make it compatible to analysis module and multiplen simulators
             ## Get SimID to append with topic (should be same as experiment ID)
             topicName = topicName + "." + str(wf.id)
             #print("Kafka topic selected as >> ", channelName)
