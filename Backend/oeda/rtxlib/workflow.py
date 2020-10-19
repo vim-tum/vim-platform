@@ -8,7 +8,7 @@ from oeda.rtxlib.executionstrategy.FactorialExperimentStrategy import start_fact
 from oeda.rtxlib.executionstrategy.TtestStrategy import start_ttest_analysis
 from oeda.analysis.analysis_execution import start_one_sample_tests
 from oeda.rtxlib.executionstrategy import run_execution_strategy
-from oeda.rtxlib.simulationchannels import init_channels, create_scenario_file, init_simulation
+from oeda.rtxlib.simulationchannels import init_channels, create_scenario_file, init_simulation, experimentAck
 
 
 def execute_analysis(wf):
@@ -45,6 +45,11 @@ def execute_workflow(wf):
 
     # initiate send it on orchestration
     init_simulation(wf, sc)
+
+    ack = experimentAck(wf)
+    if (len(ack) == 0):
+        debug("No acknowledgement received from simulator. Please check if it is running.", Fore.RED)
+        exit(1)
 
     # execute chosen strategy and run analysis
     run_execution_strategy(wf)

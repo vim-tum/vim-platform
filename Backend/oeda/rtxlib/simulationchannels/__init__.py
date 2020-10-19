@@ -1,5 +1,6 @@
 from oeda.log import *
 import json
+import time
 
 
 def init_channels(wf):
@@ -68,6 +69,36 @@ def init_simulation(wf, sc):
                 orchestrator = secondary_data_provider["instance"]
                 break
 
+    print("Orchestrator channel is >>" + str(orchestrator.topic))
     # publish jsonified scenario file
     orchestrator.sendData(sc)
 
+def experimentAck(wf):
+    
+    ackChannel = {}
+
+    if wf.primary_data_provider["name"] == "Scenario":
+        ackChannel = wf.primary_data_provider["instance"]
+    else:
+        for secondary_data_provider in wf.secondary_data_providers:
+            if secondary_data_provider["name"] == "Scenario":
+                ackChannel = secondary_data_provider["instance"]
+                break    
+
+    print("ACK channel is >>" + str(ackChannel.topic))
+
+    #taking a 5 minute timeout for ACK waiting. Can be lower or removed  completely
+    timeOut = time.time() + 60 * 5 
+    ack = []
+    
+    while ((time.time() < timeOut)):
+        ack = ackChannel.returnDataListNonBlocking()
+        if len(ack) == 0:
+            time.sleep(10) #wait for 10sec for new message
+            debug("Waiting for ACK from simulator > ", Fore.GREEN)
+        else:
+            break
+    
+    debug("Ack received > " + str(ack))
+    
+    return ack
