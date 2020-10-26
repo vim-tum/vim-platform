@@ -71,8 +71,10 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
 
   public aggregateFunctionsMetric: any;
   public aggregateFunctionsBoolean: any;
+  private aggTopics: any;
 
   constructor() {
+
     this.aggregateFunctionsMetric = [
       {key:'avg',label:'Average'},
       {key:'min',label:'Min'},
@@ -94,7 +96,7 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
 
   public is_data_type_considered(): boolean {
     for (let dataType of this.targetSystem.incomingDataTypes) {
-      if (dataType["is_considered"] == true) {
+      if (dataType["is_considered"] === true) {
         return true;
       }
     }
@@ -120,13 +122,13 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
   public data_type_checkbox_clicked(data_type_index): void {
     let data_type = this.targetSystem.incomingDataTypes[data_type_index];
 
+
     // adjust the clicked data type
     // first click
     if (isNullOrUndefined(data_type["is_considered"])) {
       data_type["is_considered"] = true;
-    }
-    // subsequent clicks (also refresh aggregateFunction)
-    else {
+    } else {
+      // subsequent clicks (also refresh aggregateFunction)
       data_type["is_considered"] = !data_type["is_considered"];
       data_type["aggregateFunction"] = null;
     }
@@ -139,19 +141,47 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
         this.targetSystem.incomingDataTypes[i]["aggregateFunction"] = null;
       }
     }
-     */
+    */
 
-    // propagate changes to parent component
+    // if none of the selected incoming types are from primary data provider,
+    // select the primary data provider as the aggregate topic
+
+    let isPrimaryDPSelected = false;
+    for (let i = 0; i < this.targetSystem.incomingDataTypes.length; i++) {
+      let data_type = this.targetSystem.incomingDataTypes[i];
+      if (this.is_data_type_coming_from_primary(i) && data_type["is_considered"] === true) {
+        isPrimaryDPSelected = true;
+        break;
+      }
+    }
+
+    this.targetSystem.primaryDataProvider["is_considered"] = isPrimaryDPSelected;
+
+    if (!isPrimaryDPSelected) {
+      this.check_topic_primaryDP(0);
+    }
+    // propagate changes to the parent component
     this.incomingDataTypesChanged.emit(this.targetSystem.incomingDataTypes);
+
   }
 
   // check if user has selected a data coming from primary dp.
   public is_primary_dp_selected() {
-    for (let data_type of this.targetSystem.primaryDataProvider.incomingDataTypes) {
-      if (data_type["is_considered"] === true) {
+    for (let i = 0; i < this.targetSystem.incomingDataTypes.length; i++) {
+      let data_type = this.targetSystem.incomingDataTypes[i];
+      if (this.is_data_type_coming_from_primary(i) && data_type["is_considered"] === true) {
         return true;
       }
     }
     return false;
   }
+
+  public check_topic_primaryDP(topic_index): void {
+
+    this.targetSystem.dataProviders[topic_index]["is_considered"] = true;
+
+    // TODO: fix this propagation
+    //  this.incomingDataTypesChanged.emit(this.targetSystem.primaryDataProvider);
+  }
+
 }

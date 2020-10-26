@@ -22,8 +22,14 @@ class KafkaConsumerDataProvider(DataProvider):
                     # changes to topic naming
                     channel_name = str(cp["channel"]) + "." + wf._oeda_target["type"]
 
-                    # include SimID in the topic name (should be same as experiment ID)
-                    channel_name += "." + str(wf.id) + "." + cp["topic"] + "." + idt["name"]
+                    # include SimID in the topic name (should be the same as experiment ID)
+                    channel_name += "." + str(wf.id)
+
+                    # provision channel has an additional attribute 'micro'
+                    if cp["channel"] == "provision":
+                        channel_name += ".micro"
+
+                    channel_name += "." + cp["topic"] + "." + idt["name"]
 
                     self.topic = channel_name
 
