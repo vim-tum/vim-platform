@@ -320,7 +320,7 @@ export class CreateExperimentsComponent implements OnInit {
     }
 
     if (this.entityService.get_number_of_considered_data_types(this.targetSystem) === 0) {
-      this.errorButtonLabel = "Provide at least one incoming data type to be analyzed";
+      this.errorButtonLabel = "Provide at least one output data type to be analyzed";
       return true;
     }
 

@@ -59,7 +59,7 @@ export class AggregateTopicsComponent implements OnInit {
   }
 
   public is_topic_considered(): boolean {
-    for (const topic of this.targetSystem.secondaryDataProviders) {
+    for (const topic of this.targetSystem.dataProviders) {
       if (topic["is_considered"] === true) {
         return true;
       }
@@ -84,8 +84,54 @@ export class AggregateTopicsComponent implements OnInit {
       topic["is_considered"] = !topic["is_considered"];
     }
 
+    let anyPrimarySubtopic = false;
+    for (let i = 0; i < this.targetSystem.incomingDataTypes.length; i++) {
+      let data_type = this.targetSystem.incomingDataTypes[i];
+      // console.log(data_type.name + " is :" + data_type["is_considered"]);
+      if (this.is_data_type_coming_from_primary(i) && data_type["is_considered"] == true) {
+        anyPrimarySubtopic = true;
+        break;
+      }
+    }
+
+    if (!anyPrimarySubtopic && this.isPrimaryDataProvider(topic) && !topic["is_considered"]) {
+      // select the first incoming type of the primary data provider as output
+      this.change_data_type_selection(0);
+
+    }
+
+    /*
+    console.log("[aggregate topics] primary DP considered: " + this.targetSystem.primaryDataProvider["is_considered"]);
+    // selection propagated from incoming data types
+    if (!this.targetSystem.primaryDataProvider["is_considered"]) {
+      this.topic_checkbox_clicked(0);
+    }
+
+   */
+
     // propagate changes to parent component
     this.aggregateTopicChanged.emit(this.targetSystem.dataProviders[topic_index]);
+  }
+
+  public is_data_type_coming_from_primary(data_type_index): boolean {
+    let data_type_name = this.targetSystem.incomingDataTypes[data_type_index]["name"];
+    for (let data_type of this.targetSystem.primaryDataProvider.incomingDataTypes) {
+      if (data_type["name"] == data_type_name) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public change_data_type_selection(data_type_index): void {
+    let data_type = this.targetSystem.incomingDataTypes[data_type_index];
+
+    // mark data_type as considered and refresh aggregateFunction
+    data_type["is_considered"] = true;
+    data_type["aggregateFunction"] = null;
+
+    // propagate changes to parent component
+    // this.incomingDataTypesChanged.emit(this.targetSystem.incomingDataTypes);
   }
 
 }

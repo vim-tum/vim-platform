@@ -292,7 +292,7 @@ export class ShowSuccessfulExperimentComponent implements OnInit {
 
     this.apiService.loadAvailableStepsAndStagesWithExperimentId(this.experiment_id).subscribe(steps => {
       if (!isNullOrUndefined(steps)) {
-        console.log("retrieved steps", steps);
+        // console.log("retrieved steps", steps);
         for (let step_no in steps) {
           if(steps.hasOwnProperty(step_no)) {
             let new_stages = [];
