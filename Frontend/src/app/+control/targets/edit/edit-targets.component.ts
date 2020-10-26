@@ -225,6 +225,7 @@ export class EditTargetsComponent implements OnInit {
   // refresh primaryDataProvider & secondaryDataProviders modals, o/w there will be a bug related with sizes of respective arrays
   // it also checks if a primary data provider is selected or not
   refreshDataProvidersAndCheckValidity() {
+    console.log("refreshDataProvidersAndCheckValidity");
     this.target.secondaryDataProviders = [];
     this.target.primaryDataProvider = {};
     let primary_exists = false;
@@ -256,7 +257,6 @@ export class EditTargetsComponent implements OnInit {
         ctrl.target.type = "simulation";
       }
 
-      console.log("user creating this experiment: ", ctrl.target.user, " ", ctrl.target.type);
 
       // new ts will be created in first case
       if (ctrl.router.url.indexOf("/create") !== -1) {
@@ -543,7 +543,7 @@ export class EditTargetsComponent implements OnInit {
       // this.scenarioDataProvider = tempConfiguration.filter(dataProvider => dataProvider['name']=="Scenario");
       for (let dataProviderFromConfig of tempConfiguration.dataProviders) {
         if (dataProviderFromConfig['name'] == 'Scenario')
-          this.scenarioDataProvider=dataProviderFromConfig;
+          this.scenarioDataProvider = dataProviderFromConfig;
       }
     }
 

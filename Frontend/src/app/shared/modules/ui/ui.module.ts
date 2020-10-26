@@ -14,6 +14,7 @@ import {IncomingDataTypesAnalysisComponent} from "./incoming-data-types-analysis
 import {ExperimentStagesPaginatorRunningComponent} from "./experiment-stages-paginator-running.component";
 import {AnovaAnalysisComponent} from "./anova-analysis.component";
 import {IncomingDataTypesSimulationComponent} from "./incoming-data-types-simulation.component";
+import {AggregateTopicsComponent} from "./aggregate-topics";
 
 const uiElements = [
   DebugElementComponent,
@@ -27,7 +28,8 @@ const uiElements = [
   TtestAnalysisComponent,
   IncomingDataTypesComponent,
   IncomingDataTypesAnalysisComponent,
-  IncomingDataTypesSimulationComponent
+  IncomingDataTypesSimulationComponent,
+  AggregateTopicsComponent
 ];
 
 @NgModule({

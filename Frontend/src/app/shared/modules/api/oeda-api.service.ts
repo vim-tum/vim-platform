@@ -115,6 +115,7 @@ export interface Experiment {
   changeableVariables: any,
   executionStrategy: ExecutionStrategy,
   considered_data_types: object[],
+  consideredAggregateTopics: object[],
   analysis: any,
   numberOfSteps: number,
   simulation: any

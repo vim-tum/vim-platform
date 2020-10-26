@@ -69,7 +69,7 @@ export class CreateExperimentsComponent implements OnInit {
     ctrl.api.loadAllTargets().subscribe(
       (data) => {
         if (!isNullOrUndefined(data)) {
-          for (var k = 0; k < data.length; k++) {
+          for (let k = 0; k < data.length; k++) {
             if (data[k]["status"] === "READY") {
               ctrl.availableTargetSystems.push(data[k]);
             }
@@ -115,6 +115,13 @@ export class CreateExperimentsComponent implements OnInit {
       for (let item of this.targetSystem.incomingDataTypes) {
         if (item.is_considered === true) {
           this.experiment.considered_data_types.push(item);
+        }
+      }
+
+      // if the aggregate dataProvider is considered, append it to consideredAggregateTopics for subscription
+      for (let item of this.targetSystem.dataProviders) {
+        if (item.is_considered === true) {
+          this.experiment.consideredAggregateTopics.push(item);
         }
       }
 
@@ -492,6 +499,11 @@ export class CreateExperimentsComponent implements OnInit {
     this.targetSystem.incomingDataTypes = incomingDataTypes;
   }
 
+  public aggregateTopicChanged(aggregateTopics) {
+    // console.log(aggregateTopics["name"] + " is considered" + aggregateTopics["is_considered"]);
+  }
+
+
   public hasChanges(): boolean {
     return JSON.stringify(this.experiment) !== JSON.stringify(this.originalExperiment);
   }
@@ -516,10 +528,10 @@ export class CreateExperimentsComponent implements OnInit {
     this.targetSystem.incomingDataTypes = _(this.originalTargetSystem.incomingDataTypes);
 
     // set executionStrategy type
-    if (key == 't_test') {
+    if (key === 't_test') {
       this.experiment.executionStrategy.type = "sequential"; // TODO: this might be removed depending on backend logic
     }
-    else if (key == 'factorial_experiment') {
+    else if (key === 'factorial_experiment') {
       this.experiment.executionStrategy.type = "step_explorer";  // TODO: this might be removed depending on backend logic
       this.experiment.analysis.n = this.targetSystem.changeableVariables.length; // set default value of factors (n)
     }

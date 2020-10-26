@@ -434,7 +434,6 @@
     </div>
 
     <!--TESTING FOR SIMULATION: One sample test analysis -->
-    <!-- ADD HERE -->
     <div *ngIf="experiment.executionStrategy.type === 'single_experiment_run'">
       <div class="panel-body">
         <div class="row">
@@ -443,6 +442,16 @@
                                           (incomingDataTypesChanged)="incomingDataTypesChanged($event)">
           </incoming-data-types-simulation>
         </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+
+          <div class="row" *ngIf="targetSystem.type === 'simulation'">
+            <aggregate-topics [experiment]="experiment" [targetSystem]="targetSystem"
+                                            (aggregateTopicChanged)="aggregateTopicChanged($event)">
+            </aggregate-topics>
+          </div>
         </div>
       </div>
     </div>

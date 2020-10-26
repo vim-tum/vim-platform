@@ -8,7 +8,7 @@ import {isNullOrUndefined} from "util";
       <div class="panel panel-default chartJs">
         <div class="panel-heading">
           <div class="card-title">
-            <div class="title pull-left">Please select the output to analyse.
+            <div class="title pull-left">Please select the output to analyze.
             </div>
           </div>
         </div>
@@ -34,22 +34,22 @@ import {isNullOrUndefined} from "util";
                 <td *ngIf="is_data_type_coming_from_primary(i)">Primary</td>
                 <td *ngIf="!is_data_type_coming_from_primary(i)">Secondary</td>
                 <td>{{dataType.criteria}}</td>
-                <td *ngIf="is_data_type_coming_from_primary(i)">
+                <!-- td *ngIf="is_data_type_coming_from_primary(i)" -->
+                <td>
                   <input type="checkbox" class="form-check-input"
                          (change)="data_type_checkbox_clicked(i)"
                          data-toggle="tooltip"
                          title="Select one output parameter to be optimized. You cannot aggregate data coming from primary & secondary data providers at the same time"
                          [checked]="dataType.is_considered == true">
                 </td>
-
                 <td
-                  *ngIf="is_data_type_coming_from_primary(i) && dataType['is_considered'] && dataType.scale == 'Metric'">
+                  *ngIf="dataType['is_considered'] && dataType.scale == 'Metric'">
                   <select [(ngModel)]="dataType['aggregateFunction']" required>
                     <option *ngFor="let fcn of aggregateFunctionsMetric" [ngValue]="fcn.key">{{fcn.label}}</option>
                   </select>
                 </td>
                 <td
-                  *ngIf="is_data_type_coming_from_primary(i) && dataType['is_considered'] && dataType.scale == 'Boolean'">
+                  *ngIf=" dataType['is_considered'] && dataType.scale == 'Boolean'">
                   <select [(ngModel)]="dataType['aggregateFunction']" required>
                     <option *ngFor="let fcn of aggregateFunctionsBoolean" [ngValue]="fcn.key">{{fcn.label}}</option>
                   </select>
@@ -131,6 +131,7 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
       data_type["aggregateFunction"] = null;
     }
 
+    /*
     // adjust the rest because we only allow single data type for selection
     for (let i = 0; i < this.targetSystem.incomingDataTypes.length; i++) {
       if (i != data_type_index) {
@@ -138,6 +139,8 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
         this.targetSystem.incomingDataTypes[i]["aggregateFunction"] = null;
       }
     }
+     */
+
     // propagate changes to parent component
     this.incomingDataTypesChanged.emit(this.targetSystem.incomingDataTypes);
   }
@@ -145,7 +148,7 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
   // check if user has selected a data coming from primary dp.
   public is_primary_dp_selected() {
     for (let data_type of this.targetSystem.primaryDataProvider.incomingDataTypes) {
-      if (data_type["is_considered"] == true) {
+      if (data_type["is_considered"] === true) {
         return true;
       }
     }
