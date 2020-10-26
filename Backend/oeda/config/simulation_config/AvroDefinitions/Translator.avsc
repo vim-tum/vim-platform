@@ -1,0 +1,11 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "Translator",
+ 	"fields": [
+                        {   "name": "ID", "type": "string"},
+                        {   "name": "Domain", "type": "string"},
+                        {   "name": "InputLayer", "type": "string"},
+                        {   "name": "OutputLayer", "type": "string"},
+                        {   "name": "CustomParams", "type": "string"}
+                    ]
+}    

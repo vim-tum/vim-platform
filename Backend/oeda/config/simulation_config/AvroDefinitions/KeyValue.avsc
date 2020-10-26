@@ -1,0 +1,9 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "KeyValue",
+ 	"fields": [
+
+						                    {"name":"Key", "type":"string"},
+						                    {"name":"Value", "type":"string"}
+                    ]
+}

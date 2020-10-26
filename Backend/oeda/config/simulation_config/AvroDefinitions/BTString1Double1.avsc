@@ -1,0 +1,9 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "BTString1Double1",
+ 	"fields": [
+
+						                    {"name":"s1", "type":"string"},
+						                    {"name":"d1", "type":"double"}
+                    ]
+}

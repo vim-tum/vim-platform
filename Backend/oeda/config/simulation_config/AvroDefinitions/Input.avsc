@@ -1,0 +1,9 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "Input",
+ 	"fields": [
+                        {   "name": "Processing", "type": "string"},
+                        {   "name": "Layer", "type": "string"},
+                        {   "name": "Path", "type": "string"}
+                    ]
+}    

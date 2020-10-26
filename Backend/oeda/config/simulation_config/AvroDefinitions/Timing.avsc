@@ -1,0 +1,9 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "Timing",
+ 	"fields": [
+		                        	{	"name" : "Constrained", "type": "boolean"},
+		                        	{   "name": "Regulating", "type": "boolean"},
+		                        	{   "name": "Lookahead", "type": "long"}
+                    ]
+}    
