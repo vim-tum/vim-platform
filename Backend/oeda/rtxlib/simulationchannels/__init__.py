@@ -1,7 +1,7 @@
 from oeda.log import *
 import json
 import time
-
+from avro import schema, datafile, io
 
 def init_channels(wf):
 
@@ -36,7 +36,7 @@ def create_scenario_file(wf):
                             'Attribute': idt["name"],
                             'Subject': idt["dataProviderName"].lower(),
                             'Filter': 'all',
-                            'Period': str(wf._oeda_experiment["simulation"]["updateInterval"] * 1000),
+                            'Period': wf._oeda_experiment["simulation"]["updateInterval"] * 1000,
                             'Trigger': ''}
                 observers.append(observer)
 
@@ -55,6 +55,7 @@ def create_scenario_file(wf):
         json.dump(scenario, h,  indent=4)
 
     return scenario
+
 
 def init_simulation(wf, sc):
     debug("Initializing simulation > ", Fore.GREEN)
