@@ -45,8 +45,6 @@ class KafkaProducerDataProvider(DataProvider):
             schema = avro.load(os.path.join(path_to_schemas, "Scenario.avsc")) # currently only works for scenario serialization, 
                                                                                      # need to extend this for other serialization 
 
-            print(schema)
-
             self.producer = AvroProducer({'bootstrap.servers': self.kafka_uri, 'schema.registry.url': 'http://127.0.0.1:8081'},
                                          default_value_schema=schema)
 
