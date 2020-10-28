@@ -225,7 +225,6 @@ export class EditTargetsComponent implements OnInit {
   // refresh primaryDataProvider & secondaryDataProviders modals, o/w there will be a bug related with sizes of respective arrays
   // it also checks if a primary data provider is selected or not
   refreshDataProvidersAndCheckValidity() {
-    console.log("refreshDataProvidersAndCheckValidity");
     this.target.secondaryDataProviders = [];
     this.target.primaryDataProvider = {};
     let primary_exists = false;

@@ -8,16 +8,6 @@
     "serializer": "JSON",
     "channel": "orchestration"
   },
-
-  {
-  "name": "OrchestrationSync",
-  "description": "",
-  "type": "kafka_producer",
-  "kafka_uri": "kafka:9092",
-  "topic": "sync",
-  "serializer": "JSON",
-  "channel": "orchestration"
-},
   {
     "name": "OrchestrationStatus",
     "description": "",
@@ -30,7 +20,7 @@
   {
     "name": "OrchestrationControl",
     "description": "",
-    "type": "kafka_consumer",
+    "type": "kafka_producer",
     "kafka_uri": "kafka:9092",
     "topic": "ctrl",
     "serializer": "JSON",
