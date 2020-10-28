@@ -7,11 +7,11 @@ from flask import json
 from oeda.log import *
 from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
-# avro imports
-import os
-from confluent_kafka import avro
-from confluent_kafka.avro import AvroProducer
-#from confluent_kafka.avro.load import load, loads
+# # avro imports
+# import os
+# from confluent_kafka import avro
+# from confluent_kafka.avro import AvroProducer
+# #from confluent_kafka.avro.load import load, loads
 
 
 class KafkaProducerDataProvider(DataProvider):
@@ -38,15 +38,15 @@ class KafkaProducerDataProvider(DataProvider):
         except KeyError:
             error("configuration.kafka_producer was incomplete")
             exit(1)
-        
+
         # look at the serializer
         if self.serializer == "Avro":
             path_to_schemas = "oeda/config/simulation_config/AvroDefinitions/"
             schema = avro.load(os.path.join(path_to_schemas, "Scenario.avsc"))
 
             self.producer = AvroProducer({'bootstrap.servers': self.kafka_uri, 'schema.registry.url': 'http://127.0.0.1:8081'},
-                                        default_value_schema=schema)
-            
+                                         default_value_schema=schema)
+
             debug(">>>>Created Avro Producer<<<<")
         else:
             if self.serializer == "JSON":
@@ -62,8 +62,8 @@ class KafkaProducerDataProvider(DataProvider):
                 logging.getLogger("kafka.coordinator.consumer").setLevel("ERROR")
                 logging.getLogger("kafka.conn").setLevel("ERROR")
                 self.producer = KafkaProducer(bootstrap_servers=self.kafka_uri,
-                                            value_serializer=self.serialize_function,
-                                            request_timeout_ms=5000)
+                                              value_serializer=self.serialize_function,
+                                              request_timeout_ms=5000)
             except:
                 error("connection to kafka failed")
                 exit(1)

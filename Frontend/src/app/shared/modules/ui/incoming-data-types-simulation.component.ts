@@ -127,6 +127,7 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
     // first click
     if (isNullOrUndefined(data_type["is_considered"])) {
       data_type["is_considered"] = true;
+      data_type["aggregateFunction"] = "avg";
     } else {
       // subsequent clicks (also refresh aggregateFunction)
       data_type["is_considered"] = !data_type["is_considered"];

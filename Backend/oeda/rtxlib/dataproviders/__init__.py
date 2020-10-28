@@ -12,7 +12,12 @@ def init_data_providers(wf):
     createInstance(wf, wf.primary_data_provider)
     if hasattr(wf, "secondary_data_providers"):
         for cp in wf.secondary_data_providers:
-            createInstance(wf, cp)
+            # create a single instance for aggregate DPs, orchestration channel topics and scenario topic
+            if 'incomingDataTypes' not in cp or 'consider_aggregate_topic' in cp:
+                createInstance(wf, cp)
+            # otherwise create instances for every incoming data type of a DP
+            else:
+                createMultipleInstances(wf, cp)
 
 
 def createInstance(wf, cp):
@@ -30,3 +35,15 @@ def createInstance(wf, cp):
     else:
         cp["instance"] = None
         error("Not a valid data_provider")
+
+def createMultipleInstances(wf, cp):
+    """ creates multiple instances for each considered data type """
+    if cp["type"] == "kafka_consumer":
+        instances = []
+#        for i in cp["incomingDataTypes"].length:
+        for idp in cp["incomingDataTypes"]:
+            instances.append(KafkaConsumerDataProvider(wf, cp, idp))
+        cp["instance"] = instances
+    else:
+        cp["instance"] = None
+        error("Only Kafka instances are supported")
