@@ -7,11 +7,11 @@ from flask import json
 from oeda.log import *
 from oeda.rtxlib.dataproviders.DataProvider import DataProvider
 
-# # avro imports
-# import os
-# from confluent_kafka import avro
-# from confluent_kafka.avro import AvroProducer
-# #from confluent_kafka.avro.load import load, loads
+# avro imports
+import os
+from confluent_kafka import avro
+from confluent_kafka.avro import AvroProducer
+#from confluent_kafka.avro.load import load, loads
 
 
 class KafkaProducerDataProvider(DataProvider):
