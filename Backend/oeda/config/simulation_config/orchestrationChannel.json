@@ -10,7 +10,7 @@
   },
   {
     "name": "OrchestrationStatus",
-    "description": "",
+    "description": "Topic for receiving status messages sent by the simulator",
     "type": "kafka_consumer",
     "kafka_uri": "kafka:9092",
     "topic": "status",
@@ -19,7 +19,7 @@
   },
   {
     "name": "OrchestrationControl",
-    "description": "",
+    "description": "Topic for issuing control messages such as termination of a simulation run",
     "type": "kafka_producer",
     "kafka_uri": "kafka:9092",
     "topic": "ctrl",
