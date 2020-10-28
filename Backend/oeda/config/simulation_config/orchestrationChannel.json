@@ -5,7 +5,7 @@
     "type": "kafka_producer",
     "kafka_uri": "kafka:9092",
     "topic": "bootstrap",
-    "serializer": "JSON",
+    "serializer": "Avro",
     "channel": "orchestration"
   },
   {
