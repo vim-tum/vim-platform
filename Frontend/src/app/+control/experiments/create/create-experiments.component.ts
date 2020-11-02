@@ -97,17 +97,7 @@ export class CreateExperimentsComponent implements OnInit {
       this.experiment.analysis.sample_size = Math.floor((this.experiment.simulation.endTime - this.experiment.simulation.startTime) /
         this.experiment.simulation.updateInterval);
 
-      // get additional resources
-      if (this.experiment.simulation["addResource"] === true) {
-        // currently this is a path to general resources
-        // but could be just the attribute RoadMap in the scenario file
-        this.experiment.simulation.resourcePath = String(this.experiment.simulation.resourcePath);
-        console.log(" resource path: ", this.experiment.simulation.resourcePath)
-      }
-
-      if (this.experiment.simulation["addResultsFilename"] === true) {
-        this.experiment.simulation.resultsFilename = String(this.experiment.simulation.resultsFilename);
-      }
+      // TODO: retrieve input for additional resources such as archived results
 
       this.experiment.user = this.user.name;
 
@@ -301,6 +291,11 @@ export class CreateExperimentsComponent implements OnInit {
       return true;
     }
 
+    if (isNullOrUndefined(this.experiment.simulation.resources[0]["name"]) ||
+      isNullOrUndefined(this.experiment.simulation.resources[1]["name"])) {
+      this.errorButtonLabel = "Provide experiment resources (RoadMap & Sumo Network)";
+      return true;
+    }
 
     if (this.experiment.executionStrategy.type === null) {
       this.errorButtonLabel = "Choose the experiment strategy";
@@ -693,10 +688,29 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   // if one of the parameters in executionStrategy is not valid, sets stages_count to null, so that it will get hidden
-  strategyParametesChanged(value) {
+  strategyParametersChanged(value) {
     if (isNullOrUndefined(value)) {
       this.stages_count = null;
     }
   }
 
+  addResources() {
+    this.experiment.simulation.resources.push({
+      "disabled": false
+    });
+  }
+
+  removeResource(index) {
+    this.experiment.simulation.resources.splice(index, 1);
+  }
+
+  addResults() {
+    this.experiment.simulation.archivedResults.push({
+      "disabled": false
+    });
+  }
+
+  removeResult(index) {
+    this.experiment.simulation.archivedResults.splice(index, 1);
+  }
 }

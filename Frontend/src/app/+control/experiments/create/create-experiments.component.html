@@ -370,6 +370,7 @@
     </div>
   </div>
 
+
   <div class="col-md-12" *ngIf="targetSystem.name !== '' && targetSystem.type === 'simulation'">
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
@@ -386,31 +387,77 @@
           <labeled-input name="Update Interval" [model]="experiment.simulation" key="updateInterval" [colSize]="3"
                          tooltipTitle="Enter the update interval in seconds"></labeled-input>
         </div>
+
         <hr style="height: 1px; border: 0;border-top: 1px solid #EEEEEE;margin: 1em 0;padding: 0">
-        <div class="row" style="padding-top: 0%; padding-left: 0">
 
-          <labeled-input name="Add Resources" [model]="experiment.simulation"
-                         key="addResource" [colSize]="6"
-                         inputType="checkbox" [disabled]="false"
-                         data-toggle="tooltip" title="Add resource path">
-          </labeled-input>
-
-          <labeled-input name="Get Results in a File" [model]="experiment.simulation"
-                         key="addResultsFilename" [colSize]="6"
-                         inputType="checkbox" [disabled]="false"
-                         data-toggle="tooltip" title="Check to add the output results file">
-          </labeled-input>
-
-          <labeled-input *ngIf="experiment.simulation.addResource"
-                         name="Resource Path" [model]="experiment.simulation" key="resourcePath" [colSize]="6"
-                         tooltipTitle="Enter the simulation start time in seconds"></labeled-input>
-          <labeled-input *ngIf="experiment.simulation.addResultsFilename"
-                         name="Results Filename" [model]="experiment.simulation" key="resultsFilename" [colSize]="6"
-                         placeholder="{{experiment.name}}"
-                         tooltipTitle="Enter the simulation end time in seconds"></labeled-input>
-
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Resources</div>
+                <div class="pull-right">
+                  <div (click)="addResources()" class="btn btn-xs btn-orange"><i class="fa fa-plus push-5-r"></i> Add</div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="padding-top: 20px">
+              <div class="row" *ngFor="let input of experiment.simulation.resources; let i = index">
+                <labeled-input
+                name="Name" [model]="input" key="name" [colSize]="5" disabled="false"></labeled-input>
+                <div class="col-md-1 pull-right" style="margin-top: 56px;color: #ef705d">
+                  <a *ngIf="i > 1" (click)="removeResource(i)">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </div>
+                <labeled-input-select *ngIf="i < 2" name="Type" [model]="input" key="type" [colSize]="5"
+                                      disabled="true" [options]="[
+                                      {key:'RoadMap',label:'RoadMap'},
+                                      {key:'Input',label:'Input'},
+                                      {key:'Other',label:'Other'}]"
+                                      data-toggle="tooltip" title="Select resource type">
+                </labeled-input-select>
+                <labeled-input-select *ngIf="i >= 2" name="Type" [model]="input" key="type" [colSize]="5"
+                                      [options]="[
+                                      {key:'RoadMap',label:'RoadMap'},
+                                      {key:'Input',label:'Input'},
+                                      {key:'Other',label:'Other'}]"
+                                      data-toggle="tooltip" title="Select resource type">
+                </labeled-input-select>
+                <hr class="col-md-12">
+              </div>
+            </div>
+          </div>
         </div>
-
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Results</div>
+                <div class="pull-right">
+                  <div (click)="addResults()" class="btn btn-xs btn-orange"><i class="fa fa-plus push-5-r"></i> Add</div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="padding-top: 20px">
+              <div class="row" *ngFor="let input of experiment.simulation.archivedResults; let i = index">
+                <labeled-input
+                  name="File Name" [model]="input" key="fileName" [colSize]="5" disabled="false"></labeled-input>
+                <div class="col-md-1 pull-right" style="margin-top: 56px;color: #ef705d">
+                  <a (click)="removeResult(i)">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </div>
+                <labeled-input-select name="File Extension" [model]="input" key="fileExtension" [colSize]="5"
+                                      [options]="[
+                                      {key:'xml',label:'xml'},
+                                      {key:'zip',label:'zip'}]"
+                                      data-toggle="tooltip" title="Select file extension">
+                </labeled-input-select>
+                <hr class="col-md-12">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

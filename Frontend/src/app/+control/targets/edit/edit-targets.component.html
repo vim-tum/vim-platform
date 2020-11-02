@@ -36,6 +36,7 @@
     </div>
   </div>
 
+  <!-- Data Providers -->
   <div class="col-md-6">
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
@@ -291,7 +292,16 @@
                 </thead>
                 <tbody class="bigTable">
                 <tr *ngFor="let dataProvider of selectedConfiguration.dataProviders; let i = index;">
-                  <ng-container *ngIf="dataProvider.name != 'Scenario'">
+                  <ng-container *ngIf="selectedConfiguration.name === 'Simulation' && dataProvider.is_configurable">
+                    <td> {{dataProvider.name}} </td>
+                    <td> {{dataProvider.description}}</td>
+                    <td>
+                      <div class="btn btn-xs btn-orange" (click)="addDataProvider(dataProvider)">
+                        <i class="fa fa-plus push-5-r"></i> Add
+                      </div>
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="selectedConfiguration.name !== 'Simulation'">
                     <td> {{dataProvider.name}} </td>
                     <td> {{dataProvider.description}}</td>
                     <td>
@@ -344,7 +354,7 @@
     </div>
   </div>
 
-  <!-- Info modal for Changeable Variables (-> Input Parameters) -->
+  <!-- Info modal for Changeable Variables (renamed to -> Input Parameters) -->
   <div class="modal fade bd-example-modal-sm" id="changeableVariableModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="col-md-12">
       <div class="modal-dialog" role="document">

@@ -202,8 +202,10 @@ export class EntityService {
           "startTime" : 0,
           "endTime" : 500,
           "updateInterval" : 1,
-          "resourcePath": "http://",
-          "resultsFilename": ""
+          "resources": [
+            {"name": "network.sumo.xml", "type": "RoadMap"}, {"name": "traffic.xml", "type": "Input"}
+          ],
+          "archivedResults": []
         }
       }
   }

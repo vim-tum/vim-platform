@@ -34,7 +34,9 @@ export class EditTargetsComponent implements OnInit {
   selectedConfiguration: any;
   configsAvailable = false;
   targetCreatedFromConfig: boolean = false;
-  scenarioDataProvider= [];
+  scenarioDataProvider = [];
+  resourceDataProvider = [];
+  resultsDataProvider = [];
 
   /* tslint:disable */
   ngOnInit(): void {
@@ -222,7 +224,8 @@ export class EditTargetsComponent implements OnInit {
     }
   }
 
-  // refresh primaryDataProvider & secondaryDataProviders modals, o/w there will be a bug related with sizes of respective arrays
+  // refresh primaryDataProvider & secondaryDataProviders modals,
+  // o/w there will be a bug related with sizes of respective arrays
   // it also checks if a primary data provider is selected or not
   refreshDataProvidersAndCheckValidity() {
     this.target.secondaryDataProviders = [];
@@ -243,6 +246,8 @@ export class EditTargetsComponent implements OnInit {
       }
     }
     this.target.secondaryDataProviders.push(this.scenarioDataProvider);
+    this.target.secondaryDataProviders.push(this.resourceDataProvider);
+    this.target.secondaryDataProviders.push(this.resultsDataProvider);
     return primary_exists;
   }
 
@@ -255,6 +260,7 @@ export class EditTargetsComponent implements OnInit {
       if (ctrl.target.name.match('Simulation')) {
         ctrl.target.type = "simulation";
       }
+      console.log(this.target.secondaryDataProviders);
 
 
       // new ts will be created in first case
@@ -360,7 +366,6 @@ export class EditTargetsComponent implements OnInit {
             || dataProvider.port < 1
             || dataProvider.port > 65535
             || dataProvider.topic.length === 0
-            || dataProvider.topic == null
           ) {
             this.errorButtonLabel = "Provide valid inputs for MQTT data provider";
             return true;
@@ -397,7 +402,6 @@ export class EditTargetsComponent implements OnInit {
         || this.target.changeProvider.port < 1
         || this.target.changeProvider.port > 65535
         || this.target.changeProvider.topic.length === 0
-        || this.target.changeProvider.topic == null
       ) {
         this.errorButtonLabel = "Provide valid inputs for MQTT change provider";
         return true;
@@ -535,14 +539,18 @@ export class EditTargetsComponent implements OnInit {
       this.target.changeProvider['serializer'] = 'JSON';
     }
 
-    // add provision topic for scenario ACK kafka consumer
-    // TODO: might need to move this furhter in the workflow
+    // add provision topic for scenario ACK kafka consumer and resources
+    // TODO: might need to move this further down in the workflow
     if (this.selectedConfiguration['name'] == "Simulation") {
       let tempConfiguration = this.availableConfigurations.filter(config => config.name === this.selectedConfiguration['name'])[0];
       // this.scenarioDataProvider = tempConfiguration.filter(dataProvider => dataProvider['name']=="Scenario");
       for (let dataProviderFromConfig of tempConfiguration.dataProviders) {
         if (dataProviderFromConfig['name'] == 'Scenario')
           this.scenarioDataProvider = dataProviderFromConfig;
+        if (dataProviderFromConfig['name'] == 'Resource')
+          this.resourceDataProvider = dataProviderFromConfig;
+        if (dataProviderFromConfig['name'] == 'Results')
+          this.resultsDataProvider = dataProviderFromConfig;
       }
     }
 

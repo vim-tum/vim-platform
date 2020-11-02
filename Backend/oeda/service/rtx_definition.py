@@ -66,6 +66,8 @@ class RTXDefinition:
             for dp in oeda_target.get("secondaryDataProviders"):  # see dataProviders.json for the mapping
                 # add all secondary DPs that are observed as aggregate
                 for considered_dp in oeda_experiment["consideredAggregateTopics"]:
+
+                    # TODO: assert correct definition and input of data provider attributes
                     if dp["name"] == considered_dp["name"] and not dp["name"] in secondary_dps:
                         sec_dp = dp.copy()
                         sec_dp["consider_aggregate_topic"] = True

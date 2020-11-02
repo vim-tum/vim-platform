@@ -23,7 +23,7 @@
     "type": "kafka_producer",
     "kafka_uri": "kafka:9092",
     "topic": "ctrl",
-    "serializer": "JSON",
+    "serializer": "Avro",
     "channel": "orchestration"
   }
 ]

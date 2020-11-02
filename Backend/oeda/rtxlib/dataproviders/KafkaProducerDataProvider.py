@@ -42,18 +42,29 @@ class KafkaProducerDataProvider(DataProvider):
         # look at the serializer
         if self.serializer == "Avro":
             path_to_schemas = "oeda/config/simulation_config/AvroDefinitions/"
-            schema = avro.load(os.path.join(path_to_schemas, "Scenario.avsc")) # currently only works for scenario serialization, 
-                                                                                     # need to extend this for other serialization 
 
-            self.producer = AvroProducer({'bootstrap.servers': self.kafka_uri, 'schema.registry.url': 'http://127.0.0.1:8081'},
-                                         default_value_schema=schema)
+            if cp["name"] == "OrchestrationBootstrap":
+                # msgs are jsonfied strings
+                schema = avro.load(os.path.join(path_to_schemas, "Scenario.avsc"))
+            elif cp["name"] == "OrchestrationControl":
+                # msgs are strings?
+                schema = avro.load(os.path.join(path_to_schemas, "CtrlMsg.avsc"))
+            elif cp["name"] == "Resource":
+                # msgs are records including raw bytes
+                schema = avro.load(os.path.join(path_to_schemas, "ResourceFile.avsc"))
+            else:
+                error("unknown channel")
+                exit(1)
 
-            debug(">>>>Created Avro Producer<<<<")
+            self.producer = AvroProducer({'bootstrap.servers': self.kafka_uri,
+                                          'schema.registry.url': 'http://127.0.0.1:8081'},
+                                         default_value_schema = schema)
+
+            info("> Created Avro Producer", Fore.CYAN)
+
         else:
             if self.serializer == "JSON":
                 self.serialize_function = lambda v: json.dumps(v).encode('utf-8')
-            elif self.serializer == "pickle":
-                self.serialize_function = lambda v: pickle.dumps(v).encode('ascii')
             else:
                 error("serializer not implemented")
                 exit(1)
@@ -71,15 +82,14 @@ class KafkaProducerDataProvider(DataProvider):
 
     def sendData(self, message):
         """ send out a message through kafka """
-        debug("Sending out Kafka Message:" + str(message))
+        info("Sending out a Kafka Message >>     ", Fore.LIGHTMAGENTA_EX)
+        info("                    channel >>     " + self.topic, Fore.LIGHTMAGENTA_EX)
 
-        #check if the producer is Avro serialized
+        # check if the producer uses Avro serialization
         if self.serializer == "Avro":
+            info("      [Avro serialized message]    ", Fore.LIGHTMAGENTA_EX)
             self.producer.produce(topic=self.topic, value=message)
             self.producer.flush()
-        else: 
+        else:
+            info("            message payload >>     " + str(message), Fore.LIGHTMAGENTA_EX)
             self.producer.send(self.topic, message)
-
-    def sendFile(self, filename):
-        """ serialize and send a file through kafka """
-        self.producer.send(self.topic, filename)
