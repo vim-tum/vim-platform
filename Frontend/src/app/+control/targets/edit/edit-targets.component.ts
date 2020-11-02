@@ -247,7 +247,7 @@ export class EditTargetsComponent implements OnInit {
     }
     this.target.secondaryDataProviders.push(this.scenarioDataProvider);
     this.target.secondaryDataProviders.push(this.resourceDataProvider);
-    this.target.secondaryDataProviders.push(this.resultsDataProvider);
+    // this.target.secondaryDataProviders.push(this.resultsDataProvider);   // currently not implemented serializer
     return primary_exists;
   }
 
@@ -549,8 +549,10 @@ export class EditTargetsComponent implements OnInit {
           this.scenarioDataProvider = dataProviderFromConfig;
         if (dataProviderFromConfig['name'] == 'Resource')
           this.resourceDataProvider = dataProviderFromConfig;
+        /* results DP currently not implemented
         if (dataProviderFromConfig['name'] == 'Results')
           this.resultsDataProvider = dataProviderFromConfig;
+        */
       }
     }
 
