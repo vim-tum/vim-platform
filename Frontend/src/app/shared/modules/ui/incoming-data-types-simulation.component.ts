@@ -159,7 +159,14 @@ export class IncomingDataTypesSimulationComponent implements OnInit {
     this.targetSystem.primaryDataProvider["is_considered"] = isPrimaryDPSelected;
 
     if (!isPrimaryDPSelected) {
-      this.check_topic_primaryDP(0);
+      // find the index of primary DP
+      let primary_dp_index = 0;
+      for (; primary_dp_index < this.targetSystem.dataProviders.length; primary_dp_index++) {
+        let topic = this.targetSystem.dataProviders[primary_dp_index];
+        if (topic.name === this.targetSystem.primaryDataProvider["name"])
+          break;
+      }
+      this.check_topic_primaryDP(primary_dp_index);
     }
     // propagate changes to the parent component
     this.incomingDataTypesChanged.emit(this.targetSystem.incomingDataTypes);

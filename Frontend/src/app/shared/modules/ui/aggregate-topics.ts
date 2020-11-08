@@ -88,15 +88,24 @@ export class AggregateTopicsComponent implements OnInit {
     for (let i = 0; i < this.targetSystem.incomingDataTypes.length; i++) {
       let data_type = this.targetSystem.incomingDataTypes[i];
       // console.log(data_type.name + " is :" + data_type["is_considered"]);
-      if (this.is_data_type_coming_from_primary(i) && data_type["is_considered"] == true) {
+      if (this.is_data_type_coming_from_primary(i) && data_type["is_considered"] === true) {
         anyPrimarySubtopic = true;
         break;
       }
     }
 
     if (!anyPrimarySubtopic && this.isPrimaryDataProvider(topic) && !topic["is_considered"]) {
+
       // select the first incoming type of the primary data provider as output
-      this.change_data_type_selection(0);
+      let i = 0;
+      let primary_dp_idp = this.targetSystem.primaryDataProvider.incomingDataTypes[0];
+      for (; i < this.targetSystem.incomingDataTypes.length; i++) {
+        let data_type = this.targetSystem.incomingDataTypes[i];
+        if (data_type["name"] === primary_dp_idp["name"])
+          break;
+      }
+
+      this.change_data_type_selection(i);
 
     }
 
@@ -128,7 +137,7 @@ export class AggregateTopicsComponent implements OnInit {
 
     // mark data_type as considered and refresh aggregateFunction
     data_type["is_considered"] = true;
-    data_type["aggregateFunction"] = null;
+    data_type["aggregateFunction"] = "avg";
 
     // propagate changes to parent component
     // this.incomingDataTypesChanged.emit(this.targetSystem.incomingDataTypes);
