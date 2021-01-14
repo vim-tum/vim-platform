@@ -78,22 +78,23 @@ def experimentFunction(wf, exp):
                 process("CollectSamples | ", i, sample_size)
 
             # now we use returnDataListNonBlocking on all secondary data providers
-            if hasattr(wf, "secondary_data_providers"):
-                for cp in wf.secondary_data_providers:
-                    new_data = cp["instance"].returnDataListNonBlocking()
-                    idx = wf.secondary_data_providers.index(cp)
-                    # just get the name of the variable from (cp) and pass it to (nd, wf, idx)
-                    for nd in new_data:
-                        try:
-                            wf = cp["data_reducer"](nd, wf, idx)
-                        except StopIteration as e:
-                            raise  # just
-                        except RuntimeError as e:
-                            raise  # just fwd
-                        except Exception as e:
-                            tb = traceback.format_exc()
-                            error("Exception:", str(tb))
-                            error("Could not reduce data set: " + str(nd))
+            # if hasattr(wf, "secondary_data_providers"):
+            #     for cp in wf.secondary_data_providers:
+            #         if cp["type"] == "kafka_consumer" and 'consider_aggregate_topic' in cp:
+            #             new_data = cp["instance"].returnDataListNonBlocking()
+            #             idx = wf.secondary_data_providers.index(cp)
+            #             # just get the name of the variable from (cp) and pass it to (nd, wf, idx)
+            #             for nd in new_data:
+            #                 try:
+            #                     wf = cp["data_reducer"](nd, wf, idx)
+            #                 except StopIteration as e:
+            #                     raise  # just
+            #                 except RuntimeError as e:
+            #                     raise  # just fwd
+            #                 except Exception as e:
+            #                     tb = traceback.format_exc()
+            #                     error("Exception:", str(tb))
+            #                     error("Could not reduce data set: " + str(nd))
     except StopIteration as e:
         # this iteration should stop asap
         error("This stage got stopped as requested by the StopIteration exception:" + str(e))

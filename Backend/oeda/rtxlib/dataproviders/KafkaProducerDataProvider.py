@@ -15,7 +15,7 @@ from confluent_kafka.avro import AvroProducer
 
 
 class KafkaProducerDataProvider(DataProvider):
-    """ implements a data provider based on kafka publish. Required for Provision channel configuration publishing """ 
+    """ implements a data provider based on kafka publish. Required for Provision channel configuration publishing """
 
     def __init__(self, wf, cp):
         # load config
@@ -47,7 +47,7 @@ class KafkaProducerDataProvider(DataProvider):
                 # msgs are jsonfied strings
                 schema = avro.load(os.path.join(path_to_schemas, "Scenario.avsc"))
             elif cp["name"] == "OrchestrationControl":
-                # msgs are strings?
+                # msgs are strings
                 schema = avro.load(os.path.join(path_to_schemas, "CtrlMsg.avsc"))
             elif cp["name"] == "Resource":
                 # msgs are records including raw bytes

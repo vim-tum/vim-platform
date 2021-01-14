@@ -3,7 +3,7 @@
     "name": "OrchestrationBootstrap",
     "description": "Bootstrap topic for sending sce-files to start, stop or interrupt the simulation",
     "type": "kafka_producer",
-    "kafka_uri": "kafka:9092",
+    "kafka_uri": "localhost:9092",
     "topic": "bootstrap",
     "serializer": "Avro",
     "channel": "orchestration"
@@ -12,7 +12,7 @@
     "name": "OrchestrationStatus",
     "description": "Topic for receiving status messages sent by the simulator",
     "type": "kafka_consumer",
-    "kafka_uri": "kafka:9092",
+    "kafka_uri": "localhost:9092",
     "topic": "status",
     "serializer": "JSON",
     "channel": "orchestration"
@@ -21,7 +21,7 @@
     "name": "OrchestrationControl",
     "description": "Topic for issuing control messages such as termination of a simulation run",
     "type": "kafka_producer",
-    "kafka_uri": "kafka:9092",
+    "kafka_uri": "localhost:9092",
     "topic": "ctrl",
     "serializer": "Avro",
     "channel": "orchestration"

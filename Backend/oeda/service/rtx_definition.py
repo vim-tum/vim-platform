@@ -48,6 +48,10 @@ class RTXDefinition:
                 primary_data_provider = topic
                 # if any outputs chosen from the original primary DP, append them to secondary DPs
                 considered_primary_subtopics = considered_subtopics_from_dp(self, primary_data_provider)
+                primary_subtopic = considered_primary_subtopics[0]
+                primary_data_provider["incomingDataTypes"] = primary_subtopic
+                primary_data_provider["topic"] += "." + primary_subtopic["name"] + ".json"
+                considered_primary_subtopics = considered_primary_subtopics[1:]
                 if considered_primary_subtopics:
                     secondary_from_primary = topic.copy()
                     secondary_from_primary["is_primary"] = False
@@ -112,7 +116,7 @@ class RTXDefinition:
     """ important assumption here: there's a 1-1 mapping between secondary data provider and its payload
         i.e. payload (data) with different attributes can be published to same topic of Kafka
         new_data is a type of dict, e.g. {'routingDuration': 12, 'xDuration': 555.25...} is handled accordingly
-        but publishing different types of payloads to the same topic will not work, 
+        but publishing different types of payloads to the same topic will not work,
         declare another secondary data provider for this purpose """
     @staticmethod
     def secondary_data_reducer(new_data, wf, idx):
@@ -232,7 +236,7 @@ def considered_subtopics_from_dp(self, data_provider):
     if 'incomingDataTypes' in data_provider:
         for idt in data_provider["incomingDataTypes"]:
             for cdt in self.considered_data_types:
-                if idt["name"] == cdt["name"] and idt["dataProviderName"] == cdt["dataProviderName"]\
+                if idt["name"] == cdt["name"] and idt["dataProviderName"] == cdt["dataProviderName"] \
                         and cdt not in considered_subtopics:
                     considered_subtopics.append(cdt)
 

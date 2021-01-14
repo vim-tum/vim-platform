@@ -54,6 +54,15 @@ def create_scenario_file(wf):
                             'Trigger': ''}
                 observers.append(observer)
 
+            for aggr_topic in wf.considered_aggregate_topics:
+                observer = {'Task': 'publish',
+                            'Attribute': 'micro',
+                            'Subject': aggr_topic["topic"],
+                            'Filter': 'all',
+                            'Period': wf._oeda_experiment["simulation"]["updateInterval"] * 1000,
+                            'Trigger': ''}
+                observers.append(observer)
+
             new_sim["Observers"] = observers
 
             simulators.remove(sim)
