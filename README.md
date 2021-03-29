@@ -46,4 +46,4 @@ bash ./serve.sh
 
 
 ### _Contact_
-[Ilias Gerostathopoulos](http://wwwbroy.in.tum.de/~gerostat/) & [Ljubica Kärkkäinen](https://www.cm.in.tum.de/en/research-group/ljubicak/)
+[Ilias Gerostathopoulos](http://wwwbroy.in.tum.de/~gerostat/), [Ljubica Kärkkäinen](https://www.cm.in.tum.de/en/research-group/ljubicak/) & [Nitinder Mohan](https://www.nitindermohan.com/)
