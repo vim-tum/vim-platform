@@ -1,0 +1,12 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "Observer",
+ 	"fields": [
+                        {   "name": "Task", "type": "string"},
+                        {   "name": "Attribute", "type": "string"},
+                        {   "name": "Filter", "type": "string"},
+                        {   "name": "Subject", "type": "string"},
+                        {   "name": "Period", "type": "int"},
+                        {   "name": "Trigger", "type": "string"}
+                    ]
+}    

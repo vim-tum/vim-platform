@@ -18,3 +18,11 @@ class DataProvider:
     def returnDataListNonBlocking(self):
         """ returns a list of all available data without waiting for it """
         pass
+
+    def sendData(self, message):
+        """ message gets send to the system to be sent out to target """
+        pass
+
+    def sendFile(self, filename):
+        """ send files (e.g. scenario file) to the simulator """
+        pass

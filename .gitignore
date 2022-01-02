@@ -174,3 +174,5 @@ venv.bak/
 
 Backend/oeda/databases/user_db_config.json
 Backend/oeda/databases/experiment_db_config.json
+/Backend/oeda/databases/oeda_users.sqlite
+/Backend/oeda/config/simulation_test_config/

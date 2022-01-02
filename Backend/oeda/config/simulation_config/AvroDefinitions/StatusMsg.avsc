@@ -1,0 +1,10 @@
+{ "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "StatusMsg",
+ 	"fields": [
+		                        	{	"name" : "Sender", "type": "string"},
+		                        	{   "name": "Action", "type": "string"},
+		                        	{   "name": "Status", "type":"string"}
+							       
+              ]
+}    

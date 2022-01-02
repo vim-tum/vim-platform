@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "Micro",
+  "namespace": "eu.fau.cs7.datamodel",
+  "fields": [
+    { "name": "vehicleID", "type": "string"}, 
+    { "name": "acceleration","type": "double"},
+    { "name": "angle", "type": "double"},
+    { "name": "edge", "type": "string"},
+    { "name": "lane", "type": "int"},
+    { "name": "positionX", "type": "double"},   
+    { "name": "positionY", "type": "double"},   
+    { "name": "positionZ", "type": "double"},   
+    { "name": "positionEdge", "type": "double"}, 
+    { "name": "route", "type": "string"},
+    { "name": "speed", "type": "double"},
+    { "name": "vtype", "type": "string"}
+  ]
+}

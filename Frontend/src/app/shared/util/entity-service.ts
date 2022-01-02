@@ -195,8 +195,18 @@ export class EntityService {
         "executionStrategy": execution_strategy,
         "changeableVariables": [], // used while creating an experiment
         "considered_data_types": [],
+        "consideredAggregateTopics": [],
         "analysis": {},
-        "numberOfSteps": 0
+        "numberOfSteps": 0,
+        "simulation": {
+          "startTime" : 0,
+          "endTime" : 500,
+          "updateInterval" : 1,
+          "resources": [
+            {"name": "network.sumo.xml", "type": "RoadMap"}, {"name": "traffic.xml", "type": "Input"}
+          ],
+          "archivedResults": []
+        }
       }
   }
 
@@ -216,6 +226,7 @@ export class EntityService {
       "name": "",
       "status": "",
       "description": "",
+      "type": "",
       "incomingDataTypes": [],
       "changeableVariables": [], // used while creating a target system
       "defaultVariables": []
@@ -230,6 +241,7 @@ export class EntityService {
       stages_count: 0,
       acquisition_method: "",
       optimizer_iterations: 15,
+      optimizer_iterations_in_design: 0
     }
   }
 

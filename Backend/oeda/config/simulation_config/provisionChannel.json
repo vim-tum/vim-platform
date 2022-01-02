@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Vehicle",
+    "description": "Provides acceleration, edge, position and speed of vehicles",
+    "type": "kafka_consumer",
+    "kafka_uri": "localhost:9092",
+    "topic": "vehicle",
+    "serializer": "JSON",
+    "channel": "provision",
+    "is_configurable": true,
+    "incomingDataTypes": [
+      {
+        "name": "acceleration",
+        "description": "acceleration value of vehicles",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      }, {
+        "name": "edge",
+        "description": "edge value of the vehicle",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      }, {
+        "name": "position",
+        "description": "current position of the car",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      }, {
+        "name": "speed",
+        "description": "current speed of the car",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      }
+    ]
+  }, {
+  "name": "Road",
+  "description": "Provides statistics of the road",
+  "type": "kafka_consumer",
+  "kafka_uri": "localhost:9092",
+  "topic": "road",
+  "serializer": "JSON",
+  "channel": "provision",
+  "is_configurable": true,
+  "incomingDataTypes": [
+    {
+      "name": "emission",
+      "description": "Provides fuel emission by vehicles on the road",
+      "scale": "Metric",
+      "criteria": "Minimize",
+      "dataProviderName": "Road"
+    }
+  ]
+}, {
+  "name": "Scenario",
+  "description": "Used for ACK purposes",
+  "type": "kafka_consumer",
+  "kafka_uri": "localhost:9092",
+  "topic": "scenario",
+  "serializer": "JSON",
+  "channel": "provision",
+  "is_configurable": false
+}, {
+  "name": "Results",
+  "description": "A consumer topic for receiving simulation results in an archived file",
+  "type": "kafka_consumer",
+  "kafka_uri": "localhost:9092",
+  "topic": "result",
+  "serializer": "Avro",
+  "channel": "provision",
+  "is_configurable": false
+}, {
+  "name": "Resource",
+  "description": "A producer topic for sending resources to the simulator (mapfile, traffic input, etc.)",
+  "type": "kafka_producer",
+  "kafka_uri": "localhost:9092",
+  "topic": "resource",
+  "serializer": "Avro",
+  "channel": "provision",
+  "is_configurable": false
+}
+]

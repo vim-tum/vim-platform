@@ -52,6 +52,7 @@ export class CreateExperimentsComponent implements OnInit {
 
     // create experiment, target system, and execution strategy
     this.executionStrategy = this.entityService.create_execution_strategy();
+
     this.targetSystem = this.entityService.create_target_system();
     this.experiment = this.entityService.create_experiment(this.executionStrategy);
     this.originalExperiment = _(this.experiment);
@@ -68,7 +69,7 @@ export class CreateExperimentsComponent implements OnInit {
     ctrl.api.loadAllTargets().subscribe(
       (data) => {
         if (!isNullOrUndefined(data)) {
-          for (var k = 0; k < data.length; k++) {
+          for (let k = 0; k < data.length; k++) {
             if (data[k]["status"] === "READY") {
               ctrl.availableTargetSystems.push(data[k]);
             }
@@ -88,7 +89,16 @@ export class CreateExperimentsComponent implements OnInit {
       // prepare other attributes
       this.experiment.executionStrategy.optimizer_iterations = Number(this.experiment.executionStrategy.optimizer_iterations);
       this.experiment.executionStrategy.sample_size = Number(this.experiment.executionStrategy.sample_size);
-      this.experiment.analysis.sample_size = Number(this.experiment.analysis.sample_size);
+
+      // get sample size
+      this.experiment.simulation.startTime = Number(this.experiment.simulation.startTime);
+      this.experiment.simulation.endTime = Number(this.experiment.simulation.endTime);
+      this.experiment.simulation.updateInterval = Number(this.experiment.simulation.updateInterval);
+      this.experiment.analysis.sample_size = Math.floor((this.experiment.simulation.endTime - this.experiment.simulation.startTime) /
+        this.experiment.simulation.updateInterval);
+
+      // TODO: retrieve input for additional resources such as archived results
+
       this.experiment.user = this.user.name;
 
       // take the incoming data type labeled as "is_considered" to perform stage result calculation in backend
@@ -98,11 +108,17 @@ export class CreateExperimentsComponent implements OnInit {
         }
       }
 
-      if (this.experiment.analysis.type == "factorial_experiment") {
+      // if the aggregate dataProvider is considered, append it to consideredAggregateTopics for subscription
+      for (let item of this.targetSystem.dataProviders) {
+        if (item.is_considered === true) {
+          this.experiment.consideredAggregateTopics.push(item);
+        }
+      }
+
+      if (this.experiment.executionStrategy.type === "single_experiment_run") {
         let knobs = {};
         for (let chVar of this.targetSystem.changeableVariables) {
-          console.log(chVar)
-          if (chVar.is_selected == true) {
+          if (chVar.is_selected === true) {
             let knobArr = [];
             let factors = chVar.factorValues.split(",");
             for (let factor of factors) {
@@ -111,13 +127,10 @@ export class CreateExperimentsComponent implements OnInit {
             knobs[chVar.name] = knobArr;
           }
         }
-        console.log(knobs)
         this.experiment.changeableVariables = knobs;
         this.experiment.executionStrategy.knobs = knobs; // also set executionStrategy knobs here
-      } else if (this.experiment.analysis.type == "t_test") {
-        this.experiment.executionStrategy.knobs = this.experiment.changeableVariables;
+        this.experiment.executionStrategy.sample_size = this.experiment.analysis.sample_size;
       }
-
 
       this.api.saveExperiment(this.experiment).subscribe(
         (success) => {
@@ -137,13 +150,22 @@ export class CreateExperimentsComponent implements OnInit {
     });
   }
 
+  public navigateToSimulationsPage() {
+    this.router.navigate(["control/experiments/create/simulation"]).then(() => {
+      console.log("navigated to simulations creation page");
+    });
+  }
+
   public targetSystemChanged(targetSystemName: any) {
     this.selectedTargetSystem = this.availableTargetSystems.find(item => item.name === targetSystemName);
+
     if (this.selectedTargetSystem !== undefined) {
+      /*
       if (this.selectedTargetSystem.changeableVariables.length === 0) {
         this.notify.error("Error", "Target does not contain input parameters.");
         return;
       }
+       */
 
       // remove previously added variables if they exist
       if (this.experiment.changeableVariables.length > 0) {
@@ -177,7 +199,9 @@ export class CreateExperimentsComponent implements OnInit {
       this.experiment.analysis.tTestEffectSize = this.defaultTTestEffectSize;
       this.experiment.analysis.tTestSampleSize = this.defaultTTestSampleSize;
       this.maxNrOfImportantFactors = Math.pow(2, this.targetSystem.changeableVariables.length) - 1;
-      this.experiment.executionStrategy.type = "self_optimizer";
+      // this.experiment.executionStrategy.type = "self_optimizer";
+
+      this.experiment.executionStrategy.type = null;
       this.acquisitionMethodChanged("gp_hedge");
       // set changeableVariable.min, changeableVariable.max as default value for factorValues for each chVar
       for (let i = 0; i < this.targetSystem.changeableVariables.length; i++) {
@@ -205,19 +229,21 @@ export class CreateExperimentsComponent implements OnInit {
     if (isNullOrUndefined(changeableVariable.is_selected)) {
       changeableVariable.is_selected = true;
     }
-    else if (changeableVariable.is_selected == true) {
+    else
+      if (changeableVariable.is_selected === true) {
       changeableVariable.is_selected = false;
       // also refresh factorValues
       changeableVariable.factorValues = null;
     }
-    else if (changeableVariable.is_selected == false) {
+    else
+      if (changeableVariable.is_selected === false) {
       changeableVariable.is_selected = true;
     }
     this.setMaxNrOfFactors();
   }
 
   public setMaxNrOfFactors(): void {
-    if (this.targetSystem.changeableVariables.length == 0) {
+    if (this.targetSystem.changeableVariables.length === 0) {
       this.maxNrOfImportantFactors = 0;
     } else {
       let selected = 0;
@@ -239,14 +265,45 @@ export class CreateExperimentsComponent implements OnInit {
       return true;
     }
 
-    const cond3 = this.experiment.name === null;
-    const cond4 = this.experiment.name.length === 0;
-    if (cond3 || cond4) {
+    if (this.experiment.name === null || this.experiment.name.length === 0) {
       this.errorButtonLabel = "Provide experiment name";
       return true;
     }
 
-    // check data types for optimization
+    if (this.experiment.simulation.startTime < 0 ||
+      this.experiment.simulation.startTime === null ||
+      this.experiment.simulation.endTime < this.experiment.simulation.startTime) {
+      this.errorButtonLabel = "Provide valid simulation start time";
+      return true;
+    }
+
+    if (this.experiment.simulation.endTime <= 0 ||
+      this.experiment.simulation.endTime === null ||
+      this.experiment.simulation.endTime < this.experiment.simulation.startTime) {
+      this.errorButtonLabel = "Provide valid simulation end time";
+      return true;
+    }
+
+    if (this.experiment.simulation.updateInterval <= 0 ||
+      this.experiment.simulation.updateInterval === null ||
+      this.experiment.simulation.updateInterval > this.experiment.simulation.endTime) {
+      this.errorButtonLabel = "Provide valid simulation update interval";
+      return true;
+    }
+
+    if (isNullOrUndefined(this.experiment.simulation.resources[0]["name"]) ||
+      isNullOrUndefined(this.experiment.simulation.resources[1]["name"])) {
+      this.errorButtonLabel = "Provide experiment resources (RoadMap & Sumo Network)";
+      return true;
+    }
+
+    if (this.experiment.executionStrategy.type === null) {
+      this.errorButtonLabel = "Choose the experiment strategy";
+      return true;
+    }
+
+    // check data types for analysis
+
     for (let item of this.targetSystem.incomingDataTypes) {
       if (item.is_considered) {
         // check aggregate functions
@@ -257,8 +314,8 @@ export class CreateExperimentsComponent implements OnInit {
       }
     }
 
-    if (this.entityService.get_number_of_considered_data_types(this.targetSystem) == 0) {
-      this.errorButtonLabel = "Provide at least one incoming type to be optimized";
+    if (this.entityService.get_number_of_considered_data_types(this.targetSystem) === 0) {
+      this.errorButtonLabel = "Provide at least one output data type to be analyzed";
       return true;
     }
 
@@ -282,11 +339,12 @@ export class CreateExperimentsComponent implements OnInit {
         nrOfSelectedVariables += 1;
       }
     }
+    /*
     if (nrOfSelectedVariables == 0) {
       this.errorButtonLabel = "Provide at least one input parameter";
       return true;
     }
-
+*/
     return false;
   }
 
@@ -436,6 +494,11 @@ export class CreateExperimentsComponent implements OnInit {
     this.targetSystem.incomingDataTypes = incomingDataTypes;
   }
 
+  public aggregateTopicChanged(aggregateTopics) {
+    // console.log(aggregateTopics["name"] + " is considered" + aggregateTopics["is_considered"]);
+  }
+
+
   public hasChanges(): boolean {
     return JSON.stringify(this.experiment) !== JSON.stringify(this.originalExperiment);
   }
@@ -460,14 +523,31 @@ export class CreateExperimentsComponent implements OnInit {
     this.targetSystem.incomingDataTypes = _(this.originalTargetSystem.incomingDataTypes);
 
     // set executionStrategy type
-    if (key == 't_test') {
+    if (key === 't_test') {
       this.experiment.executionStrategy.type = "sequential"; // TODO: this might be removed depending on backend logic
     }
-    else if (key == 'factorial_experiment') {
+    else if (key === 'factorial_experiment') {
       this.experiment.executionStrategy.type = "step_explorer";  // TODO: this might be removed depending on backend logic
       this.experiment.analysis.n = this.targetSystem.changeableVariables.length; // set default value of factors (n)
     }
 
+  }
+
+  executionStrategyChanged(key) {
+    // this.experiment.executionStrategy = this.entityService.create_execution_strategy();
+    this.stages_count = null;
+    this.experiment.changeableVariables = [];
+    this.experiment.analysis.method = null;
+    this.experiment.analysis.data_type = null;
+    this.experiment.analysis.alpha = null;
+
+    // also refresh targetSystem variables if user has selected some of them
+    this.targetSystem.changeableVariables = _(this.originalTargetSystem.changeableVariables);
+    this.targetSystem.incomingDataTypes = _(this.originalTargetSystem.incomingDataTypes);
+
+    // set executionStrategy type
+    this.experiment.executionStrategy.type = key;
+    this.experiment.analysis.type = this.experiment.executionStrategy.type;
   }
 
   public is_changeable_variable_selected(i): boolean {
@@ -488,26 +568,26 @@ export class CreateExperimentsComponent implements OnInit {
   addChangeableVariableTtest(variable) {
     const ctrl = this;
     let knobArr = [];
-      if (isNullOrUndefined(variable.target)) {
-        ctrl.notify.error("Error", "Provide target value for changeable variable(s)");
+    if (isNullOrUndefined(variable.target)) {
+      ctrl.notify.error("Error", "Provide target value for changeable variable(s)");
+      return;
+    } else {
+      // check number of already-added variables for different analysis options
+      if (ctrl.experiment.changeableVariables.length == 2) {
+        ctrl.notify.error("Error", "2 factors have already been specified for T-test");
+        return;
+      }
+      // ch. var is empty or there's one variable. check boundaries
+      if (!isNullOrUndefined(variable.target) && variable.target <= variable.max && variable.target >= variable.min) {
+        // ch. var is empty, just push
+        knobArr.push(_(variable));
+        ctrl.experiment.changeableVariables.push(knobArr);
         return;
       } else {
-        // check number of already-added variables for different analysis options
-        if (ctrl.experiment.changeableVariables.length == 2) {
-          ctrl.notify.error("Error", "2 factors have already been specified for T-test");
-          return;
-        }
-        // ch. var is empty or there's one variable. check boundaries
-        if (!isNullOrUndefined(variable.target) && variable.target <= variable.max && variable.target >= variable.min) {
-          // ch. var is empty, just push
-          knobArr.push(_(variable));
-          ctrl.experiment.changeableVariables.push(knobArr);
-          return;
-        } else {
-          ctrl.notify.error("Error", "Provide valid value(s) for variable");
-          return;
-        }
+        ctrl.notify.error("Error", "Provide valid value(s) for variable");
+        return;
       }
+    }
   }
 
   // assuming that user has provided different configurations for variables and wants them to use for the selected analysis test
@@ -608,10 +688,29 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   // if one of the parameters in executionStrategy is not valid, sets stages_count to null, so that it will get hidden
-  strategyParametesChanged(value) {
+  strategyParametersChanged(value) {
     if (isNullOrUndefined(value)) {
       this.stages_count = null;
     }
   }
 
+  addResources() {
+    this.experiment.simulation.resources.push({
+      "disabled": false
+    });
+  }
+
+  removeResource(index) {
+    this.experiment.simulation.resources.splice(index, 1);
+  }
+
+  addResults() {
+    this.experiment.simulation.archivedResults.push({
+      "disabled": false
+    });
+  }
+
+  removeResult(index) {
+    this.experiment.simulation.archivedResults.splice(index, 1);
+  }
 }

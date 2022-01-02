@@ -1,0 +1,9 @@
+ { "type": "record",
+ 	"namespace": "eu.fau.cs7.datamodel",
+ 	"name": "BTString1Integer1",
+ 	"fields": [
+
+						                    {"name":"s1", "type":"string"},
+						                    {"name":"i1", "type":"int"}
+                    ]
+}

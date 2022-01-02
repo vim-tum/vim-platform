@@ -21,6 +21,7 @@ class RTXDefinition:
     step_no = None
     step_name = None
     considered_data_types = []
+    considered_aggregate_topics = []
 
     def __init__(self, oeda_experiment, oeda_target, oeda_callback, oeda_stop_request):
         self._oeda_experiment = oeda_experiment
@@ -36,17 +37,58 @@ class RTXDefinition:
         self.change_provider = oeda_target["changeProvider"]
         self.incoming_data_types = oeda_target["incomingDataTypes"] # contains all of the data types provided by both config & user
         self.considered_data_types = oeda_experiment["considered_data_types"]
+        self.considered_aggregate_topics = oeda_experiment["consideredAggregateTopics"]
         self.analysis = oeda_experiment["analysis"]
 
         # set-up primary data provider
         primary_data_provider = oeda_target["primaryDataProvider"]
+        for topic in oeda_experiment["consideredAggregateTopics"]:
+            if topic["is_primary"]:
+                # primary data provider for the aggregate topic
+                primary_data_provider = topic
+                # if any outputs chosen from the original primary DP, append them to secondary DPs
+                considered_primary_subtopics = considered_subtopics_from_dp(self, primary_data_provider)
+                primary_subtopic = considered_primary_subtopics[0]
+                primary_data_provider["incomingDataTypes"] = primary_subtopic
+                primary_data_provider["topic"] += "." + primary_subtopic["name"] + ".json"
+                considered_primary_subtopics = considered_primary_subtopics[1:]
+                if considered_primary_subtopics:
+                    secondary_from_primary = topic.copy()
+                    secondary_from_primary["is_primary"] = False
+                    secondary_from_primary["data_types_from_primary"] = True
+                    secondary_from_primary["consider_data_types"] = True
+                    secondary_from_primary["incomingDataTypes"] = considered_primary_subtopics
+                    secondary_from_primary["data_reducer"] = RTXDefinition.secondary_data_reducer
+                    self.secondary_data_providers.append(secondary_from_primary)
+                break
+
         primary_data_provider["data_reducer"] = RTXDefinition.primary_data_reducer
         self.primary_data_provider = primary_data_provider
 
+        secondary_dps = []
         if oeda_target["secondaryDataProviders"] is not None:
             for dp in oeda_target.get("secondaryDataProviders"):  # see dataProviders.json for the mapping
-                dp["data_reducer"] = RTXDefinition.secondary_data_reducer
-                self.secondary_data_providers.append(dp)
+                # add all secondary DPs that are observed as aggregate
+                for considered_dp in oeda_experiment["consideredAggregateTopics"]:
+
+                    # TODO: assert correct definition and input of data provider attributes
+                    if dp["name"] == considered_dp["name"] and not dp["name"] in secondary_dps:
+                        sec_dp = dp.copy()
+                        sec_dp["consider_aggregate_topic"] = True
+                        sec_dp["data_reducer"] = RTXDefinition.secondary_data_reducer
+                        self.secondary_data_providers.append(sec_dp)
+
+                # now add other secondary DPs that are partially observed (subtopics observed)
+                considered_secondary_subtopics = considered_subtopics_from_dp(self, dp)
+                sec_dp = dp.copy()
+                if considered_secondary_subtopics:
+                    sec_dp["incomingDataTypes"] = considered_secondary_subtopics
+                    sec_dp["consider_data_types"] = True
+                # finally, add also control topics as secondary DPs
+                if 'incomingDataTypes' not in dp or considered_secondary_subtopics:
+                    sec_dp["data_reducer"] = RTXDefinition.secondary_data_reducer
+                    self.secondary_data_providers.append(sec_dp)
+                    secondary_dps.append(sec_dp["name"])
 
         execution_strategy = oeda_experiment["executionStrategy"]
         self.execution_strategy = execution_strategy
@@ -74,7 +116,7 @@ class RTXDefinition:
     """ important assumption here: there's a 1-1 mapping between secondary data provider and its payload
         i.e. payload (data) with different attributes can be published to same topic of Kafka
         new_data is a type of dict, e.g. {'routingDuration': 12, 'xDuration': 555.25...} is handled accordingly
-        but publishing different types of payloads to the same topic will not work, 
+        but publishing different types of payloads to the same topic will not work,
         declare another secondary data provider for this purpose """
     @staticmethod
     def secondary_data_reducer(new_data, wf, idx):
@@ -188,3 +230,17 @@ def get_all_knobs(knob_keys, knob_values):
             index += 1
         all_knobs.append(knobs)
     return all_knobs
+
+def considered_subtopics_from_dp(self, data_provider):
+    considered_subtopics = []
+    if 'incomingDataTypes' in data_provider:
+        for idt in data_provider["incomingDataTypes"]:
+            for cdt in self.considered_data_types:
+                if idt["name"] == cdt["name"] and idt["dataProviderName"] == cdt["dataProviderName"] \
+                        and cdt not in considered_subtopics:
+                    considered_subtopics.append(cdt)
+
+    return considered_subtopics
+
+# def is_primary_dp_subtopic():
+#     pass

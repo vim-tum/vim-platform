@@ -510,8 +510,6 @@ export class ExperimentDetailsComponent implements OnInit {
 
   /** combines unselected data types of targetSystem and selected data types of experiment */
   ngOnInit(): void {
-    console.log(this.experiment);
-    console.log("chVar", this.experiment.changeableVariables);
     this.combined_data_types = [];
     for (let considered_data_type of this.experiment.considered_data_types) {
       this.combined_data_types.push(considered_data_type);

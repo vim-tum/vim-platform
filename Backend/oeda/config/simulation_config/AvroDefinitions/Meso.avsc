@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "Meso",
+  "namespace": "eu.fau.cs7.datamodel",
+  "fields": [
+    { "name": "vehicleID", "type": "string"},
+    { "name": "edge", "type": "string"},
+    { "name": "vtype", "type": "string"},
+    { "name": "route", "type": "string"}
+  ]
+}

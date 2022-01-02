@@ -1,4 +1,19 @@
 from oeda.log import *
+from oeda.rtxlib.execution import experimentFunction
+
+from oeda.rtxlib.executionstrategy.SingleExperimentStrategy import start_single_experiment_strategy
+
+
+def run_execution_strategy(wf):
+    """ we run the correct execution strategy """
+    applyInitKnobs(wf)
+    # start the right execution strategy
+    if wf.execution_strategy["type"] == "single_experiment_run":
+        start_single_experiment_strategy(wf)
+
+    # finished
+    info(">")
+    applyDefaultKnobs(wf)
 
 
 def applyInitKnobs(wf):

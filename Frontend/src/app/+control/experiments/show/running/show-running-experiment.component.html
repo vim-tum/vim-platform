@@ -90,7 +90,7 @@
               <li *ngFor="let key of get_keys(oedaCallback.current_knob);"><b>{{key}}:</b> {{oedaCallback.current_knob[key]}}</li>
             </ul>
             <p>
-              Number of collected data: {{oedaCallback['index']}} , total size: {{oedaCallback['size']}}
+              Number of collected data: {{oedaCallback['index']+1}} , total size: {{oedaCallback['size']}}
             </p>
             <progressbar [value]="oedaCallback['complete']*100"></progressbar>
           </div>
