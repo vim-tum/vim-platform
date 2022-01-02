@@ -3,7 +3,7 @@ import {NotificationsService} from "angular2-notifications";
 import {LayoutService} from "../../shared/modules/helper/layout.service";
 import {Configuration, OEDAApiService, UserEntity} from "../../shared/modules/api/oeda-api.service";
 import * as _ from "lodash.clonedeep";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../shared/modules/auth/user.service";
 
 @Component({
@@ -17,7 +17,7 @@ export class ConfigurationComponent implements OnInit {
               private api: OEDAApiService,
               private router: Router,
               private notify: NotificationsService,
-              private userService: UserService) {
+              private userService: UserService, private route: ActivatedRoute) {
     this.save_button_clicked = false;
   }
 
@@ -54,13 +54,12 @@ export class ConfigurationComponent implements OnInit {
       this.user.db_configuration["host"] = this.configuration.host;
       this.user.db_configuration["port"] = this.configuration.port.toString();
       this.user.db_configuration["type"] = this.configuration.type;
-      this.api.updateUser(this.user).subscribe(
+      this.api.updateSystemConfig(this.user).subscribe(
         (success) => {
           ctrl.originalConfiguration = _(this.configuration);
-          const parsed_json = JSON.parse(success['_body']);
-          ctrl.notify.success("Success", parsed_json["message"]);
+          ctrl.notify.success("Success", success["message"]);
           // after a successful update, use the retrieved token and put it into userService, so that user will be able to run experiments
-          ctrl.userService.setAuthToken(parsed_json["token"]);
+          ctrl.userService.setAuthToken(success["token"]);
           this.save_button_clicked = false;
         }, (error => {
           error = JSON.parse(error._body);

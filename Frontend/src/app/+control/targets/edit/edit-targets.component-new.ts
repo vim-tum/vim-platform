@@ -1,29 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {LayoutService} from "../../../shared/modules/helper/layout.service";
-import {TempStorageService} from "../../../shared/modules/helper/temp-storage-service";
-import {OEDAApiService, Target} from "../../../shared/modules/api/oeda-api.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {UUID} from "angular2-uuid";
-import {NotificationsService} from "angular2-notifications/dist";
+import { Component, OnInit } from "@angular/core";
+import { LayoutService } from "../../../shared/modules/helper/layout.service";
+import { TempStorageService } from "../../../shared/modules/helper/temp-storage-service";
+import {
+  OEDAApiService,
+  Target,
+} from "../../../shared/modules/api/oeda-api.service";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { UUID } from "angular2-uuid";
+import { NotificationsService } from "angular2-notifications/dist";
 import * as _ from "lodash.clonedeep";
 import * as lodash from "lodash";
-import {isNullOrUndefined} from "util";
-import {UserService} from "../../../shared/modules/auth/user.service";
+import { isNullOrUndefined } from "util";
+import { UserService } from "../../../shared/modules/auth/user.service";
 
 @Component({
-  selector: 'edit-control-targets-new',
-  templateUrl: './edit-targets.component-new.html',
+  selector: "edit-control-targets-new",
+  templateUrl: "./edit-targets.component-new.html",
 })
 export class EditTargetsComponent implements OnInit {
-
-
-  constructor(private layout: LayoutService,
-              private temp_storage: TempStorageService,
-              private api: OEDAApiService,
-              private userService: UserService,
-              private router: Router, private route: ActivatedRoute,
-              private notify: NotificationsService) {
-  }
+  constructor(
+    private layout: LayoutService,
+    private temp_storage: TempStorageService,
+    private api: OEDAApiService,
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notify: NotificationsService
+  ) {}
 
   target: Target;
   originalTarget: Target;
@@ -34,23 +37,21 @@ export class EditTargetsComponent implements OnInit {
   selectedConfiguration: any;
   configsAvailable = false;
   targetCreatedFromConfig: boolean = false;
-  scenarioDataProvider= [];
+  scenarioDataProvider = [];
 
   /* tslint:disable */
   ngOnInit(): void {
     const ctrl = this;
     this.layout.setHeader("Target System", "");
     this.route.params.subscribe((params: Params) => {
-      if (params['id']) {
+      if (params["id"]) {
         ctrl.pageTitle = "Edit Target System";
         ctrl.saveButtonLabel = "Save Changes";
-        this.api.loadTargetById(params['id']).subscribe(
-          (data) => {
-            this.target = data;
-            this.originalTarget = _(this.target);
-            this.assureObjectContract();
-          }
-        )
+        this.api.loadTargetById(params["id"]).subscribe((data) => {
+          this.target = data;
+          this.originalTarget = _(this.target);
+          this.assureObjectContract();
+        });
       } else {
         ctrl.pageTitle = "Create Target System";
         ctrl.saveButtonLabel = "Save Target System";
@@ -59,70 +60,75 @@ export class EditTargetsComponent implements OnInit {
 
         // retrieve config json object via the api provided at localhost:5000/api/config/crowdnav
         this.api.getConfigFromAPI().subscribe((configs) => {
-            for (let idx in configs) {
-              if (configs.hasOwnProperty(idx)) {
-                //console.log(configs);
-                if (!isNullOrUndefined(configs[idx])) {
-                  // open the modal in UI
-                  this.availableConfigurations.push(configs[idx]);
-                  this.configsAvailable = true;
-                }
+          for (let idx in configs) {
+            if (configs.hasOwnProperty(idx)) {
+              //console.log(configs);
+              if (!isNullOrUndefined(configs[idx])) {
+                // open the modal in UI
+                this.availableConfigurations.push(configs[idx]);
+                this.configsAvailable = true;
               }
             }
-            document.getElementById("openModalButton").click();
           }
-        );
+          document.getElementById("openModalButton").click();
+        });
 
         this.assureObjectContract();
       }
-    })
+    });
   }
 
   assureObjectContract() {
     if (this.target.dataProviders == null) {
-      this.target.dataProviders = []
+      this.target.dataProviders = [];
     }
     if (this.target.changeProvider == null) {
-      this.target.changeProvider = {type: ""}
+      this.target.changeProvider = { type: "" };
     }
     if (this.target.incomingDataTypes == null) {
-      this.target.incomingDataTypes = []
+      this.target.incomingDataTypes = [];
     }
     if (this.target.changeableVariables == null) {
-      this.target.changeableVariables = []
+      this.target.changeableVariables = [];
     }
   }
 
   createTarget(): Target {
     return {
-      "id": UUID.UUID(),
-      "user": "",
-      "dataProviders": [],
-      "primaryDataProvider": {},
-      "secondaryDataProviders": [],
-      "changeProvider": {
-        "type": "",
-        "changesApplicable": false
+      id: UUID.UUID(),
+      user: "",
+      dataProviders: [],
+      primaryDataProvider: {},
+      secondaryDataProviders: [],
+      changeProvider: {
+        type: "",
+        changesApplicable: false,
       },
-      "name": "",
-      "type": "",
-      "status": "READY",
-      "description": "",
-      "incomingDataTypes": [],
-      "changeableVariables": [],
-      "defaultVariables": []
-    }
+      name: "",
+      type: "",
+      status: "READY",
+      description: "",
+      incomingDataTypes: [],
+      changeableVariables: [],
+      defaultVariables: [],
+      parentTargetSystem: null,
+      simulationType: "",
+    };
   }
 
   public addChangeableVariable(existingKnob) {
-    if (existingKnob == null) { // for usual case, without using any configuration files
+    if (existingKnob == null) {
+      // for usual case, without using any configuration files
       this.target.changeableVariables.push({
-        "disabled": false // mark the variable as 'not' disabled, so that user can provide a default value for it
+        disabled: false, // mark the variable as 'not' disabled, so that user can provide a default value for it
       });
-    }
-    else {
+    } else {
       // user should not be able to add already-added variable coming from config
-      if (this.target.changeableVariables.filter(variable => variable.name === existingKnob.name).length === 0) {
+      if (
+        this.target.changeableVariables.filter(
+          (variable) => variable.name === existingKnob.name
+        ).length === 0
+      ) {
         this.target.changeableVariables.push(existingKnob);
       } else {
         this.notify.error("", "Variable is already added");
@@ -131,19 +137,22 @@ export class EditTargetsComponent implements OnInit {
   }
 
   removeChangeableVariable(index) {
-    this.target.changeableVariables.splice(index, 1)
+    this.target.changeableVariables.splice(index, 1);
   }
 
   addDataProvider(dataProvider) {
     if (dataProvider == null) {
       // for usual case, without using any configuration files
       this.target.dataProviders.push({
-        "is_primary": false
+        is_primary: false,
       });
-    }
-    else {
+    } else {
       // user should not be able to add already-added data providers
-      if (this.target.dataProviders.filter(variable => variable.name === dataProvider.name).length === 0) {
+      if (
+        this.target.dataProviders.filter(
+          (variable) => variable.name === dataProvider.name
+        ).length === 0
+      ) {
         // before push, mark data provider as "not primary". User will have to select it later.
         dataProvider["is_primary"] = false;
         this.target.dataProviders.push(dataProvider);
@@ -151,7 +160,9 @@ export class EditTargetsComponent implements OnInit {
         for (let i = 0; i < dataProvider.incomingDataTypes.length; i++) {
           this.target.incomingDataTypes.push(dataProvider.incomingDataTypes[i]);
           // mark name, description and default values of pushed variables as disabled, but Scale is not disabled (TODO?)
-          let pushedDataType =  this.target.incomingDataTypes[this.target.incomingDataTypes.length - 1];
+          let pushedDataType = this.target.incomingDataTypes[
+            this.target.incomingDataTypes.length - 1
+          ];
           pushedDataType["disabled"] = true;
         }
       } else {
@@ -163,9 +174,11 @@ export class EditTargetsComponent implements OnInit {
   removeDataProvider(index) {
     // also remove associated incoming data types (i.e. the added ones via configuration)
     let dataProvider = this.target.dataProviders[index];
-    if (dataProvider.hasOwnProperty("incomingDataTypes"))  {
+    if (dataProvider.hasOwnProperty("incomingDataTypes")) {
       for (let i = 0; i < dataProvider.incomingDataTypes.length; i++) {
-        this.target.incomingDataTypes = this.target.incomingDataTypes.filter(dataType => dataType.name !== dataProvider.incomingDataTypes[i].name);
+        this.target.incomingDataTypes = this.target.incomingDataTypes.filter(
+          (dataType) => dataType.name !== dataProvider.incomingDataTypes[i].name
+        );
       }
     }
     this.target.dataProviders.splice(index, 1);
@@ -173,7 +186,7 @@ export class EditTargetsComponent implements OnInit {
 
   addIncomingDataType() {
     this.target.incomingDataTypes.push({
-      "disabled": false
+      disabled: false,
     });
     // automatically add is_default & aggregationFcn attributes if there's only one data type
     if (this.target.incomingDataTypes.length == 1) {
@@ -187,14 +200,22 @@ export class EditTargetsComponent implements OnInit {
     if (incomingDataType.hasOwnProperty("dataProviderName")) {
       let dataProviderName = incomingDataType["dataProviderName"];
       // get dataProvider reference
-      let dataProvider = this.target.dataProviders.find(item => item.name === dataProviderName);
+      let dataProvider = this.target.dataProviders.find(
+        (item) => item.name === dataProviderName
+      );
       if (!isNullOrUndefined(dataProvider)) {
         if (dataProvider.hasOwnProperty("incomingDataTypes")) {
           // filter out the incoming variable from data provider
-          dataProvider.incomingDataTypes.splice(dataProvider.incomingDataTypes.indexOf(incomingDataType), 1);
+          dataProvider.incomingDataTypes.splice(
+            dataProvider.incomingDataTypes.indexOf(incomingDataType),
+            1
+          );
           // completely remove data provider if there are no associated data types
           if (dataProvider.incomingDataTypes.length === 0) {
-            this.target.dataProviders.splice(this.target.dataProviders.indexOf(dataProvider), 1);
+            this.target.dataProviders.splice(
+              this.target.dataProviders.indexOf(dataProvider),
+              1
+            );
           }
         }
       }
@@ -203,21 +224,26 @@ export class EditTargetsComponent implements OnInit {
   }
 
   hasChanges(): boolean {
-    return JSON.stringify(this.target) !== JSON.stringify(this.originalTarget)
+    return JSON.stringify(this.target) !== JSON.stringify(this.originalTarget);
   }
 
   checkValidityOfTargetSystemDefinition() {
-
     // check if names of user-added changeable variables are not same with the ones coming from configuration
-    if (this.checkDuplicateInObject('name', this.target.changeableVariables)) {
-      return this.notify.error("", "Input parameters contain duplicate elements");
+    if (this.checkDuplicateInObject("name", this.target.changeableVariables)) {
+      return this.notify.error(
+        "",
+        "Input parameters contain duplicate elements"
+      );
     }
     // check if names of user-added incoming data types are not same with the ones coming from configuration
-    if (this.checkDuplicateInObject('name', this.target.incomingDataTypes)) {
-      return this.notify.error("", "Incoming data types contain duplicate elements");
+    if (this.checkDuplicateInObject("name", this.target.incomingDataTypes)) {
+      return this.notify.error(
+        "",
+        "Incoming data types contain duplicate elements"
+      );
     }
     // check if names of data providers are not same with the ones coming from configuration
-    if (this.checkDuplicateInObject('name', this.target.dataProviders)) {
+    if (this.checkDuplicateInObject("name", this.target.dataProviders)) {
       return this.notify.error("", "Data providers contain duplicate elements");
     }
   }
@@ -233,7 +259,7 @@ export class EditTargetsComponent implements OnInit {
       let dataProvider = this.target.dataProviders[i];
       if (dataProvider["is_primary"] === true) {
         // now check if user provided a valid input for number of samples to ignore
-        if (isNullOrUndefined(dataProvider["ignore_first_n_samples"])){
+        if (isNullOrUndefined(dataProvider["ignore_first_n_samples"])) {
           dataProvider["ignore_first_n_samples"] = 0; // TODO: deal with these samples in a less ugly way
         }
         primary_exists = true;
@@ -252,11 +278,16 @@ export class EditTargetsComponent implements OnInit {
       this.target.defaultVariables = _(this.target.changeableVariables);
       ctrl.target.name = ctrl.target.name.trim();
       ctrl.target.user = this.userService.getAuthToken()["value"].user.name;
-      if (ctrl.target.name.match('Simulation')) {
-        ctrl.target.type = "simulation";
+      if (ctrl.target.name.match("Simulation")) {
+        ctrl.target.type.includes("simulation");
       }
 
-      console.log("user creating this experiment: ", ctrl.target.user, " ", ctrl.target.type);
+      console.log(
+        "user creating this experiment: ",
+        ctrl.target.user,
+        " ",
+        ctrl.target.type
+      );
 
       // new ts will be created in first case
       if (ctrl.router.url.indexOf("/create") !== -1) {
@@ -264,34 +295,36 @@ export class EditTargetsComponent implements OnInit {
         ctrl.checkValidityOfTargetSystemDefinition();
         let primary_data_provider_exists = this.refreshDataProvidersAndCheckValidity();
         if (!primary_data_provider_exists) {
-          return ctrl.notify.error("", "Choose a single primary data provider!");
+          return ctrl.notify.error(
+            "",
+            "Choose a single primary data provider!"
+          );
           //return ctrl.notify.error("", "Provide at least one primary data provider and number of samples to ignore");
         }
         // and perform save operation
-        ctrl.api.saveTarget(ctrl.target).subscribe(
-          (new_target) => {
-            ctrl.temp_storage.setNewValue(new_target);
-            ctrl.notify.success("Success", "Target system is saved");
-            ctrl.router.navigate(["control/targets"]);
-          }
-        )
+        ctrl.api.saveTarget(ctrl.target).subscribe((new_target) => {
+          ctrl.temp_storage.setNewValue(new_target);
+          ctrl.notify.success("Success", "Target system is saved");
+          ctrl.router.navigate(["control/targets"]);
+        });
       } else {
         // perform necessary checks for validity of target system
         ctrl.checkValidityOfTargetSystemDefinition();
         let primary_exists = this.refreshDataProvidersAndCheckValidity();
         if (!primary_exists) {
-          return ctrl.notify.error("", "Choose a single primary data provider!");
+          return ctrl.notify.error(
+            "",
+            "Choose a single primary data provider!"
+          );
         }
         // everything is OK, create new uuid for edit operation
         ctrl.target.id = UUID.UUID();
 
-        ctrl.api.saveTarget(ctrl.target).subscribe(
-          (new_target) => {
-            ctrl.temp_storage.setNewValue(new_target);
-            ctrl.notify.success("Success", "Target system is saved");
-            ctrl.router.navigate(["control/targets"]);
-          }
-        );
+        ctrl.api.saveTarget(ctrl.target).subscribe((new_target) => {
+          ctrl.temp_storage.setNewValue(new_target);
+          ctrl.notify.success("Success", "Target system is saved");
+          ctrl.router.navigate(["control/targets"]);
+        });
       }
     }
   }
@@ -304,7 +337,7 @@ export class EditTargetsComponent implements OnInit {
       return true;
     }
 
-    if (this.target.type === '') {
+    if (this.target.type.length == 0) {
       this.errorButtonLabel = "Please select the experiment type!";
       return true;
     }
@@ -336,42 +369,52 @@ export class EditTargetsComponent implements OnInit {
 
         // check for attributes of data providers
         if (dataProvider.type === "kafka_consumer") {
-          if (dataProvider.serializer == null
-            || dataProvider.kafka_uri == null
-            || dataProvider.kafka_uri.length === 0
-            || dataProvider.topic == null
-            || dataProvider.topic.length === 0) {
-            this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+          if (
+            dataProvider.serializer == null ||
+            dataProvider.kafka_uri == null ||
+            dataProvider.kafka_uri.length === 0 ||
+            dataProvider.topic == null ||
+            dataProvider.topic.length === 0
+          ) {
+            this.errorButtonLabel =
+              "Provide valid inputs for Kafka data provider";
             return true;
           }
         } else if (dataProvider.type === "kafka_producer") {
-          if (dataProvider.serializer == null
-            || dataProvider.kafka_uri == null
-            || dataProvider.kafka_uri.length === 0
-            || dataProvider.topic == null
-            || dataProvider.topic.length === 0) {
-            this.errorButtonLabel = "Provide valid inputs for Kafka data provider";
+          if (
+            dataProvider.serializer == null ||
+            dataProvider.kafka_uri == null ||
+            dataProvider.kafka_uri.length === 0 ||
+            dataProvider.topic == null ||
+            dataProvider.topic.length === 0
+          ) {
+            this.errorButtonLabel =
+              "Provide valid inputs for Kafka data provider";
             return true;
           }
         } else if (dataProvider.type === "mqtt_listener") {
-          if (dataProvider.serializer == null
-            || dataProvider.host == null
-            || dataProvider.host.length === 0
-            || dataProvider.port == null
-            || dataProvider.port < 1
-            || dataProvider.port > 65535
-            || dataProvider.topic.length === 0
-            || dataProvider.topic == null
+          if (
+            dataProvider.serializer == null ||
+            dataProvider.host == null ||
+            dataProvider.host.length === 0 ||
+            dataProvider.port == null ||
+            dataProvider.port < 1 ||
+            dataProvider.port > 65535 ||
+            dataProvider.topic.length === 0 ||
+            dataProvider.topic == null
           ) {
-            this.errorButtonLabel = "Provide valid inputs for MQTT data provider";
+            this.errorButtonLabel =
+              "Provide valid inputs for MQTT data provider";
             return true;
           }
         } else if (dataProvider.type === "http_request") {
-          if (dataProvider.serializer == null
-            || dataProvider.url == null
-            || dataProvider.url.length === 0
+          if (
+            dataProvider.serializer == null ||
+            dataProvider.url == null ||
+            dataProvider.url.length === 0
           ) {
-            this.errorButtonLabel = "Provide valid inputs for HTTP data provider";
+            this.errorButtonLabel =
+              "Provide valid inputs for HTTP data provider";
             return true;
           }
         } else {
@@ -382,31 +425,36 @@ export class EditTargetsComponent implements OnInit {
     }
     // check for attributes of change provider
     if (this.target.changeProvider.type === "kafka_producer") {
-      if (this.target.changeProvider.serializer == null
-        || this.target.changeProvider.kafka_uri == null
-        || this.target.changeProvider.kafka_uri.length === 0
-        || this.target.changeProvider.topic == null
-        || this.target.changeProvider.topic.length === 0) {
-        this.errorButtonLabel = "Provide valid inputs for Kafka change provider";
+      if (
+        this.target.changeProvider.serializer == null ||
+        this.target.changeProvider.kafka_uri == null ||
+        this.target.changeProvider.kafka_uri.length === 0 ||
+        this.target.changeProvider.topic == null ||
+        this.target.changeProvider.topic.length === 0
+      ) {
+        this.errorButtonLabel =
+          "Provide valid inputs for Kafka change provider";
         return true;
       }
     } else if (this.target.changeProvider.type === "mqtt_publisher") {
-      if (this.target.changeProvider.serializer == null
-        || this.target.changeProvider.host == null
-        || this.target.changeProvider.host.length === 0
-        || this.target.changeProvider.port == null
-        || this.target.changeProvider.port < 1
-        || this.target.changeProvider.port > 65535
-        || this.target.changeProvider.topic.length === 0
-        || this.target.changeProvider.topic == null
+      if (
+        this.target.changeProvider.serializer == null ||
+        this.target.changeProvider.host == null ||
+        this.target.changeProvider.host.length === 0 ||
+        this.target.changeProvider.port == null ||
+        this.target.changeProvider.port < 1 ||
+        this.target.changeProvider.port > 65535 ||
+        this.target.changeProvider.topic.length === 0 ||
+        this.target.changeProvider.topic == null
       ) {
         this.errorButtonLabel = "Provide valid inputs for MQTT change provider";
         return true;
       }
     } else if (this.target.changeProvider.type === "http_request") {
-      if (this.target.changeProvider.serializer == null
-        || this.target.changeProvider.url == null
-        || this.target.changeProvider.url.length === 0
+      if (
+        this.target.changeProvider.serializer == null ||
+        this.target.changeProvider.url == null ||
+        this.target.changeProvider.url.length === 0
       ) {
         this.errorButtonLabel = "Provide valid inputs for http change provider";
         return true;
@@ -415,12 +463,14 @@ export class EditTargetsComponent implements OnInit {
 
     // now check attributes of output parameters
     for (let i = 0; i < this.target.incomingDataTypes.length; i++) {
-      if (this.target.incomingDataTypes[i].name == null
-        || this.target.incomingDataTypes[i].length === 0
-        || this.target.incomingDataTypes[i].description == null
-        || this.target.incomingDataTypes[i].description === 0
-        || isNullOrUndefined(this.target.incomingDataTypes[i].scale)
-        || isNullOrUndefined(this.target.incomingDataTypes[i].criteria)) {
+      if (
+        this.target.incomingDataTypes[i].name == null ||
+        this.target.incomingDataTypes[i].length === 0 ||
+        this.target.incomingDataTypes[i].description == null ||
+        this.target.incomingDataTypes[i].description === 0 ||
+        isNullOrUndefined(this.target.incomingDataTypes[i].scale) ||
+        isNullOrUndefined(this.target.incomingDataTypes[i].criteria)
+      ) {
         this.errorButtonLabel = "Provide valid inputs for output parameter(s)";
         return true;
       }
@@ -428,49 +478,65 @@ export class EditTargetsComponent implements OnInit {
 
     // check for attributes of input parameters
     for (let i = 0; i < this.target.changeableVariables.length; i++) {
-      if (this.target.changeableVariables[i].scale !== 'Boolean') {
-        if (this.target.changeableVariables[i].name == null
-          || this.target.changeableVariables[i].length === 0
-          || this.target.changeableVariables[i].description == null
-          || this.target.changeableVariables[i].description === 0
-          || isNullOrUndefined(this.target.changeableVariables[i].scale)
-          || isNullOrUndefined(this.target.changeableVariables[i].min)
-          || isNullOrUndefined(this.target.changeableVariables[i].max)
-          || isNullOrUndefined(this.target.changeableVariables[i].default)
-          || this.target.changeableVariables[i].min > this.target.changeableVariables[i].max) {
-          this.errorButtonLabel = "Provide valid inputs for changeable variable(s)";
+      if (this.target.changeableVariables[i].scale !== "Boolean") {
+        if (
+          this.target.changeableVariables[i].name == null ||
+          this.target.changeableVariables[i].length === 0 ||
+          this.target.changeableVariables[i].description == null ||
+          this.target.changeableVariables[i].description === 0 ||
+          isNullOrUndefined(this.target.changeableVariables[i].scale) ||
+          isNullOrUndefined(this.target.changeableVariables[i].min) ||
+          isNullOrUndefined(this.target.changeableVariables[i].max) ||
+          isNullOrUndefined(this.target.changeableVariables[i].default) ||
+          this.target.changeableVariables[i].min >
+            this.target.changeableVariables[i].max
+        ) {
+          this.errorButtonLabel =
+            "Provide valid inputs for changeable variable(s)";
           return true;
         }
       } else {
-        if (this.target.changeableVariables[i].name == null
-          || this.target.changeableVariables[i].length === 0
-          || this.target.changeableVariables[i].description == null
-          || this.target.changeableVariables[i].description === 0
-          || isNullOrUndefined(this.target.changeableVariables[i].scale)
-          || isNullOrUndefined(this.target.changeableVariables[i].default)
-          || isNullOrUndefined(this.target.changeableVariables[i].value)) {
-          this.errorButtonLabel = "1 Provide valid inputs for input parameter(s)!";
+        if (
+          this.target.changeableVariables[i].name == null ||
+          this.target.changeableVariables[i].length === 0 ||
+          this.target.changeableVariables[i].description == null ||
+          this.target.changeableVariables[i].description === 0 ||
+          isNullOrUndefined(this.target.changeableVariables[i].scale) ||
+          isNullOrUndefined(this.target.changeableVariables[i].default) ||
+          isNullOrUndefined(this.target.changeableVariables[i].value)
+        ) {
+          this.errorButtonLabel =
+            "1 Provide valid inputs for input parameter(s)!";
           return true;
         }
       }
 
-
       // if ch. var. is not created from configuration, check its default values
       if (this.target.changeableVariables[i]["disabled"] == false) {
-        if(this.target.changeableVariables[i].default < this.target.changeableVariables[i].min
-          || this.target.changeableVariables[i].default > this.target.changeableVariables[i].max) {
-          this.errorButtonLabel = "Provide valid inputs for your input parameter(s)";
+        if (
+          this.target.changeableVariables[i].default <
+            this.target.changeableVariables[i].min ||
+          this.target.changeableVariables[i].default >
+            this.target.changeableVariables[i].max
+        ) {
+          this.errorButtonLabel =
+            "Provide valid inputs for your input parameter(s)";
           return true;
         }
       }
       // if ch. var. is created from configuration, check its min & max
       else {
         let changeableVariable = this.target.changeableVariables[i];
-        let existingDefaultVariable = this.target.defaultVariables.find(item => item.name === changeableVariable.name);
+        let existingDefaultVariable = this.target.defaultVariables.find(
+          (item) => item.name === changeableVariable.name
+        );
         if (existingDefaultVariable) {
-          if (changeableVariable["min"] < existingDefaultVariable["min"]
-            || changeableVariable["max"] > existingDefaultVariable["max"]) {
-            this.errorButtonLabel = "Inputs for input parameter(s) cannot exceed limits in target system configuration";
+          if (
+            changeableVariable["min"] < existingDefaultVariable["min"] ||
+            changeableVariable["max"] > existingDefaultVariable["max"]
+          ) {
+            this.errorButtonLabel =
+              "Inputs for input parameter(s) cannot exceed limits in target system configuration";
             return true;
           }
         }
@@ -491,14 +557,14 @@ export class EditTargetsComponent implements OnInit {
     }
      */
 
-
     if (this.target.incomingDataTypes.length === 0) {
       this.errorButtonLabel = "Provide at least one output parameter";
       return true;
     }
 
     if (isNullOrUndefined(this.target.changeProvider.changesApplicable)) {
-      this.errorButtonLabel = "Provide True or False for applicability of changes to target system on the run-time";
+      this.errorButtonLabel =
+        "Provide True or False for applicability of changes to target system on the run-time";
       return true;
     }
 
@@ -515,35 +581,45 @@ export class EditTargetsComponent implements OnInit {
   }
 
   configDropdownChanged(selected_configuration_name: any) {
-    this.selectedConfiguration = this.availableConfigurations.filter(config => config.name === selected_configuration_name)[0];
+    this.selectedConfiguration = this.availableConfigurations.filter(
+      (config) => config.name === selected_configuration_name
+    )[0];
   }
 
   useConfiguration() {
     this.targetCreatedFromConfig = true;
-    this.target['name'] = this.selectedConfiguration['name'];
-    this.target['description'] = this.selectedConfiguration['description'];
-    this.target.changeProvider['changesApplicable'] = this.selectedConfiguration['changesApplicable'];
+    this.target["name"] = this.selectedConfiguration["name"];
+    this.target["description"] = this.selectedConfiguration["description"];
+    this.target.changeProvider[
+      "changesApplicable"
+    ] = this.selectedConfiguration["changesApplicable"];
 
     // kafkaHost attribute is retrieved from api
     if (this.selectedConfiguration.hasOwnProperty("kafkaHost")) {
-      this.target.changeProvider['kafka_uri'] = this.selectedConfiguration['kafkaHost'];
-      this.target.changeProvider['type'] = 'kafka_producer';
-      this.target.changeProvider['topic'] = this.selectedConfiguration['kafkaCommandsTopic'];
-      this.target.changeProvider['serializer'] = 'JSON';
+      this.target.changeProvider["kafka_uri"] = this.selectedConfiguration[
+        "kafkaHost"
+      ];
+      this.target.changeProvider["type"] = "kafka_producer";
+      this.target.changeProvider["topic"] = this.selectedConfiguration[
+        "kafkaCommandsTopic"
+      ];
+      this.target.changeProvider["serializer"] = "JSON";
     } else if (this.selectedConfiguration.hasOwnProperty("url")) {
-      this.target.changeProvider['url'] = this.selectedConfiguration['url'];
-      this.target.changeProvider['type'] = 'http_request';
-      this.target.changeProvider['serializer'] = 'JSON';
+      this.target.changeProvider["url"] = this.selectedConfiguration["url"];
+      this.target.changeProvider["type"] = "http_request";
+      this.target.changeProvider["serializer"] = "JSON";
     }
 
     // add provision topic for scenario ACK kafka consumer
     // TODO: might need to move this furhter in the workflow
-    if (this.selectedConfiguration['name'] == "Simulation") {
-      let tempConfiguration = this.availableConfigurations.filter(config => config.name === this.selectedConfiguration['name'])[0];
+    if (this.selectedConfiguration["name"] == "Simulation") {
+      let tempConfiguration = this.availableConfigurations.filter(
+        (config) => config.name === this.selectedConfiguration["name"]
+      )[0];
       // this.scenarioDataProvider = tempConfiguration.filter(dataProvider => dataProvider['name']=="Scenario");
       for (let dataProviderFromConfig of tempConfiguration.dataProviders) {
-        if (dataProviderFromConfig['name'] == 'Scenario')
-          this.scenarioDataProvider=dataProviderFromConfig;
+        if (dataProviderFromConfig["name"] == "Scenario")
+          this.scenarioDataProvider = dataProviderFromConfig;
       }
     }
 
@@ -551,7 +627,7 @@ export class EditTargetsComponent implements OnInit {
     for (let knob of this.selectedConfiguration.knobs) {
       // try to guess default value of target system if not provided via api
       // https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-      if(isNullOrUndefined(knob["default"])) {
+      if (isNullOrUndefined(knob["default"])) {
         let randomDefault = lodash.random(knob["min"], knob["max"]);
         // knob["default"] = randomDefault.toFixed(2);
         knob["default"] = randomDefault;
@@ -570,14 +646,13 @@ export class EditTargetsComponent implements OnInit {
     var seenDuplicate = false,
       testObject = {};
 
-    inputArray.map(function(item) {
+    inputArray.map(function (item) {
       var itemPropertyName = item[propertyName];
       if (itemPropertyName in testObject) {
         testObject[itemPropertyName].duplicate = true;
         item.duplicate = true;
         seenDuplicate = true;
-      }
-      else {
+      } else {
         testObject[itemPropertyName] = item;
         delete item.duplicate;
       }

@@ -13,7 +13,7 @@ def experimentFunction(wf, exp):
     """ executes a given experiment stage """
     start_time = current_milli_time()
     # remove all old data from the queues
-    wf.primary_data_provider["instance"].reset()
+    wf.primary_data_provider["instance"][0].reset()
 
     # load change event creator or use a default
     if hasattr(wf, "change_event_creator"):
@@ -35,7 +35,7 @@ def experimentFunction(wf, exp):
     if to_ignore > 0:
         i = 0
         while i < to_ignore:
-            new_data = wf.primary_data_provider["instance"].returnData()
+            new_data = wf.primary_data_provider["instance"][0].returnData()
             if new_data is not None:
                 i += 1
                 # we callback to oeda and give us info there
@@ -56,7 +56,7 @@ def experimentFunction(wf, exp):
     try:
         while i < sample_size:
             # we start with the primary data provider using blocking returnData
-            new_data = wf.primary_data_provider["instance"].returnData()
+            new_data = wf.primary_data_provider["instance"][0].returnData()
             if new_data is not None:
                 try:
                     wf = wf.primary_data_provider["data_reducer"](new_data, wf)
@@ -135,7 +135,7 @@ def simulationFunction(wf, exp):
     """ executes a given experiment stage """
     start_time = current_milli_time()
     # remove all old data from the queues
-    wf.primary_data_provider["instance"].reset()
+    wf.primary_data_provider["instance"][0].reset()
 
     # load change event creator or use a default
     if hasattr(wf, "change_event_creator"):
@@ -157,7 +157,7 @@ def simulationFunction(wf, exp):
     if to_ignore > 0:
         i = 0
         while i < to_ignore:
-            new_data = wf.primary_data_provider["instance"].returnData()
+            new_data = wf.primary_data_provider["instance"][0].returnData()
             if new_data is not None:
                 i += 1
                 # we callback to oeda and give us info there
@@ -178,7 +178,7 @@ def simulationFunction(wf, exp):
     try:
         while i < sample_size:
             # we start with the primary data provider using blocking returnData
-            new_data = wf.primary_data_provider["instance"].returnData()
+            new_data = wf.primary_data_provider["instance"][0].returnData()
             if new_data is not None:
                 try:
                     wf = wf.primary_data_provider["data_reducer"](new_data, wf)

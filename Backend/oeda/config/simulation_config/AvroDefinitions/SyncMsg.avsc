@@ -1,17 +1,15 @@
-{ "type": "record",
- 	"namespace": "eu.fau.cs7.datamodel",
- 	"name": "SyncMsg",
- 	"fields": [
-		                        	{	"name" : "Sender", "type": "string"},
-		                        	{   "name": "Action", "type": "string"},
-		                        	{   "name": "Time", "type": "long"},
-		                        	{   "name": "Messages", "type": {
-							                "type": "array",
-							                "items":{
-							                    "name": "Message",
-							                    "type": "KeyValue"
-							                }
-							          	}
-							        }
-              ]
-}    
+{
+  "type": "record",
+  "namespace": "org.vim_project.datamodel",
+  "name": "SyncMsg",
+  "fields": [
+    { "name": "Sender", "type": "string" },
+    { "name": "Action", "type": "string", "default": "request" },
+    { "name": "Time", "type": "long" },
+    { "name": "Epoch", "type": "int", "default": 0 },
+    {
+      "name": "Messages",
+      "type": { "type": "map", "values": "long", "default": {} }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+--ResourceFile.avsc--
+Was extended with a RefFile field. RefFile has to be an absolute link (e.g. s3://s3bvimpprddatastorage/simulation/resources/test.txt)

@@ -3,15 +3,17 @@ import {Injectable, Injector} from "@angular/core";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Request, Response, Headers} from '@angular/http';
+import {UserService} from "../modules/auth/user.service";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class HttpInterceptor extends Http {
 
+  _router: any = null;
+
   static httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions, injector: Injector) {
     return new HttpInterceptor(xhrBackend, requestOptions, injector)
   }
-
-  _router: any = null;
 
   constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private injector: Injector) {
     super(backend, defaultOptions);
@@ -19,7 +21,7 @@ export class HttpInterceptor extends Http {
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    return this.intercept(super.request(url, options));
+      return this.intercept(super.request(url, options));
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -51,23 +53,13 @@ export class HttpInterceptor extends Http {
 
   intercept(observable: Observable<Response>): Observable<Response> {
     return observable.catch((err, source) => {
-      if (err.status == 401) {
-        setTimeout(
-          () => this._router.navigate(['/auth/login'], {
-            queryParams: {returnUrl: this._router.currentRouterState.snapshot.url}
-          })
-        )
-        ;
-        return Observable.empty();
+      if (err.status === 401) {
+        this._router.navigate("/")
+      } else if (err.status === 403) {
+         this._router.navigate(['control', 'experiments'])
+      } else {
+        return Observable.throw(err);
       }
-
-      // offline case
-      // if (err.status == 0 && !err.ok) {
-      //   return Observable.throw(err);
-      // }
-
-      return Observable.throw(err);
-
     });
 
   }

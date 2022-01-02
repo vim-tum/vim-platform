@@ -25,9 +25,11 @@ class KafkaProducerDataProvider(DataProvider):
             # Get the channel name
             channel_name = str(cp["channel"])
 
-            channel_name += "." + wf._oeda_target["type"]
+            channel_name += "." + cp["experiment_type"]
 
-            if cp["topic"] != "bootstrap":
+            if cp["topic"] == "command":
+                channel_name += "." + cp["topic"]
+            elif cp["topic"] != "bootstrap":
                 channel_name += "." + str(wf.id) + "." + cp["topic"]
             # print("Kafka topic selected as >> ", channel_name)
             self.topic = channel_name
@@ -52,13 +54,15 @@ class KafkaProducerDataProvider(DataProvider):
             elif cp["name"] == "Resource":
                 # msgs are records including raw bytes
                 schema = avro.load(os.path.join(path_to_schemas, "ResourceFile.avsc"))
+            elif cp["name"] == "OrchestrationCommand":
+                schema = avro.load(os.path.join(path_to_schemas, "AnalysisCommand.avsc"))
             else:
                 error("unknown channel")
                 exit(1)
 
             self.producer = AvroProducer({'bootstrap.servers': self.kafka_uri,
-                                          'schema.registry.url': 'http://127.0.0.1:8081'},
-                                         default_value_schema = schema)
+                                          'schema.registry.url': 'http://131.159.24.152:8081'},
+                                         default_value_schema=schema)
 
             info("> Created Avro Producer", Fore.CYAN)
 

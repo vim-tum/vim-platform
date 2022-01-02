@@ -27,6 +27,8 @@ def start_single_experiment_strategy(wf):
     wf.analysis["data_type"] = considered_data_type_name
 
     # indicate the end of whole execution
-    wf.run_oeda_callback({"status": "EXPERIMENT_DONE",
+
+    wf.run_oeda_callback({"status": "COLLECTING_DATA",
                           "experiment_counter": wf.experimentCounter, "total_experiments": wf.totalExperiments,
                           "remaining_time_and_stages": wf.remaining_time_and_stages})
+

@@ -7,7 +7,6 @@ import {AccordionModule} from "ngx-bootstrap/accordion";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {NotificationsService} from "angular2-notifications";
-import {HttpInterceptor} from "./util/http-interceptor";
 import {CustomErrorHandler} from "./util/custom-error-handler";
 import {LoggerService} from "./modules/helper/logger.service";
 import {TempStorageService} from "./modules/helper/temp-storage-service";
@@ -21,6 +20,12 @@ import {UIModule} from "./modules/ui/ui.module";
 import {OEDAApiService} from "./modules/api/oeda-api.service";
 import {PlotService} from "./util/plot-service";
 import {EntityService} from "./util/entity-service";
+import {HttpInterceptor} from "./util/http-interceptor";
+import {AuthorizationService} from "./modules/auth/authorization.service";
+import {RoleRouterGuard} from "./modules/auth/role-routerguard.service";
+import {BootstrapSwitchModule} from "angular2-bootstrap-switch";
+import {ResourceService} from "./util/resource-service";
+
 
 @NgModule({
   imports: [
@@ -32,7 +37,8 @@ import {EntityService} from "./util/entity-service";
     ModalModule,
     UtilModule,
     DataTableModule,
-    UIModule
+    UIModule,
+    BootstrapSwitchModule.forRoot(),
   ],
   exports: [
     CommonModule,
@@ -50,11 +56,13 @@ import {EntityService} from "./util/entity-service";
     LoggerService,
     TempStorageService,
     UserRouteGuard,
+    RoleRouterGuard,
     LayoutService,
     DataService,
     PlotService,
     EntityService,
-    OEDAApiService
+    OEDAApiService,
+    AuthorizationService
     // should always be empty
   ]
 })
@@ -64,7 +72,6 @@ export class SharedModule {
   static authHttpServiceFactory(http: HttpInterceptor, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
       tokenName: 'oeda_token',
-      globalHeaders: [{'Content-Type': 'application/json'}],
     }), http, options)
   }
 
@@ -91,7 +98,8 @@ export class SharedModule {
         UserService,
         LayoutService,
         UserRouteGuard,
-        NotificationsService
+        NotificationsService,
+        ResourceService
       ]
     };
   }

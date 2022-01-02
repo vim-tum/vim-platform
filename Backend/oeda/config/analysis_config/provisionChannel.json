@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Output",
+    "description": "A consumer topic for receiving analysis results in an archived file",
+    "type": "kafka_consumer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "output",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": false
+  }
+]

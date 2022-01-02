@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-default col-md-6">
+      <div class="panel-heading">
+        <div class="card-title">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="title">All Users</div>
+                <div class="btn btn-sm btn-orange" style="margin-top: 10px" (click)="createUser()"><i
+                  class="fa fa-file-o"></i>
+                  Create new User
+                </div>
+                <div class="btn btn-sm btn-orange" style="margin-top: 10px" (click)="editRoles()"><i
+                  class="fa fa-cogs"></i>
+                  Manage Roles
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5">
+              <input class="form-control form-control-sm mr-3" type="text" placeholder="Search by username"
+                     aria-label="Search" [(ngModel)]="searchText" name="searchText">
+            </div>
+            <div class="col-md-5">
+              <angular4-multiselect [data]="dropdownList" [(ngModel)]="selectedItems"
+                                    [settings]="dropdownSettings"></angular4-multiselect>
+            </div>
+            <div class="col-md-2">
+              <div class="btn btn-sm btn-orange" (click)="search()"><i class="fa fa-search"></i> Search</div>
+            </div>
+            <div *ngIf="searchedUsers" class="table-responsive col-md-12">
+              <table style="margin-top: 20px" class="table table-striped table-bordered table-hover"
+                     [mfData]="searchedUsers"
+                     #mf="mfDataTable"
+                     [mfRowsOnPage]="10"
+                     [mfSortBy]="'created_at'"
+                     [mfSortOrder]="'desc'">
+                <thead>
+                <tr>
+                  <th>Manage</th>
+                  <th>
+                    <mfDefaultSorter by="name">Username</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="created_at">Registered at</mfDefaultSorter>
+                  </th>
+                  <th>Roles</th>
+                </tr>
+                </thead>
+                <tbody class="bigTable">
+                <ng-container *ngFor="let item of mf.data">
+                  <tr>
+                    <td><a
+                      class="btn btn-xs btn-primary"
+                      type="button"
+                      data-toggle="tooltip"
+                      (click)="editUser(item.name)"
+                      title="Click to see results"
+                    ><i class="fa fa-pencil"></i> Edit
+                    </a>
+                      <a class="btn btn-xs btn-orange" type="button"
+                         (click)="deleteUser(item)"
+                         data-toggle="modal"><i class="fa fa-trash-o"></i> Delete
+                      </a>
+                    </td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td>
+                      <ng-container *ngFor="let role of item.roles">
+                        <label class="label label-default" style="margin-left: 1px; margin-right: 1px">
+                          <span data-toggle="tooltip" data-placement="bottom"
+                                title="{{role.description}}">{{role.name}}</span>
+                        </label>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+                <tfoot *ngIf="users.length > 10">
+                <tr>
+                  <td colspan="4">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[10,25,100]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <app-user-edit *ngIf="selectedUser" [user]="selectedUser" [action]="this.action"
+                     (onDataChange)="loadData()"></app-user-edit>
+    </div>
+  </div>
+</div>
+

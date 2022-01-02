@@ -123,6 +123,25 @@ class ElasticSearchDb(Database):
             error("TransportError while retrieving targets. Check type mappings in experiment_db_config.json.")
             raise err2
 
+    def get_targets_by(self, field, value):
+        try:
+            query = {
+                "size": 1000,
+                "query": {
+                    "match": {field: value}
+                }
+            }
+            self.es.indices.refresh(index=self.target_system_index)
+            res = self.es.search(index=self.target_system_index, body=query)
+            return [r["_id"] for r in res["hits"]["hits"]], [r["_source"] for r in res["hits"]["hits"]]
+        except ConnectionError as err1:
+            error("ConnectionError while retrieving targets. Check connection to elasticsearch.")
+            raise err1
+        except TransportError as err2:
+            error("TransportError while retrieving targets. Check type mappings in experiment_db_config.json.")
+            raise err2
+
+
     def save_experiment(self, experiment_data):
         experiment_data["status"] = "OPEN"
         experiment_data["createdDate"] = datetime.now().isoformat(' ')

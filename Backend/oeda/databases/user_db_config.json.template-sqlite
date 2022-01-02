@@ -1,4 +1,0 @@
-{
-  "db_type": "sqlite",
-  "sqlite_file": "full-path-to-sqlite-file (e.g. /Users/<user-name>/oeda_users.sqlite); will be created if it does not exist)"
-}

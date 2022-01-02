@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {OedaCallbackEntity} from "../api/oeda-api.service";
-import {isNullOrUndefined} from "util";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { OedaCallbackEntity } from "../api/oeda-api.service";
+import { isNullOrUndefined } from "util";
 
 @Component({
-  selector: 'experiment-stages-paginator',
+  selector: "experiment-stages-paginator",
   template: `
     <div class="col-md-12" [hidden]="hidden">
       <div class="panel panel-default chartJs">
@@ -12,18 +12,33 @@ import {isNullOrUndefined} from "util";
             <div class="col-md-4">
               <div class="card-title">
                 Output Parameters
-                <select class="form-control" [(ngModel)]="incoming_data_type_name" (ngModelChange)="onIncomingDataTypeChange($event)">
-                  <option *ngFor="let dataType of targetSystem.incomingDataTypes" value="{{dataType.name}}">
-                    {{dataType.name}}
-                  </option>
+                <select
+                  class="form-control"
+                  [(ngModel)]="incoming_data_type_name"
+                  (ngModelChange)="onIncomingDataTypeChange($event)"
+                >
+                  <ng-container
+                    *ngFor="let dataType of targetSystem.incomingDataTypes"
+                  >
+                    <ng-container *ngIf="dataType.scale == 'Metric'">
+                      <option value="{{ dataType.name }}">
+                        {{ dataType.name }}
+                      </option>
+                    </ng-container>
+                  </ng-container>
                 </select>
               </div>
             </div>
-            
+
             <div class="col-md-4">
               <div class="card-title">
                 Scale
-                <select class="form-control" required [(ngModel)]="scale" (ngModelChange)="onScaleChange($event)">
+                <select
+                  class="form-control"
+                  required
+                  [(ngModel)]="scale"
+                  (ngModelChange)="onScaleChange($event)"
+                >
                   <option selected>Normal</option>
                   <option>Log</option>
                 </select>
@@ -33,73 +48,127 @@ import {isNullOrUndefined} from "util";
         </div>
         <div class="panel-body" style="padding-top: 20px; padding-left: 2%">
           <div class="table-responsive">
-            <table style="margin-top: 20px" class="table table-bordered table-hover" [mfData]="available_steps[step_no]" #mf="mfDataTable" [mfRowsOnPage]="10">
+            <table
+              style="margin-top: 20px"
+              class="table table-bordered table-hover"
+              [mfData]="available_steps[step_no]"
+              #mf="mfDataTable"
+              [mfRowsOnPage]="10"
+            >
               <thead>
                 <tr>
-                  <th>
-                    Stage
-                  </th>
-                  <th *ngIf="for_successful_experiment">
-                    Result
-                  </th>
+                  <th>Stage</th>
+                  <th *ngIf="for_successful_experiment">Result</th>
                   <!-- Default Knobs Header (this is always in the same order because we retrieve it from config)-->
-                  <th *ngFor="let default_knob of targetSystem.defaultVariables"> 
-                    {{default_knob.name}}
+                  <th
+                    *ngFor="let default_knob of targetSystem.defaultVariables"
+                  >
+                    {{ default_knob.name }}
                   </th>
                 </tr>
               </thead>
               <tbody class="bigTable">
-                <tr *ngFor="let item of mf.data" (click)="onRowClick(item)" [class.active]="item.number == selected_row">
-                  <td *ngIf="item.number === -1 && experiment.executionStrategy.type !== 'forever'" data-toggle="tooltip" title="Default configuration values are shown on this row">
+                <tr
+                  *ngFor="let item of mf.data"
+                  (click)="onRowClick(item)"
+                  [class.active]="item.number == selected_row"
+                >
+                  <td
+                    *ngIf="
+                      item.number === -1 &&
+                      experiment.executionStrategy.type !== 'forever'
+                    "
+                    data-toggle="tooltip"
+                    title="Default configuration values are shown on this row"
+                  >
                     <b>All Stages</b>
                   </td>
-                  <td *ngIf="item.number !== -1" data-toggle="tooltip" title="Click to draw plots">
-                    {{item.number}}
+                  <td
+                    *ngIf="item.number !== -1"
+                    data-toggle="tooltip"
+                    title="Click to draw plots"
+                  >
+                    {{ item.number }}
                   </td>
-                  <td *ngIf="for_successful_experiment && (item.number === -1 || item.stage_result == null)" data-toggle="tooltip" title="Result cannot be shown">
+                  <td
+                    *ngIf="
+                      for_successful_experiment &&
+                      (item.number === -1 || item.stage_result == null)
+                    "
+                    data-toggle="tooltip"
+                    title="Result cannot be shown"
+                  >
                     <!--a font or null value can be shown here-->
                   </td>
-                  <td *ngIf="for_successful_experiment && item.number !== -1 && item.stage_result != null" data-toggle="tooltip" title="Shows result of the stage">
-                    {{item.stage_result}}
+                  <td
+                    *ngIf="
+                      for_successful_experiment &&
+                      item.number !== -1 &&
+                      item.stage_result != null
+                    "
+                    data-toggle="tooltip"
+                    title="Shows result of the stage"
+                  >
+                    {{ item.stage_result }}
                   </td>
-                  <td *ngFor="let knob_key_name of ordered_keys" data-toggle="tooltip" title="Click to draw plots">
+                  <td
+                    *ngFor="let knob_key_name of ordered_keys"
+                    data-toggle="tooltip"
+                    title="Click to draw plots"
+                  >
                     <!-- all stage variables that we make experiment with (if strategy is not forever) -- format: [min, max]-->
-                    <span *ngIf="item.number === -1 && is_included_in_experiment(knob_key_name) && experiment.executionStrategy.type !== 'forever'">
-                      <b>[{{item.knobs[knob_key_name].min}}, {{item.knobs[knob_key_name].max}}]</b>
+                    <span
+                      *ngIf="
+                        item.number === -1 &&
+                        is_included_in_experiment(knob_key_name) &&
+                        experiment.executionStrategy.type !== 'forever'
+                      "
+                    >
+                      <b
+                        >[{{ item.knobs[knob_key_name].min }},
+                        {{ item.knobs[knob_key_name].max }}]</b
+                      >
                     </span>
-    
+
                     <!-- all stage variables that we do "not" make experiment with (if strategy is not forever) -- format: default_value -->
-                    <span *ngIf="item.number === -1 && !is_included_in_experiment(knob_key_name) && experiment.executionStrategy.type !== 'forever'">
-                      <b>{{item.knobs[knob_key_name].default}}</b>
+                    <span
+                      *ngIf="
+                        item.number === -1 &&
+                        !is_included_in_experiment(knob_key_name) &&
+                        experiment.executionStrategy.type !== 'forever'
+                      "
+                    >
+                      <b>{{ item.knobs[knob_key_name].default }}</b>
                     </span>
-                    
+
                     <span *ngIf="item.number !== -1">
-                      {{item.knobs[knob_key_name]}}
+                      {{ item.knobs[knob_key_name] }}
                     </span>
                   </td>
-                  
                 </tr>
-                </tbody>
-                <!--<tfoot *ngIf="get_keys(available_steps[step_no]).length > 10">-->
-                <tfoot>
-                  <tr>
-                    <td colspan="12">
-                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+              </tbody>
+              <!--<tfoot *ngIf="get_keys(available_steps[step_no]).length > 10">-->
+              <tfoot>
+                <tr>
+                  <td colspan="12">
+                    <mfBootstrapPaginator
+                      [rowsOnPageSet]="[5, 10, 25]"
+                    ></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  `
+  `,
 })
-
 export class ExperimentStagesPaginatorComponent implements OnInit {
   @Output() rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() scaleChanged: EventEmitter<any> = new EventEmitter<any>();
-  @Output() incomingDataTypeChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  incomingDataTypeChanged: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() experiment: any;
   @Input() available_steps: any;
@@ -132,7 +201,7 @@ export class ExperimentStagesPaginatorComponent implements OnInit {
     if (this.available_steps.hasOwnProperty(this.step_no)) {
       // ordered_keys is used to display knobs of All Stages row
       let step_tuple = this.available_steps[this.step_no];
-      if(!isNullOrUndefined(step_tuple)) {
+      if (!isNullOrUndefined(step_tuple)) {
         this.ordered_keys = this.get_ordered_keys(step_tuple[0].knobs);
       }
     }
@@ -147,7 +216,7 @@ export class ExperimentStagesPaginatorComponent implements OnInit {
   }
 
   /** returns keys of the given object */
-  get_keys(object) : Array<string> {
+  get_keys(object): Array<string> {
     if (!isNullOrUndefined(object)) {
       return Object.keys(object);
     }
@@ -160,10 +229,12 @@ export class ExperimentStagesPaginatorComponent implements OnInit {
    */
   get_ordered_keys(stage_object) {
     let sortingArray = [];
-    this.targetSystem.defaultVariables.forEach(function(default_variable){
-      sortingArray.push(default_variable['name']);
+    this.targetSystem.defaultVariables.forEach(function (default_variable) {
+      sortingArray.push(default_variable["name"]);
     });
     let unordered_stage_keys = this.get_keys(stage_object);
-    return sortingArray.filter((element)=>(unordered_stage_keys.indexOf(element) > -1));
+    return sortingArray.filter(
+      (element) => unordered_stage_keys.indexOf(element) > -1
+    );
   }
 }

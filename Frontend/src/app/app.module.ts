@@ -21,7 +21,7 @@ import {SimpleNotificationsModule} from "angular2-notifications";
     GlobalModule,
     AmChartsModule,
     SharedModule.forRoot(),
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
   ],
   providers: [
     // should be empty as we import all global services through "SharedModule.forRoot()"

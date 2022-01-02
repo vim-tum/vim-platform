@@ -1,0 +1,9 @@
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.large {
+  width: 20px;
+  height: 20px;
+}

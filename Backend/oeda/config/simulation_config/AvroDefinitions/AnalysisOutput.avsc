@@ -1,0 +1,32 @@
+{
+    "namespace": "org.vim_project.analysis",
+    "name": "Output",
+    "type": "record",
+    "fields": [
+        { "name" : "job_id", "type" : "string" },
+        { "name" : "final", "type" : "boolean" },
+        {
+            "name" : "algorithms",
+            "type" : {
+                "type": "array",
+                "items": {
+                    "type": "record",
+                    "name": "AlgorithmOutput",
+                    "fields": [
+                        { "name" : "name", "type" : "string" },
+                        {
+                            "name" : "results",
+                            "type" :
+                            {
+                                "type": "map",
+                                "values": [ "boolean", "long", "double", "string", "bytes" ]
+                            },
+                            "default": {}
+                        }
+                    ]
+                }
+            },
+            "default": []
+        }
+    ]
+}

@@ -1,19 +1,71 @@
 {
   "type": "record",
   "name": "Micro",
-  "namespace": "eu.fau.cs7.datamodel",
+  "namespace": "org.vim_project.datamodel",
   "fields": [
-    { "name": "vehicleID", "type": "string"}, 
-    { "name": "acceleration","type": "double"},
-    { "name": "angle", "type": "double"},
-    { "name": "edge", "type": "string"},
-    { "name": "lane", "type": "int"},
-    { "name": "positionX", "type": "double"},   
-    { "name": "positionY", "type": "double"},   
-    { "name": "positionZ", "type": "double"},   
-    { "name": "positionEdge", "type": "double"}, 
-    { "name": "route", "type": "string"},
-    { "name": "speed", "type": "double"},
-    { "name": "vtype", "type": "string"}
+    {
+      "name": "vehicleID",
+      "type": "string"
+    },
+    {
+      "name": "acceleration",
+      "type": "double"
+    },
+    {
+      "name": "angle",
+      "type": "double"
+    },
+    {
+      "name": "edge",
+      "type": "string"
+    },
+    {
+      "name": "lane",
+      "type": "int"
+    },
+    {
+      "name": "position",
+      "type": {
+        "type": "record",
+        "name": "Vec3",
+        "fields": [
+          {
+            "name": "x",
+            "type": "double"
+          },
+          {
+            "name": "y",
+            "type": "double"
+          },
+          {
+            "name": "z",
+            "type": "double"
+          }
+        ]
+      }
+    },
+    {
+      "name": "positionEdge",
+      "type": "double"
+    },
+    {
+      "name": "route",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "slope",
+      "type": "double"
+    },
+    {
+      "name": "speed",
+      "type": "double"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    }
   ]
 }

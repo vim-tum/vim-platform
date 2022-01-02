@@ -1,0 +1,20 @@
+{
+    "namespace": "org.vim_project.analysis",
+    "name": "Response",
+    "type": "record",
+    "fields": [
+        { "name" : "response_type", "type" : "string" },
+        { "name" : "sub_type", "type" : "string" },
+        { "name" : "msg_id", "type" : "string", "default": "" },
+        { "name" : "job_id", "type" : "string", "default": "" },
+        {
+            "name" : "payload",
+            "type":
+            {
+                "type": "map",
+                "values": [ "boolean", "long", "double", "string", "bytes" ]
+            },
+            "default": {}
+        }
+    ]
+}

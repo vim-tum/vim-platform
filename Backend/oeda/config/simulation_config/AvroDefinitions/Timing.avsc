@@ -1,9 +1,18 @@
- { "type": "record",
- 	"namespace": "eu.fau.cs7.datamodel",
+ {
+ 	"type": "record",
+ 	"namespace": "org.vim_project.datamodel",
  	"name": "Timing",
- 	"fields": [
-		                        	{	"name" : "Constrained", "type": "boolean"},
-		                        	{   "name": "Regulating", "type": "boolean"},
-		                        	{   "name": "Lookahead", "type": "long"}
-                    ]
-}    
+ 	"fields": [{
+ 			"name": "Constrained",
+ 			"type": "boolean"
+ 		},
+ 		{
+ 			"name": "Regulating",
+ 			"type": "boolean"
+ 		},
+ 		{
+ 			"name": "Lookahead",
+ 			"type": "long"
+ 		}
+ 	]
+ }

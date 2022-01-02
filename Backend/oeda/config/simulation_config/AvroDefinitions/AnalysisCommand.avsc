@@ -1,0 +1,43 @@
+{
+    "namespace": "org.vim_project.analysis",
+    "name": "Command",
+    "type": "record",
+    "fields": [
+        { "name" : "command_type", "type" : "string" },
+        { "name" : "msg_id", "type" : "string" },
+        { "name" : "job_id", "type" : "string", "default": "" },
+        {
+            "name" : "parameters",
+            "type":
+            {
+                "type": "map",
+                "values": [ "boolean", "long", "double", "string", "bytes" ]
+            },
+            "default": {}
+        },
+        {
+            "name" : "algorithms",
+            "type" : {
+                "type": "array",
+                "items": {
+                    "type": "record",
+                    "name": "AlgorithmInput",
+                    "fields": [
+                        { "name" : "name", "type" : "string" },
+                        { "name" : "result_output", "type":  "long" },
+                        {
+                            "name" : "parameters",
+                            "type" :
+                            {
+                                "type": "map",
+                                "values": [ "boolean", "long", "double", "string", "bytes" ]
+                            },
+                            "default": {}
+                        }
+                    ]
+                }
+            },
+            "default": []
+        }
+    ]
+}

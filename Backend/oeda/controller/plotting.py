@@ -1,4 +1,6 @@
 from flask_restful import Resource
+
+from oeda.controller.securityUtils import jwt_auth_required, Permission, has_access_to_experiment, require_permission
 from oeda.controller.experiment_results import get_all_stage_data
 from oeda.utilities.Structures import DefaultOrderedDict
 from collections import OrderedDict
@@ -20,6 +22,8 @@ class QQPlotController(Resource):
 
     availableScales = ["normal", "log"]
 
+    @jwt_auth_required()
+    @require_permission(Permission.GET_EXPERIMENT, has_access_to_experiment)
     def get(self, experiment_id, step_no, stage_no, distribution, scale, incoming_data_type_name):
         try:
             # required because we store them as number in db, but retrieve as string
@@ -81,6 +85,8 @@ class QQPlotController(Resource):
 class BoxPlotController(Resource):
     availableScales = ["normal", "log"]
 
+    @jwt_auth_required()
+    @require_permission(Permission.GET_EXPERIMENT, has_access_to_experiment)
     def get(self, experiment_id, step_no, stage_no, scale, incoming_data_type_name):
         try:
             # required because we store them as number in db, but retrieve as string

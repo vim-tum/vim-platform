@@ -6,59 +6,106 @@
         <div class="card-title">
           <div class="title pull-left">Target System Selection</div>
           <div class="pull-right">
-            <div *ngIf="hasChanges() && !hasErrors()" (click)="saveExperiment()" class="btn btn-sm btn-orange"><i
-              class="fa fa-send"></i> Create Experiment
+            <div
+              *ngIf="hasChanges() && !hasErrors()"
+              (click)="saveExperiment()"
+              class="btn btn-sm btn-orange"
+            >
+              <i class="fa fa-send"></i> Create Experiment
             </div>
-            <div *ngIf="hasChanges() && hasErrors()" class="btn btn-m btn-danger"><i
-              class="fa fa-close"></i> {{errorButtonLabel}}
+            <div
+              *ngIf="hasChanges() && hasErrors()"
+              class="btn btn-m btn-danger"
+            >
+              <i class="fa fa-close"></i> {{ errorButtonLabel }}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="panel-body" *ngIf="availableTargetSystems.length > 0" style="padding-top: 20px">
+      <div
+        class="panel-body"
+        *ngIf="availableTargetSystems.length > 0"
+        style="padding-top: 20px"
+      >
         <div class="row">
           <div class="col-md-3">
             <div class="sub-title">Name</div>
             <div>
-              <select class="form-control" required (change)="targetSystemChanged($event.target.value)">
+              <select
+                class="form-control"
+                required
+                (change)="targetSystemChanged($event.target.value)"
+              >
                 <option disabled>Select target system</option>
-                <option *ngFor="let i of availableTargetSystems;" [ngValue]="i">{{ i.name }}</option>
+                <option *ngFor="let i of availableTargetSystems" [ngValue]="i">
+                  {{ i.name }}
+                </option>
               </select>
             </div>
           </div>
 
           <div class="col-md-4" *ngIf="targetSystem.name !== ''">
             <div class="sub-title">Description</div>
-            <span>{{targetSystem.description}}</span>
+            <span>{{ targetSystem.description }}</span>
           </div>
 
           <div class="col-md-3" *ngIf="targetSystem.name !== ''">
             <div class="sub-title">Details</div>
-            <button type="button" class="btn btn-orange"
-                    (click)="is_collapsed = !is_collapsed">
+            <button
+              type="button"
+              class="btn btn-orange"
+              (click)="is_collapsed = !is_collapsed"
+            >
               <span *ngIf="is_collapsed">Show Details</span>
-              <i *ngIf="is_collapsed" class="fa fa-angle-double-down" aria-hidden="true"></i>
+              <i
+                *ngIf="is_collapsed"
+                class="fa fa-angle-double-down"
+                aria-hidden="true"
+              ></i>
 
               <span *ngIf="!is_collapsed">Hide Details</span>
-              <i *ngIf="!is_collapsed" class="fa fa-angle-double-up" aria-hidden="true"></i>
+              <i
+                *ngIf="!is_collapsed"
+                class="fa fa-angle-double-up"
+                aria-hidden="true"
+              ></i>
             </button>
           </div>
 
           <div class="col-md-2" *ngIf="targetSystem.name !== ''">
             <div class="sub-title">Status</div>
-            <label *ngIf="targetSystem.status == 'READY'" class="label label-success">READY</label>
-            <label *ngIf="targetSystem.status == 'WORKING'" class="label label-info">WORKING</label>
-            <label *ngIf="targetSystem.status == 'ERROR'" class="label label-danger">ERROR</label>
+            <label
+              *ngIf="targetSystem.status == 'READY'"
+              class="label label-success"
+              >READY</label
+            >
+            <label
+              *ngIf="targetSystem.status == 'WORKING'"
+              class="label label-info"
+              >WORKING</label
+            >
+            <label
+              *ngIf="targetSystem.status == 'ERROR'"
+              class="label label-danger"
+              >ERROR</label
+            >
           </div>
         </div>
       </div>
 
-      <div class="panel-body" *ngIf="availableTargetSystems.length == 0" style="padding-top: 20px">
+      <div
+        class="panel-body"
+        *ngIf="availableTargetSystems.length == 0"
+        style="padding-top: 20px"
+      >
         <div class="row">
           <div class="col-md-6">
-            <div class="sub-title">There are no available target systems
-              <a (click)="navigateToTargetSystemPage()"> please create one here </a>
+            <div class="sub-title">
+              There are no available target systems
+              <a (click)="navigateToTargetSystemPage()">
+                please create one here
+              </a>
             </div>
           </div>
         </div>
@@ -67,9 +114,12 @@
   </div>
 
   <!-- Primary Data Provider & Secondary Data Provider(s) & Default variables -->
-  <div class="col-md-12" *ngIf="targetSystem.name !== ''" [hidden]="is_collapsed"
-       style="border-radius: 25px; border: 2px solid #73AD21;">
-
+  <div
+    class="col-md-12"
+    *ngIf="targetSystem.name !== ''"
+    [hidden]="is_collapsed"
+    style="border-radius: 25px; border: 2px solid #73ad21"
+  >
     <!-- Primary Data Provider -->
     <div class="col-sm-6" style="padding-left: 0">
       <div class="panel panel-default chartJs">
@@ -79,149 +129,182 @@
           </div>
         </div>
         <div class="panel-body" style="padding-top: 20px">
-          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'http_request'">
+          <div
+            class="row"
+            *ngIf="targetSystem.primaryDataProvider.type == 'http_request'"
+          >
             <div class="col-md-3">
               <div class="sub-title">Name</div>
-              <span>{{targetSystem.primaryDataProvider.name}}</span>
+              <span>{{ targetSystem.primaryDataProvider.name }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">URL</div>
-              <span>{{targetSystem.primaryDataProvider.url}}</span>
+              <span>{{ targetSystem.primaryDataProvider.url }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Port</div>
-              <span>{{targetSystem.primaryDataProvider.port}}</span>
+              <span>{{ targetSystem.primaryDataProvider.port }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+              <span>{{ targetSystem.primaryDataProvider.serializer }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Ignore First N Samples</div>
-              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+              <span>{{
+                targetSystem.primaryDataProvider.ignore_first_n_samples
+              }}</span>
             </div>
           </div>
 
-          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'kafka_consumer'">
+          <div
+            class="row"
+            *ngIf="targetSystem.primaryDataProvider.type == 'kafka_consumer'"
+          >
             <div class="col-md-3">
               <div class="sub-title">Name</div>
-              <span>{{targetSystem.primaryDataProvider.name}}</span>
+              <span>{{ targetSystem.primaryDataProvider.name }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Kafka URI</div>
-              <span>{{targetSystem.primaryDataProvider.kafka_uri}}</span>
+              <span>{{ targetSystem.primaryDataProvider.kafka_uri }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Topic</div>
-              <span>{{targetSystem.primaryDataProvider.topic}}</span>
+              <span>{{ targetSystem.primaryDataProvider.topic }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+              <span>{{ targetSystem.primaryDataProvider.serializer }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Ignore First N Samples</div>
-              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+              <span>{{
+                targetSystem.primaryDataProvider.ignore_first_n_samples
+              }}</span>
             </div>
           </div>
 
-          <div class="row" *ngIf="targetSystem.primaryDataProvider.type == 'mqtt_listener'">
+          <div
+            class="row"
+            *ngIf="targetSystem.primaryDataProvider.type == 'mqtt_listener'"
+          >
             <div class="col-md-2">
               <div class="sub-title">Name</div>
-              <span>{{targetSystem.primaryDataProvider.name}}</span>
+              <span>{{ targetSystem.primaryDataProvider.name }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Host</div>
-              <span>{{targetSystem.primaryDataProvider.host}}</span>
+              <span>{{ targetSystem.primaryDataProvider.host }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Port</div>
-              <span>{{targetSystem.primaryDataProvider.port}}</span>
+              <span>{{ targetSystem.primaryDataProvider.port }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Topic</div>
-              <span>{{targetSystem.primaryDataProvider.topic}}</span>
+              <span>{{ targetSystem.primaryDataProvider.topic }}</span>
             </div>
             <div class="col-md-1">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.primaryDataProvider.serializer}}</span>
+              <span>{{ targetSystem.primaryDataProvider.serializer }}</span>
             </div>
             <div class="col-md-2">
               <div class="sub-title">Ignore First N Samples</div>
-              <span>{{targetSystem.primaryDataProvider.ignore_first_n_samples}}</span>
+              <span>{{
+                targetSystem.primaryDataProvider.ignore_first_n_samples
+              }}</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Secondary Data Provider(s) -->
-      <div class="panel panel-default chartJs" *ngIf="targetSystem.secondaryDataProviders.length > 0">
+      <div
+        class="panel panel-default chartJs"
+        *ngIf="targetSystem.secondaryDataProviders.length > 0"
+      >
         <div class="panel-heading">
           <div class="card-title">
-            <div class="title pull-left" *ngIf="targetSystem.secondaryDataProviders.length > 1">Secondary Data Providers</div>
-            <div class="title pull-left" *ngIf="targetSystem.secondaryDataProviders.length == 1">Secondary Data Provider</div>
+            <div
+              class="title pull-left"
+              *ngIf="targetSystem.secondaryDataProviders.length > 1"
+            >
+              Secondary Data Providers
+            </div>
+            <div
+              class="title pull-left"
+              *ngIf="targetSystem.secondaryDataProviders.length == 1"
+            >
+              Secondary Data Provider
+            </div>
           </div>
         </div>
         <div class="panel-body" style="padding-top: 20px">
-          <div class="row" *ngFor="let secondaryDataProvider of targetSystem.secondaryDataProviders">
+          <div
+            class="row"
+            *ngFor="
+              let secondaryDataProvider of targetSystem.secondaryDataProviders
+            "
+          >
             <div *ngIf="secondaryDataProvider.type == 'http_request'">
               <div class="col-md-3">
                 <div class="sub-title">Name</div>
-                <span>{{secondaryDataProvider.name}}</span>
+                <span>{{ secondaryDataProvider.name }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">URL</div>
-                <span>{{secondaryDataProvider.url}}</span>
+                <span>{{ secondaryDataProvider.url }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Port</div>
-                <span>{{secondaryDataProvider.port}}</span>
+                <span>{{ secondaryDataProvider.port }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Serializer</div>
-                <span>{{secondaryDataProvider.serializer}}</span>
+                <span>{{ secondaryDataProvider.serializer }}</span>
               </div>
             </div>
 
             <div *ngIf="secondaryDataProvider.type == 'kafka_consumer'">
               <div class="col-md-3">
                 <div class="sub-title">Name</div>
-                <span>{{secondaryDataProvider.name}}</span>
+                <span>{{ secondaryDataProvider.name }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Kafka URI</div>
-                <span>{{secondaryDataProvider.kafka_uri}}</span>
+                <span>{{ secondaryDataProvider.kafka_uri }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Topic</div>
-                <span>{{secondaryDataProvider.topic}}</span>
+                <span>{{ secondaryDataProvider.topic }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Serializer</div>
-                <span>{{secondaryDataProvider.serializer}}</span>
+                <span>{{ secondaryDataProvider.serializer }}</span>
               </div>
             </div>
 
             <div *ngIf="secondaryDataProvider.type == 'mqtt_listener'">
               <div class="col-md-2">
                 <div class="sub-title">Name</div>
-                <span>{{secondaryDataProvider.name}}</span>
+                <span>{{ secondaryDataProvider.name }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Host</div>
-                <span>{{secondaryDataProvider.host}}</span>
+                <span>{{ secondaryDataProvider.host }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Port</div>
-                <span>{{secondaryDataProvider.port}}</span>
+                <span>{{ secondaryDataProvider.port }}</span>
               </div>
               <div class="col-md-3">
                 <div class="sub-title">Topic</div>
-                <span>{{secondaryDataProvider.topic}}</span>
+                <span>{{ secondaryDataProvider.topic }}</span>
               </div>
               <div class="col-md-1">
                 <div class="sub-title">Serializer</div>
-                <span>{{secondaryDataProvider.serializer}}</span>
+                <span>{{ secondaryDataProvider.serializer }}</span>
               </div>
             </div>
           </div>
@@ -238,53 +321,61 @@
           </div>
         </div>
         <div class="panel-body" style="padding-top: 20px">
-
-          <div class="row" *ngIf="targetSystem.changeProvider.type == 'http_request'">
+          <div
+            class="row"
+            *ngIf="targetSystem.changeProvider.type == 'http_request'"
+          >
             <div class="col-md-4">
               <div class="sub-title">URL</div>
-              <span>{{targetSystem.changeProvider.url}}</span>
+              <span>{{ targetSystem.changeProvider.url }}</span>
             </div>
             <div class="col-md-4">
               <div class="sub-title">Port</div>
-              <span>{{targetSystem.changeProvider.port}}</span>
+              <span>{{ targetSystem.changeProvider.port }}</span>
             </div>
             <div class="col-md-4">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.changeProvider.serializer}}</span>
+              <span>{{ targetSystem.changeProvider.serializer }}</span>
             </div>
           </div>
 
-          <div class="row" *ngIf="targetSystem.changeProvider.type == 'kafka_producer'">
+          <div
+            class="row"
+            *ngIf="targetSystem.changeProvider.type == 'kafka_producer'"
+          >
             <div class="col-md-4">
               <div class="sub-title">Kafka URI</div>
-              <span>{{targetSystem.changeProvider.kafka_uri}}</span>
+              <span>{{ targetSystem.changeProvider.kafka_uri }}</span>
             </div>
             <div class="col-md-4">
               <div class="sub-title">Topic</div>
-              <span>{{targetSystem.changeProvider.topic}}</span>
+              <span>{{ targetSystem.changeProvider.topic }}</span>
             </div>
             <div class="col-md-4">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.changeProvider.serializer}}</span>
+              <span>{{ targetSystem.changeProvider.serializer }}</span>
             </div>
           </div>
 
-          <div class="row" *ngIf="targetSystem.changeProvider.type == 'mqtt_listener'">
+          <div
+            class="row"
+            *ngIf="targetSystem.changeProvider.type == 'mqtt_listener'"
+          >
             <div class="col-md-3">
               <div class="sub-title">Host</div>
-              <span>{{targetSystem.changeProvider.host}}</span>
+              <span>{{ targetSystem.changeProvider.host }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Port</div>
-              <span>{{targetSystem.changeProvider.port}}</span>
+              <span>{{ targetSystem.changeProvider.port }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Topic</div>
-              <span>{{targetSystem.changeProvider.topic}}</span>
+              <span>{{ targetSystem.changeProvider.topic }}</span>
             </div>
             <div class="col-md-3">
               <div class="sub-title">Serializer</div>
-              <span>{{targetSystem.changeProvider.serializer}}</span>
+              <span>{{ targetSystem.changeProvider.serializer }}</span>
             </div>
           </div>
         </div>
@@ -296,36 +387,42 @@
       <div class="panel panel-default chartJs">
         <div class="panel-heading">
           <div class="card-title">
-            <div class="title pull-left">Default variables of Target System</div>
+            <div class="title pull-left">
+              Default variables of Target System
+            </div>
           </div>
         </div>
         <div class="panel-body" style="padding-top: 20px">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
               <thead>
-              <th>Name</th>
-              <th>Min</th>
-              <th>Max</th>
-              <th>Default Value</th>
+                <th>Name</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Default Value</th>
               </thead>
               <tbody>
-              <tr *ngFor="let changeableVariable of targetSystem.defaultVariables" style="padding-top: 1%">
-                <td>{{changeableVariable.name}}</td>
-                <td>{{changeableVariable.min}}</td>
-                <td>{{changeableVariable.max}}</td>
-                <td>{{changeableVariable.default}}</td>
-              </tr>
+                <tr
+                  *ngFor="
+                    let changeableVariable of targetSystem.defaultVariables
+                  "
+                  style="padding-top: 1%"
+                >
+                  <td>{{ changeableVariable.name }}</td>
+                  <td>{{ changeableVariable.min }}</td>
+                  <td>{{ changeableVariable.max }}</td>
+                  <td>{{ changeableVariable.default }}</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!--Step #0: Basics-->
-  <div class="col-md-12" *ngIf="targetSystem.name !== '' && targetSystem.type !== 'simulation'">
+  <!-- Basic Setup for Experiment -->
+  <div class="col-md-12" *ngIf="targetSystem.name !== ''">
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
         <div class="card-title">
@@ -334,44 +431,45 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <labeled-input name="Experiment Name (required)" [model]="experiment" key="name" [colSize]="6"
-                         tooltipTitle="Please provide a unique name"></labeled-input>
-          <labeled-input name="Experiment Description" [model]="experiment" key="description" [required]="false" [colSize]="6"></labeled-input>
+          <labeled-input
+            name="Experiment Name (required)"
+            [model]="experiment"
+            key="name"
+            [colSize]="6"
+            tooltipTitle="Please provide a unique name"
+          ></labeled-input>
+          <labeled-input
+            name="Experiment Description"
+            [model]="experiment"
+            key="description"
+            [required]="false"
+            [colSize]="6"
+          ></labeled-input>
         </div>
-        <div class="row">
-          <incoming-data-types-simulation [experiment]="experiment" [targetSystem]="targetSystem" (incomingDataTypesChanged)="incomingDataTypesChanged($event)"></incoming-data-types-simulation>
-          <!--
-        <div class="row" *ngIf="targetSystem.type === 'simulation'">
-          <incoming-data-types-simulation [experiment]="experiment" [targetSystem]="targetSystem" (incomingDataTypesChanged)="incomingDataTypesChanged($event)"></incoming-data-types-simulation>
+        <ng-container *ngIf="targetSystem.type === 'analysis'">
+        <div class="row" style="margin-top: 20px">
+          <labeled-input-select
+            name="Select Simulation Experiment"
+            [model]="simulationData"
+            key="experimentId"
+            (modelChanged)="loadSimulationTarget($event)"
+            [colSize]="3"
+            [options]="experimentsLabels"
+          ></labeled-input-select>
         </div>
-        -->
+        <div class="row" *ngIf="simulationData.experiment" style="margin-top: 20px">
+          <resource-files-viewlist class="col-xs-6" [experiment]="simulationData.experiment">
+          </resource-files-viewlist>
         </div>
+        </ng-container>
       </div>
     </div>
   </div>
 
-
-
-  <!-- Basic Setup for Simulation -->
-  <div class="col-md-12" *ngIf="targetSystem.name !== '' && targetSystem.type === 'simulation'">
-    <div class="panel panel-default chartJs">
-      <div class="panel-heading">
-        <div class="card-title">
-          <div class="title pull-left">Step #0: Basics</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <labeled-input name="Experiment Name (required)" [model]="experiment" key="name" [colSize]="6"
-                         tooltipTitle="Please provide a unique name"></labeled-input>
-          <labeled-input name="Experiment Description" [model]="experiment" key="description" [required]="false" [colSize]="6"></labeled-input>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-md-12" *ngIf="targetSystem.name !== '' && targetSystem.type === 'simulation'">
+  <div
+    class="col-md-12"
+    *ngIf="targetSystem.name !== '' && targetSystem.type.includes('simulation')"
+  >
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
         <div class="card-title">
@@ -380,15 +478,38 @@
       </div>
       <div class="panel-body">
         <div class="row" style="padding-top: 2%; padding-left: 0">
-          <labeled-input name="Start Time" [model]="experiment.simulation" key="startTime" [colSize]="3"
-                         tooltipTitle="Enter the simulation start time in seconds"></labeled-input>
-          <labeled-input name="End Time" [model]="experiment.simulation" key="endTime" [colSize]="3"
-                         tooltipTitle="Enter the simulation end time in seconds"></labeled-input>
-          <labeled-input name="Update Interval" [model]="experiment.simulation" key="updateInterval" [colSize]="3"
-                         tooltipTitle="Enter the update interval in seconds"></labeled-input>
+          <labeled-input
+            name="Start Time"
+            [model]="experiment.simulation"
+            key="startTime"
+            [colSize]="3"
+            tooltipTitle="Enter the simulation start time in seconds"
+          ></labeled-input>
+          <labeled-input
+            name="End Time"
+            [model]="experiment.simulation"
+            key="endTime"
+            [colSize]="3"
+            tooltipTitle="Enter the simulation end time in seconds"
+          ></labeled-input>
+          <labeled-input
+            name="Update Interval"
+            [model]="experiment.simulation"
+            key="updateInterval"
+            [colSize]="3"
+            tooltipTitle="Enter the update interval in seconds"
+          ></labeled-input>
         </div>
 
-        <hr style="height: 1px; border: 0;border-top: 1px solid #EEEEEE;margin: 1em 0;padding: 0">
+        <hr
+          style="
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #eeeeee;
+            margin: 1em 0;
+            padding: 0;
+          "
+        />
 
         <div class="col-md-6">
           <div class="panel panel-default">
@@ -396,34 +517,126 @@
               <div class="card-title">
                 <div class="title pull-left">Resources</div>
                 <div class="pull-right">
-                  <div (click)="addResources()" class="btn btn-xs btn-orange"><i class="fa fa-plus push-5-r"></i> Add</div>
+                  <div (click)="addResources()" class="btn btn-xs btn-orange">
+                    <i class="fa fa-plus push-5-r"></i> Add
+                  </div>
                 </div>
               </div>
             </div>
             <div class="panel-body" style="padding-top: 20px">
-              <div class="row" *ngFor="let input of experiment.simulation.resources; let i = index">
-                <labeled-input
-                name="Name" [model]="input" key="name" [colSize]="5" disabled="false"></labeled-input>
-                <div class="col-md-1 pull-right" style="margin-top: 56px;color: #ef705d">
-                  <a *ngIf="i > 1" (click)="removeResource(i)">
+              <div
+                class="row"
+                *ngFor="
+                  let input of experiment.simulation.resources;
+                  let i = index
+                "
+              >
+                <labeled-input-select
+                  *ngIf="i >= 0"
+                  name="Pick a file type"
+                  [model]="input"
+                  key="type"
+                  [colSize]="5"
+                  [options]="[
+                    { key: 'RoadMap', label: 'RoadMap' },
+                    { key: 'Input', label: 'Input' },
+                    { key: 'Other', label: 'Other' }
+                  ]"
+                  (change)="fetchUploadedResourceFiles($event.target.value)"
+                  data-toggle="tooltip"
+                  title="Select resource type"
+                >
+                </labeled-input-select>
+                <div
+                  class="col-md-1 pull-right"
+                  style="margin-top: 56px; color: #ef705d"
+                >
+                  <a *ngIf="i >= 0" (click)="removeResource(i)">
                     <i class="fa fa-remove"></i>
                   </a>
                 </div>
-                <labeled-input-select *ngIf="i < 2" name="Type" [model]="input" key="type" [colSize]="5"
-                                      disabled="true" [options]="[
-                                      {key:'RoadMap',label:'RoadMap'},
-                                      {key:'Input',label:'Input'},
-                                      {key:'Other',label:'Other'}]"
-                                      data-toggle="tooltip" title="Select resource type">
-                </labeled-input-select>
-                <labeled-input-select *ngIf="i >= 2" name="Type" [model]="input" key="type" [colSize]="5"
-                                      [options]="[
-                                      {key:'RoadMap',label:'RoadMap'},
-                                      {key:'Input',label:'Input'},
-                                      {key:'Other',label:'Other'}]"
-                                      data-toggle="tooltip" title="Select resource type">
-                </labeled-input-select>
-                <hr class="col-md-12">
+                <div class="col-md-1 pull-right">
+                  <a
+                    *ngIf="i >= 0"
+                    class="btn btn-xs btn-orange"
+                    style="margin-top: 56px; color: #ef705d"
+                    (mouseover)="showText = input.name + i"
+                    (mouseout)="showText = ''"
+                  >
+                    <i class="fa fa-info" style="color: white"></i>
+                  </a>
+                </div>
+                <labeled-input-select
+                  *ngIf="i >= 0 && input.type == 'Input'"
+                  name="Select a custom resource file"
+                  [model]="input"
+                  key="name"
+                  [colSize]="5"
+                  [options]="uploadedInputResourceFiles"
+                  (change)="
+                    fetchUploadedResourceFileDescription(
+                      input.type,
+                      $event.target.value
+                    )
+                  "
+                ></labeled-input-select>
+                <labeled-input-select
+                  *ngIf="i >= 0 && input.type == 'RoadMap'"
+                  name="Select a custom resource file"
+                  [model]="input"
+                  key="name"
+                  [colSize]="5"
+                  [options]="uploadedRoadMapResourceFiles"
+                  (change)="
+                    fetchUploadedResourceFileDescription(
+                      input.type,
+                      $event.target.value
+                    )
+                  "
+                ></labeled-input-select>
+                <labeled-input-select
+                  *ngIf="i >= 0 && input.type == 'Other'"
+                  name="Select a custom resource file"
+                  [model]="input"
+                  key="name"
+                  [colSize]="5"
+                  [options]="uploadedOthersResourceFiles"
+                  (change)="
+                    fetchUploadedResourceFileDescription(
+                      input.type,
+                      $event.target.value
+                    )
+                  "
+                ></labeled-input-select>
+
+                <div *ngIf="i >= 0">
+                  <div
+                    *ngFor="let description_obj of resourceFilesDescription"
+                    class="col-md-12"
+                  >
+                    <div
+                      *ngIf="
+                        description_obj['file_name'] == input.name &&
+                        showText == input.name + i
+                      "
+                      style="
+                        padding: 1%;
+                        margin-top: 3%;
+                        background-color: rgb(243, 243, 243);
+                      "
+                    >
+                      <span style="padding-right: 100%">
+                        Description of the custom resource file "{{
+                          input.name
+                        }}":
+                      </span>
+                      <span>
+                        {{ description_obj["file_description"] }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <hr class="col-md-12" style="width: 92%" />
               </div>
             </div>
           </div>
@@ -432,28 +645,160 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <div class="card-title">
-                <div class="title pull-left">Results</div>
-                <div class="pull-right">
-                  <div (click)="addResults()" class="btn btn-xs btn-orange"><i class="fa fa-plus push-5-r"></i> Add</div>
+                <labeled-input
+                  name="Download raw results"
+                  [model]="experiment"
+                  key="results_downloadable"
+                  [colSize]="6"
+                  inputType="checkbox"
+                  data-toggle="tooltip"
+                  title="Select this option if you want to allow the user to download the raw simulation results from the client"
+                ></labeled-input>
+                <div class="title" *ngIf="!experiment.results_downloadable">
+                  (The simulation results of this experiment will not be
+                  downloadable)
+                </div>
+                <div class="title" *ngIf="experiment.results_downloadable">
+                  (Simulation results will be downloadable from the experiment
+                  overview or details page)
                 </div>
               </div>
             </div>
+            <div class="panel-body" style="padding-top: 20px"></div>
+          </div>
+        </div>
+        <div
+          class="col-md-12"
+          *ngIf="hasPermission(PermissionName.WRITE_DATASTORAGE)"
+        >
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="card-title">
+                <div class="title pull-left">Upload custom resource files</div>
+              </div>
+            </div>
             <div class="panel-body" style="padding-top: 20px">
-              <div class="row" *ngFor="let input of experiment.simulation.archivedResults; let i = index">
-                <labeled-input
-                  name="File Name" [model]="input" key="fileName" [colSize]="5" disabled="false"></labeled-input>
-                <div class="col-md-1 pull-right" style="margin-top: 56px;color: #ef705d">
-                  <a (click)="removeResult(i)">
-                    <i class="fa fa-remove"></i>
-                  </a>
-                </div>
-                <labeled-input-select name="File Extension" [model]="input" key="fileExtension" [colSize]="5"
-                                      [options]="[
-                                      {key:'xml',label:'xml'},
-                                      {key:'zip',label:'zip'}]"
-                                      data-toggle="tooltip" title="Select file extension">
-                </labeled-input-select>
-                <hr class="col-md-12">
+              <label class="btn btn-default" style="margin-top: 2%">
+                <input
+                  type="file"
+                  id="customResourceFile"
+                  (change)="selectFiles($event)"
+                  accept="text/xml"
+                  multiple
+                />
+              </label>
+              <p>Selected custom resource files for upload</p>
+              <div class="table-responsive">
+                <table
+                  style="margin-top: 20px"
+                  class="table table-striped table-bordered table-hover"
+                  [mfData]="resourceFiles"
+                  #mf="mfDataTable"
+                  [mfRowsOnPage]="10"
+                >
+                  <thead>
+                    <tr>
+                      <th>
+                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="description"
+                          >Description*</mfDefaultSorter
+                        >
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="resource_type"
+                          >Resource Type</mfDefaultSorter
+                        >
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                      </th>
+                      <th>
+                        <mfDefaultSorter by="status">Action</mfDefaultSorter>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bigTable">
+                    <tr *ngFor="let item of mf.data">
+                      <td>{{ item.name }}</td>
+                      <td>
+                        <textarea
+                          placeholder="Please add an description"
+                          (change)="
+                            updateFileProperty(
+                              'description',
+                              item.name,
+                              $event.target.value
+                            )
+                          "
+                          rows="3"
+                        ></textarea>
+                      </td>
+                      <td>
+                        <select
+                          name=""
+                          id="resource_type"
+                          form="resource_type"
+                          (change)="
+                            updateFileProperty(
+                              'resource_type',
+                              item.name,
+                              $event.target.value
+                            )
+                          "
+                        >
+                          <option value="RoadMap">RoadMap</option>
+                          <option value="Input">Input</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </td>
+                      <td>
+                        <label
+                          *ngIf="item.status == 'UPLOADED SUCCESSFULLY'"
+                          class="label label-success"
+                          >UPLOADED SUCCESSFULLY</label
+                        >
+                        <label
+                          *ngIf="item.status == 'NOT UPLOADED'"
+                          class="label label-info"
+                          >NOT UPLOADED</label
+                        >
+                        <label
+                          *ngIf="
+                            item.status == 'UPLOAD FAILED - FILE NAME TAKEN'
+                          "
+                          class="label label-warning"
+                          >FILE NAME TAKEN</label
+                        >
+                        <label
+                          *ngIf="
+                            item.status == 'UPLOAD FAILED - FILE ALREADY EXISTS'
+                          "
+                          class="label label-warning"
+                          >FILE ALREADY EXISTS</label
+                        >
+                      </td>
+                      <td *ngIf="item.status != 'UPLOADED SUCCESSFULLY'">
+                        <div
+                          (click)="uploadFile(item)"
+                          class="btn btn-xs btn-orange"
+                        >
+                          <i class="fa fa-upload push-5-r"></i> Upload
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot *ngIf="resourceFiles.length > 10">
+                    <tr>
+                      <td colspan="12">
+                        <mfBootstrapPaginator
+                          [rowsOnPageSet]="[10, 25, 100]"
+                        ></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
@@ -464,105 +809,125 @@
 
   <!--END of Step #0 -->
 
-  <div class="col-md-12" style="padding-left: 0; padding-right: 0" *ngIf="targetSystem.name !== ''">
-
-    <div class="panel-body">
-      <labeled-input-select name="Strategy" [model]="experiment.executionStrategy" key="type" [colSize]="4"
-                            [options]="[
-                            {key:'single_experiment_run',label:'Single Experiment Run'}]"
-                            (modelChanged)="executionStrategyChanged($event)">
-        <!--
-        [options]="[
-                  {key:'factorial_experiment',label:'Factorial Experiment'},
-                  {key:'t_test',label:'T-test'},
-                  {key:'bayesian_opt',label:'Bayesian Optimization'}]"
-        (modelChanged)="experimentTypeChanged($event)"> -->
-      </labeled-input-select>
-    </div>
-
-    <!--TESTING FOR SIMULATION: One sample test analysis -->
-    <div *ngIf="experiment.executionStrategy.type === 'single_experiment_run'">
-      <div class="panel-body">
-        <div class="row">
-        <div class="row" *ngIf="targetSystem.type === 'simulation'">
-          <incoming-data-types-simulation [experiment]="experiment" [targetSystem]="targetSystem"
-                                          (incomingDataTypesChanged)="incomingDataTypesChanged($event)">
-          </incoming-data-types-simulation>
-        </div>
+  <!-- Analysis part -->
+  <div
+    class="col-md-12"
+    *ngIf="targetSystem.name !== '' && targetSystem.type.includes('analysis')"
+  >
+    <div class="panel panel-default chartJs">
+      <div class="panel-heading">
+        <div class="card-title">
+          <div class="title pull-left">Analysis Setup</div>
         </div>
       </div>
       <div class="panel-body">
         <div class="row">
-
-          <div class="row" *ngIf="targetSystem.type === 'simulation'">
-            <aggregate-topics [experiment]="experiment" [targetSystem]="targetSystem"
-                                            (aggregateTopicChanged)="aggregateTopicChanged($event)">
-            </aggregate-topics>
-          </div>
+          <input-topics-analysis
+            *ngIf="simulationData.target"
+            [experiment]="experiment"
+            [simulationExperiment]="simulationData.experiment"
+            [simulationTargetSystem]="simulationData.target"
+          ></input-topics-analysis>
+        </div>
+        <div>
+          <analysis-module-selection #analysisSelection *ngIf="experiment" [experiment]="experiment" [targetSystem]="targetSystem">
+          </analysis-module-selection>
         </div>
       </div>
     </div>
+  </div>
 
-
+  <div
+    class="col-md-12"
+    style="padding-left: 0; padding-right: 0"
+    *ngIf="targetSystem.name !== ''"
+  >
     <!-- Step #1: Factorial ANOVA -->
     <div *ngIf="experiment.analysis.type === 'factorial_experiment'">
       <div class="col-md-12">
-
         <!--Factorial ANOVA Properties-->
         <div class="panel panel-default chartJs">
           <div class="panel-heading">
             <div class="card-title">
-              <div class="title pull-left">Step #1: Factorial ANOVA. We will here profile the target system to determine the factors (variables) and combination of factors that have a significant effect on the optimization output.</div>
+              <div class="title pull-left">
+                Step #1: Factorial ANOVA. We will here profile the target system
+                to determine the factors (variables) and combination of factors
+                that have a significant effect on the optimization output.
+              </div>
               <div class="title pull-right">
-                <a data-toggle="modal" data-target="#analysisModal"><i class="fa fa-info fa-lg"></i></a>
+                <a data-toggle="modal" data-target="#analysisModal"
+                  ><i class="fa fa-info fa-lg"></i
+                ></a>
               </div>
             </div>
           </div>
 
           <div class="panel-body" style="padding-top: 20px">
-
             <!-- changeable variable selection-->
             <div class="panel-body">
               <div class="col-md-12">
                 <div class="panel panel-default chartJs">
                   <div class="panel-heading">
                     <div class="card-title">
-                      <div class="title pull-left">Please select the variables you want to consider in the factorial design, and provide their values in comma separated manner.</div>
-                      <br>
+                      <div class="title pull-left">
+                        Please select the variables you want to consider in the
+                        factorial design, and provide their values in comma
+                        separated manner.
+                      </div>
+                      <br />
                     </div>
                   </div>
                 </div>
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table
+                      class="table table-striped table-bordered table-hover"
+                    >
                       <thead>
-                      <th style="padding-left: 1%">Name</th>
-                      <th style="padding-left: 1%">Scale</th>
-                      <th style="padding-left: 1%">Description</th>
-                      <th style="padding-left: 1%">Default</th>
-                      <th style="padding-left: 1%">Min</th>
-                      <th style="padding-left: 1%">Max</th>
-                      <th style="padding-left: 1%">Factor values</th>
-                      <th style="padding-left: 1%">Select</th>
+                        <th style="padding-left: 1%">Name</th>
+                        <th style="padding-left: 1%">Scale</th>
+                        <th style="padding-left: 1%">Description</th>
+                        <th style="padding-left: 1%">Default</th>
+                        <th style="padding-left: 1%">Min</th>
+                        <th style="padding-left: 1%">Max</th>
+                        <th style="padding-left: 1%">Factor values</th>
+                        <th style="padding-left: 1%">Select</th>
                       </thead>
                       <tbody>
-                      <tr *ngFor="let changeableVariable of targetSystem.changeableVariables; let i = index" style="padding-top: 1%">
-                        <td>{{changeableVariable.name}}</td>
-                        <td>{{changeableVariable.scale}}</td>
-                        <td>{{changeableVariable.description}}</td>
-                        <td>{{changeableVariable.default}}</td>
-                        <td>{{changeableVariable.min}}</td>
-                        <td>{{changeableVariable.max}}</td>
-                        <td>
-                          <input type="text" class="form-control" name="factorValues" id="factorValues" placeholder="Enter comma separated values"
-                                 [(ngModel)]="changeableVariable.factorValues"/>
-                        </td>
-                        <td>
-                          <input type="checkbox" class="form-check-input" (change)="changeable_variable_checkbox_clicked(i)" data-toggle="tooltip"
-                                 title="Select input parameter(s) suitable for the process"
-                                 [checked]="changeableVariable.is_selected == true">
-                        </td>
-                      </tr>
+                        <tr
+                          *ngFor="
+                            let changeableVariable of targetSystem.changeableVariables;
+                            let i = index
+                          "
+                          style="padding-top: 1%"
+                        >
+                          <td>{{ changeableVariable.name }}</td>
+                          <td>{{ changeableVariable.scale }}</td>
+                          <td>{{ changeableVariable.description }}</td>
+                          <td>{{ changeableVariable.default }}</td>
+                          <td>{{ changeableVariable.min }}</td>
+                          <td>{{ changeableVariable.max }}</td>
+                          <td>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="factorValues"
+                              id="factorValues"
+                              placeholder="Enter comma separated values"
+                              [(ngModel)]="changeableVariable.factorValues"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              (change)="changeable_variable_checkbox_clicked(i)"
+                              data-toggle="tooltip"
+                              title="Select input parameter(s) suitable for the process"
+                              [checked]="changeableVariable.is_selected == true"
+                            />
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -571,88 +936,150 @@
             </div>
 
             <!-- Sample Size for ANOVA -->
-            <labeled-input inputType="number" name="How many samples do you want to collect for each configuration?"
-                           [model]="experiment.analysis" key="sample_size" [colSize]="6" [minNumber]="1" tooltipTitle='Number of samples to be collected from each experiment'></labeled-input>
+            <labeled-input
+              inputType="number"
+              name="How many samples do you want to collect for each configuration?"
+              [model]="experiment.analysis"
+              key="sample_size"
+              [colSize]="6"
+              [minNumber]="1"
+              tooltipTitle="Number of samples to be collected from each experiment"
+            ></labeled-input>
 
             <!-- Alpha -->
-            <labeled-input inputType="number" name="Significance level (alpha) for factorial analysis"
-                           [model]="experiment.analysis" key="anovaAlpha" [colSize]="6"
-                           [minNumber]="0"
-                           [maxNumber]="1"
-                           tooltipTitle='Alpha value that will be used as significance threshold for analysis phase'>
+            <labeled-input
+              inputType="number"
+              name="Significance level (alpha) for factorial analysis"
+              [model]="experiment.analysis"
+              key="anovaAlpha"
+              [colSize]="6"
+              [minNumber]="0"
+              [maxNumber]="1"
+              tooltipTitle="Alpha value that will be used as significance threshold for analysis phase"
+            >
             </labeled-input>
 
             <!--error label for anova-->
             <div class="col-md-12">
               <div class="sub-title"></div>
               <div class="row">
-                <div *ngIf="hasChanges() && hasErrorsAnova()" class="pull-right btn btn-xs btn-danger"><i class="fa fa-close"></i>
-                  {{errorButtonLabelAnova}}
+                <div
+                  *ngIf="hasChanges() && hasErrorsAnova()"
+                  class="pull-right btn btn-xs btn-danger"
+                >
+                  <i class="fa fa-close"></i>
+                  {{ errorButtonLabelAnova }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-
-
   </div>
 
-
-
   <!-- Info modal for Execution Strategies -->
-  <div class="modal fade bd-example-modal-sm" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div
+    class="modal fade bd-example-modal-sm"
+    id="infoModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
     <div class="col-md-12">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="modalTitle">Bayesian Optimization with Gaussian Processes</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h3 class="modal-title" id="modalTitle">
+              Bayesian Optimization with Gaussian Processes
+            </h3>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>OEDA supports following libraries for <b><a target="_blank" href="https://en.wikipedia.org/wiki/Bayesian_optimization">Bayesian Optimization</a></b>
-              and acquisition functions of these libraries to be used as a function to be minimized over gaussian prior.
+            <p>
+              OEDA supports following libraries for
+              <b
+                ><a
+                  target="_blank"
+                  href="https://en.wikipedia.org/wiki/Bayesian_optimization"
+                  >Bayesian Optimization</a
+                ></b
+              >
+              and acquisition functions of these libraries to be used as a
+              function to be minimized over gaussian prior.
             </p>
 
-            <hr>
+            <hr />
             <p>
-              <b>Self Optimizer: </b>Runs multiple experiments and tries to find the best value for the knobs
-              using <a target="_blank" href="http://scikit-learn.org">scikit-learn's</a> Bayesian optimization with Gaussian Processes</p>
+              <b>Self Optimizer: </b>Runs multiple experiments and tries to find
+              the best value for the knobs using
+              <a target="_blank" href="http://scikit-learn.org"
+                >scikit-learn's</a
+              >
+              Bayesian optimization with Gaussian Processes
+            </p>
 
             Supported acquisition functions:
             <ul>
               <li>LCB: lower confidence bound</li>
               <li>EI: expected improvement</li>
               <li>PI: negative probability of improvement</li>
-              <li>GP_HEDGE (default): Probabilistically choose one of the above three acquisition functions at every iteration</li>
-              <li>EIps: for negated expected improvement per second to take into account the function compute time</li>
+              <li>
+                GP_HEDGE (default): Probabilistically choose one of the above
+                three acquisition functions at every iteration
+              </li>
+              <li>
+                EIps: for negated expected improvement per second to take into
+                account the function compute time
+              </li>
               <li>PIps: for negated probability of improvement per second</li>
             </ul>
 
-
-
-
-            <hr>
-            <p><b>mlr-MBO:</b> Optimizes expensive black-box functions by using model-based optimization
-              using  <a target="_blank" href="https://mlr-org.github.io/mlrMBO/articles/mlrMBO.html">mlrMBO</a>, which is a library written in R.</p>
-            Supported <a target="_blank" href="https://mlr-org.github.io/mlrMBO/reference/infillcrits.html">acquisition functions:</a>
+            <hr />
+            <p>
+              <b>mlr-MBO:</b> Optimizes expensive black-box functions by using
+              model-based optimization using
+              <a
+                target="_blank"
+                href="https://mlr-org.github.io/mlrMBO/articles/mlrMBO.html"
+                >mlrMBO</a
+              >, which is a library written in R.
+            </p>
+            Supported
+            <a
+              target="_blank"
+              href="https://mlr-org.github.io/mlrMBO/reference/infillcrits.html"
+              >acquisition functions:</a
+            >
             <ul>
               <li>Expected improvement (default)</li>
               <li>Mean response</li>
               <li>Standard error</li>
-              <li>Upper/Lower confidence bound (LCB, aka. statistical lower or upper bound)</li>
+              <li>
+                Upper/Lower confidence bound (LCB, aka. statistical lower or
+                upper bound)
+              </li>
               <li>Augmented expected improvement (AEI)</li>
               <li>Expected quantile improvement (EQI)</li>
             </ul>
-            <hr>
+            <hr />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
@@ -660,33 +1087,57 @@
   </div>
 
   <!-- Info modal for Analysis Types -->
-  <div class="modal fade bd-example-modal-sm" id="analysisModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div
+    class="modal fade bd-example-modal-sm"
+    id="analysisModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
     <div class="col-md-12">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h3 class="modal-title" id="analysisModalTitle">Analysis Types</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>Different types of analysis can be performed (i) to test a statistical hypothesis or (ii) to optimize output of experiments with respect to different criteria</p>
+            <p>
+              Different types of analysis can be performed (i) to test a
+              statistical hypothesis or (ii) to optimize output of experiments
+              with respect to different criteria
+            </p>
             <p>OEDA supports following analysis types</p>
-            <hr>
+            <hr />
             <ul>
               <li>
                 <b>Two Sample Tests</b>
                 <ul>
                   <li>
                     <p>
-                      <b><a target="_blank" href="https://www.investopedia.com/terms/t/t-test.asp">T-test:</a></b>
-                      Analysis of two populations means through the use of statistical examination
-                      testing the difference between the samples when the variances of two normal distributions are not known.
+                      <b
+                        ><a
+                          target="_blank"
+                          href="https://www.investopedia.com/terms/t/t-test.asp"
+                          >T-test:</a
+                        ></b
+                      >
+                      Analysis of two populations means through the use of
+                      statistical examination testing the difference between the
+                      samples when the variances of two normal distributions are
+                      not known.
                     </p>
                   </li>
                 </ul>
-                <hr>
+                <hr />
               </li>
 
               <li>
@@ -694,19 +1145,32 @@
                 <ul>
                   <li>
                     <p>
-                      <b><a target="_blank" href="https://en.wikipedia.org/wiki/Analysis_of_variance">Analysis of Variance(ANOVA):</a></b>
-                      Collection of statistical models and their associated procedures
-                      (such as "variation" among and between groups) used to analyze the differences among group means
+                      <b
+                        ><a
+                          target="_blank"
+                          href="https://en.wikipedia.org/wiki/Analysis_of_variance"
+                          >Analysis of Variance(ANOVA):</a
+                        ></b
+                      >
+                      Collection of statistical models and their associated
+                      procedures (such as "variation" among and between groups)
+                      used to analyze the differences among group means
                     </p>
                   </li>
                 </ul>
-                <hr>
+                <hr />
               </li>
             </ul>
-            <hr>
+            <hr />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>

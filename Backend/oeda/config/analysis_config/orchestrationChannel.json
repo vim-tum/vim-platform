@@ -1,0 +1,22 @@
+[
+  {
+    "name": "OrchestrationCommand",
+    "description": "Command topic for sending commands to start, stop or interrupt the analysis",
+    "type": "kafka_producer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "command",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationResponse",
+    "description": "Response topic for receiving feedback/ack from analysis",
+    "type": "kafka_consumer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "response",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  }
+]

@@ -1,6 +1,6 @@
-import {NotificationsService} from "angular2-notifications";
-import {LoggerService} from "../modules/helper/logger.service";
-import {Injectable} from "@angular/core";
+import { NotificationsService } from "angular2-notifications";
+import { LoggerService } from "../modules/helper/logger.service";
+import { Injectable } from "@angular/core";
 import {
   StageEntity,
   Experiment,
@@ -8,19 +8,19 @@ import {
   UserEntity,
   Target,
   ExecutionStrategy,
-  StepEntity
+  StepEntity,
 } from "../modules/api/oeda-api.service";
 
-import {isNullOrUndefined} from "util";
-import {UUID} from "angular2-uuid";
+import { isNullOrUndefined } from "util";
+import { UUID } from "angular2-uuid";
+import {Algorithm} from "../modules/ui/analysis-module-selection.component";
 
 @Injectable()
 /** This class provides methods related with experiment data object(s) that are retrieved from backend */
 export class EntityService {
-
   private decimal_places: number;
 
-  constructor (public notify: NotificationsService, public log: LoggerService) {
+  constructor(public notify: NotificationsService, public log: LoggerService) {
     this.decimal_places = 2;
   }
 
@@ -33,32 +33,55 @@ export class EntityService {
       this.notify.error("Error", "Cannot retrieve data from local storage");
       return;
     }
-
   }
 
   /** parses single stage data with given attributes & scale, and returns values in array */
-  public process_single_stage_data(single_stage_object, xAttribute, yAttribute, scale, incoming_data_type_name): Array<number> {
+  public process_single_stage_data(
+    single_stage_object,
+    xAttribute,
+    yAttribute,
+    scale,
+    incoming_data_type_name
+  ): Array<number> {
     const ctrl = this;
     try {
       if (single_stage_object !== undefined) {
         const processedData = [];
-        single_stage_object.values.forEach(function(data_point) {
+        single_stage_object.values.forEach(function (data_point) {
+          if (!isNullOrUndefined(data_point["payload"]["values"])) {
+            data_point["payload"][incoming_data_type_name] =
+              data_point["payload"]["values"][incoming_data_type_name];
+          }
           // filter out points that are retrieved from other data providers, o/w they will be undefined
-          if (!isNullOrUndefined(data_point["payload"][incoming_data_type_name])){
+          if (
+            !isNullOrUndefined(data_point["payload"][incoming_data_type_name])
+          ) {
             // first check if log value can be calculated properly
-            if (scale === "Log" && data_point["payload"][incoming_data_type_name] <= 0) {
+            if (
+              scale === "Log" &&
+              data_point["payload"][incoming_data_type_name] <= 0
+            ) {
               let err = {};
-              err["message"] = "Log scale cannot be applied to "  + incoming_data_type_name;
-              throw(err);
+              err["message"] =
+                "Log scale cannot be applied to " + incoming_data_type_name;
+              throw err;
             }
             if (xAttribute !== null && yAttribute !== null) {
               const newElement = {};
               newElement[xAttribute] = data_point["createdDate"];
 
               if (scale === "Log") {
-                newElement[yAttribute] = Number(Math.log(data_point["payload"][incoming_data_type_name]).toFixed(ctrl.decimal_places));
+                newElement[yAttribute] = Number(
+                  Math.log(
+                    data_point["payload"][incoming_data_type_name]
+                  ).toFixed(ctrl.decimal_places)
+                );
               } else if (scale === "Normal") {
-                newElement[yAttribute] = Number(data_point["payload"][incoming_data_type_name].toFixed(ctrl.decimal_places));
+                newElement[yAttribute] = Number(
+                  data_point["payload"][incoming_data_type_name].toFixed(
+                    ctrl.decimal_places
+                  )
+                );
               } else {
                 ctrl.notify.error("Error", "Please provide a valid scale");
                 return;
@@ -67,15 +90,27 @@ export class EntityService {
             } else {
               // this is for plotting qq plot with JS, as it only requires raw data in log or normal scale
               if (scale === "Log") {
-                processedData.push(Number(Math.log(data_point["payload"][incoming_data_type_name]).toFixed(ctrl.decimal_places)));
+                processedData.push(
+                  Number(
+                    Math.log(
+                      data_point["payload"][incoming_data_type_name]
+                    ).toFixed(ctrl.decimal_places)
+                  )
+                );
               } else if (scale === "Normal") {
-                processedData.push(Number(data_point["payload"][incoming_data_type_name].toFixed(ctrl.decimal_places)));
+                processedData.push(
+                  Number(
+                    data_point["payload"][incoming_data_type_name].toFixed(
+                      ctrl.decimal_places
+                    )
+                  )
+                );
               } else {
                 ctrl.notify.error("Error", "Please provide a valid scale");
                 return;
               }
             }
-        }
+          }
         });
         return processedData;
       }
@@ -86,15 +121,27 @@ export class EntityService {
   }
 
   /** all_stage_object can contain more than one stages here */
-  public process_all_stage_data(all_stage_object, xAttribute, yAttribute, scale, incoming_data_type_name): Array<number> {
+  public process_all_stage_data(
+    all_stage_object,
+    xAttribute,
+    yAttribute,
+    scale,
+    incoming_data_type_name
+  ): Array<number> {
     const ctrl = this;
     try {
       if (all_stage_object !== undefined) {
         const processedData = [];
 
-        all_stage_object.forEach(function(single_stage_object) {
-          const data_array = ctrl.process_single_stage_data(single_stage_object, xAttribute, yAttribute, scale, incoming_data_type_name);
-          data_array.forEach(function(data_value){
+        all_stage_object.forEach(function (single_stage_object) {
+          const data_array = ctrl.process_single_stage_data(
+            single_stage_object,
+            xAttribute,
+            yAttribute,
+            scale,
+            incoming_data_type_name
+          );
+          data_array.forEach(function (data_value) {
             processedData.push(data_value);
           });
         });
@@ -110,21 +157,36 @@ export class EntityService {
 
   /** data structure that is used for running and successful experiments are different
    * we pass key (step_no) - value (stages) pairs to this fcn from running exp. page to parse all data of all stages of single step*/
-  public process_stages(stages, xAttribute, yAttribute, scale, incoming_data_type_name): Array<number> {
+  public process_stages(
+    stages,
+    xAttribute,
+    yAttribute,
+    scale,
+    incoming_data_type_name
+  ): Array<number> {
     const ctrl = this;
     try {
       if (stages !== undefined) {
         let processedData = [];
-        stages.forEach(function(single_stage_object) {
+        stages.forEach(function (single_stage_object) {
           // iterates each stage but not All Stages tuple, it's just for displaying purposes
           if (Number(single_stage_object.number) !== -1) {
-            const data_array = ctrl.process_single_stage_data(single_stage_object, xAttribute, yAttribute, scale, incoming_data_type_name);
+            const data_array = ctrl.process_single_stage_data(
+              single_stage_object,
+              xAttribute,
+              yAttribute,
+              scale,
+              incoming_data_type_name
+            );
             processedData = processedData.concat(data_array);
           }
         });
         return processedData;
       } else {
-        this.notify.error("Error", "Failed to process all stage data for running experiment");
+        this.notify.error(
+          "Error",
+          "Failed to process all stage data for running experiment"
+        );
       }
     } catch (err) {
       this.notify.error("Error", err.message);
@@ -135,22 +197,31 @@ export class EntityService {
   /** https://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects */
   public sort_by(field, reverse, primer) {
     if (!isNullOrUndefined(field)) {
-      const key = function (x) {return primer ? primer(x[field]) : x[field]};
+      const key = function (x) {
+        return primer ? primer(x[field]) : x[field];
+      };
       return function (a, b) {
-        const A = key(a), B = key(b);
-        return ( (A < B) ? -1 : ((A > B) ? 1 : 0) ) * [-1, 1][+!!reverse];
-      }
+        const A = key(a),
+          B = key(b);
+        return (A < B ? -1 : A > B ? 1 : 0) * [-1, 1][+!!reverse];
+      };
     }
     return function (a, b) {
-      return ( (a < b) ? -1 : ((a > b) ? 1 : 0) ) * [-1, 1][+!!reverse];
-    }
-
+      return (a < b ? -1 : a > b ? 1 : 0) * [-1, 1][+!!reverse];
+    };
   }
 
   /** parses static response object returned from server, creates new stage-point tuple(s) and pushes them to the all_data (array of json strings) */
-  public process_response_for_successful_experiment(steps_and_stages, step_no, all_data): StageEntity[] {
+  public process_response_for_successful_experiment(
+    steps_and_stages,
+    step_no,
+    all_data
+  ): StageEntity[] {
     if (isNullOrUndefined(steps_and_stages)) {
-      this.notify.error("Error", "Cannot retrieve data from DB, please try again");
+      this.notify.error(
+        "Error",
+        "Cannot retrieve data from DB, please try again"
+      );
       return;
     }
 
@@ -165,10 +236,10 @@ export class EntityService {
               if (!this.isEmptyObject(stage_object)) {
                 // distribute data points to empty bins
                 const new_entity = this.create_stage_entity();
-                new_entity.number = stage_object['number'].toString();
-                new_entity.values = stage_object['values'];
-                new_entity.knobs = stage_object['knobs'];
-                new_entity.stage_result = stage_object['stage_result'];
+                new_entity.number = stage_object["number"].toString();
+                new_entity.values = stage_object["values"];
+                new_entity.knobs = stage_object["knobs"];
+                new_entity.stage_result = stage_object["stage_result"];
 
                 // important assumption here: we retrieve steps, stages and data points in a sorted manner w.r.t. createdDate field
                 // so all_data is sth like:
@@ -181,68 +252,87 @@ export class EntityService {
       }
     }
     return all_data;
-
   }
 
-  public create_experiment(execution_strategy): Experiment {
-      return {
-        "id": UUID.UUID(),
-        "user": "",
-        "name": "",
-        "description": "",
-        "status": "",
-        "targetSystemId": "",
-        "executionStrategy": execution_strategy,
-        "changeableVariables": [], // used while creating an experiment
-        "considered_data_types": [],
-        "consideredAggregateTopics": [],
-        "analysis": {},
-        "numberOfSteps": 0,
-        "simulation": {
-          "startTime" : 0,
-          "endTime" : 500,
-          "updateInterval" : 1,
-          "resources": [
-            {"name": "network.sumo.xml", "type": "RoadMap"}, {"name": "traffic.xml", "type": "Input"}
-          ],
-          "archivedResults": []
-        }
-      }
+  public create_experiment(execution_strategy, simulation_type): Experiment {
+    var resources_preloaded = [];
+    /*
+    if (simulation_type == "sumo") {
+      resources_preloaded = [
+        { name: "network.sumo.xml", type: "RoadMap" },
+        { name: "traffic.xml", type: "Input" },
+      ];
+    } else if (simulation_type == "matsim") {
+      resources_preloaded = [
+        { name: "network.matsim.xml", type: "RoadMap" },
+        { name: "plans.xml", type: "Input" },
+      ];
+    }
+    */
+
+    return {
+      id: UUID.UUID(),
+      user: "",
+      name: "",
+      description: "",
+      status: "",
+      targetSystemId: "",
+      equal_experiment_id: "",
+      executionStrategy: execution_strategy,
+      changeableVariables: [], // used while creating an experiment
+      considered_data_types: [],
+      consideredAggregateTopics: [],
+      analysis: {
+        input_topics: [],
+        algorithms: new Array<Algorithm>()
+      },
+      numberOfSteps: 0,
+      simulation: {
+        startTime: 0,
+        endTime: 500,
+        updateInterval: 1,
+        resources: resources_preloaded,
+        archivedResults: [],
+      },
+      results_downloadable: false,
+    };
   }
 
   public create_target_system(): Target {
     return {
-      "id": "",
-      "user": "",
-      "dataProviders": [],
-      "primaryDataProvider": {
-        "type": "",
-        "ignore_first_n_samples": null
+      id: "",
+      user: "",
+      dataProviders: [],
+      primaryDataProvider: {
+        type: "",
+        ignore_first_n_samples: null,
       },
-      "secondaryDataProviders": [],
-      "changeProvider": {
-        "type": "",
+      secondaryDataProviders: [],
+      changeProvider: {
+        type: "",
       },
-      "name": "",
-      "status": "",
-      "description": "",
-      "type": "",
-      "incomingDataTypes": [],
-      "changeableVariables": [], // used while creating a target system
-      "defaultVariables": []
-    }
+      name: "",
+      status: "",
+      description: "",
+      type: "",
+      incomingDataTypes: [],
+      changeableVariables: [], // used while creating a target system
+      defaultVariables: [],
+      parentTargetSystem: null,
+      simulationType: "",
+    };
   }
 
   public create_execution_strategy(): ExecutionStrategy {
     return {
-      type: "",
+      type: "single_experiment_run",
       sample_size: 500,
       knobs: [],
       stages_count: 0,
       acquisition_method: "",
       optimizer_iterations: 15,
-      optimizer_iterations_in_design: 0
-    }
+      optimizer_iterations_in_design: 0,
+    };
   }
 
   public create_oeda_callback_entity(): OedaCallbackEntity {
@@ -258,7 +348,7 @@ export class EntityService {
       current_knob: new Map<string, number>(),
       remaining_time_and_stages: {},
       step_name: "",
-      step_no: 0
+      step_no: 0,
     };
   }
 
@@ -266,7 +356,10 @@ export class EntityService {
     return {
       name: "",
       password: "",
-      db_configuration: new Map<string, string>()
+      email: "",
+      created_at: "",
+      db_configuration: new Map<string, string>(),
+      roles: [],
     };
   }
 
@@ -275,16 +368,16 @@ export class EntityService {
       number: "",
       values: [],
       knobs: null,
-      stage_result: null
-    }
+      stage_result: null,
+    };
   }
 
   public create_step_entity(): StepEntity {
     return {
       step_no: "",
       stages: [],
-      step_name: ""
-    }
+      step_name: "",
+    };
   }
 
   /** we do not allow user to take Log of Boolean (Nominal) data */
@@ -301,8 +394,11 @@ export class EntityService {
     if (stage_data !== undefined) {
       if (stage_data.hasOwnProperty("values")) {
         const values = stage_data.values;
-        values.forEach(function(tuple) {
-          if(tuple.payload.hasOwnProperty(incoming_data_type.name) && !retrieved) {
+        values.forEach(function (tuple) {
+          if (
+            tuple.payload.hasOwnProperty(incoming_data_type.name) &&
+            !retrieved
+          ) {
             retrieved = true;
             return retrieved;
           }
@@ -320,16 +416,21 @@ export class EntityService {
    *  but: before plotting, we must ensure that a proper & valid incoming data type is selected
    */
   public get_candidate_data_type(experiment, targetSystem, first_stage_data) {
-
-    if (typeof first_stage_data === 'string') {
+    if (typeof first_stage_data === "string") {
       first_stage_data = JSON.parse(first_stage_data);
     }
 
     // first check if we can get one of the optimized data types from payload
     for (let k = 0; k < experiment.considered_data_types.length; k++) {
-      const candidate_incoming_optimized_data_type = experiment.considered_data_types[k];
+      const candidate_incoming_optimized_data_type =
+        experiment.considered_data_types[k];
       if (candidate_incoming_optimized_data_type["is_considered"] === true) {
-        if (this.is_data_type_retrieved(first_stage_data, candidate_incoming_optimized_data_type)) {
+        if (
+          this.is_data_type_retrieved(
+            first_stage_data,
+            candidate_incoming_optimized_data_type
+          )
+        ) {
           return candidate_incoming_optimized_data_type;
         }
       }
@@ -338,7 +439,12 @@ export class EntityService {
     // now check regular incoming data types
     for (let j = 0; j < targetSystem.incomingDataTypes.length; j++) {
       const candidate_incoming_data_type = targetSystem.incomingDataTypes[j];
-      if (this.is_data_type_retrieved(first_stage_data, candidate_incoming_data_type)) {
+      if (
+        this.is_data_type_retrieved(
+          first_stage_data,
+          candidate_incoming_data_type
+        )
+      ) {
         return candidate_incoming_data_type;
       }
     }
@@ -366,13 +472,12 @@ export class EntityService {
    * iterates given object and round their values to given decimal number
    */
   public round_values(iterable_object: any, decimal: number) {
-    if (iterable_object == undefined)
-      return iterable_object;
-    Object.getOwnPropertyNames(iterable_object).forEach(key => {
+    if (iterable_object == undefined) return iterable_object;
+    Object.getOwnPropertyNames(iterable_object).forEach((key) => {
       let value = iterable_object[key];
-      if(typeof(value) == 'string') {
+      if (typeof value == "string") {
         iterable_object[key] = parseFloat(Number(value).toFixed(decimal));
-      } else if (typeof(value) == 'number') {
+      } else if (typeof value == "number") {
         iterable_object[key] = parseFloat(value.toFixed(decimal));
       }
     });
@@ -380,7 +485,7 @@ export class EntityService {
   }
 
   /** returns keys of the given map */
-  public get_keys(object) : Array<string> {
+  public get_keys(object): Array<string> {
     if (!isNullOrUndefined(object)) {
       return Object.keys(object);
     }
@@ -396,10 +501,14 @@ export class EntityService {
    * targetSystemVariables: object[]
    * return value -> stageKnobs
    */
-  public populate_knob_objects_with_variables(stageKnobs: any, targetSystemVariables: any, for_all_stages: boolean) {
+  public populate_knob_objects_with_variables(
+    stageKnobs: any,
+    targetSystemVariables: any,
+    for_all_stages: boolean
+  ) {
     let ctrl = this;
     let knob_keys = ctrl.get_keys(stageKnobs);
-    targetSystemVariables.forEach(function(target_system_knob) {
+    targetSystemVariables.forEach(function (target_system_knob) {
       if (knob_keys.length > 0 && !for_all_stages) {
         if (!knob_keys.includes(target_system_knob.name)) {
           stageKnobs[target_system_knob.name] = target_system_knob.default;
@@ -412,11 +521,10 @@ export class EntityService {
         min_max_map["max"] = target_system_knob.max;
         min_max_map["default"] = target_system_knob.default;
         stageKnobs[target_system_knob.name] = min_max_map;
-
       }
     });
 
-    return stageKnobs
+    return stageKnobs;
   }
 
   /**
@@ -439,7 +547,7 @@ export class EntityService {
     for (let i = 0; i < targetSystem.incomingDataTypes.length; i++) {
       let data_type = targetSystem.incomingDataTypes[i];
       if (data_type["is_considered"] == true) {
-        number_of_considered_data_types += 1
+        number_of_considered_data_types += 1;
       }
     }
     return number_of_considered_data_types;
@@ -450,7 +558,7 @@ export class EntityService {
    */
   public convert_object_into_map(object): Map<string, any> {
     let map = new Map<string, any>();
-    object.forEach(function(attribute) {
+    object.forEach(function (attribute) {
       let value = object[attribute];
       map.set(attribute, value);
     });
@@ -462,6 +570,6 @@ export class EntityService {
    * @returns {boolean}
    */
   public isEmptyObject(obj): boolean {
-    return JSON.stringify(obj) === '{}';
+    return JSON.stringify(obj) === "{}";
   }
 }

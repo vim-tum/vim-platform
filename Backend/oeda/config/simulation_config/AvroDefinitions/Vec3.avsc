@@ -1,0 +1,18 @@
+{
+	"type": "record",
+	"name": "Vec3",
+	"namespace": "org.vim_project.datamodel",
+	"fields": [{
+			"name": "x",
+			"type": "double"
+		},
+		{
+			"name": "y",
+			"type": "double"
+		},
+		{
+			"name": "z",
+			"type": "double"
+		}
+	]
+}

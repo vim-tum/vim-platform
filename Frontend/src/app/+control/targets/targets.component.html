@@ -21,7 +21,7 @@
 
         <div class="panel-body" style="padding-top: 20px">
           <div>
-            <a routerLink="/control/targets/create" class="btn btn-orange btn-sm"><i class="fa fa-file-o"></i> Create Target System</a>
+            <a *ngIf="hasPermission(PermissionName.WRITE_TARGETSYSTEM)" routerLink="/control/targets/create" class="btn btn-orange btn-sm"><i class="fa fa-file-o"></i> Create Target System</a>
           </div>
         </div>
 
@@ -64,10 +64,13 @@
             <tbody class="bigTable">
             <tr *ngFor="let item of mf.data">
               <td>
-                <a class="btn btn-xs btn-primary" type="button"
+                <a *ngIf="hasPermission(PermissionName.GET_TARGETSYSTEM, item.user) && !hasPermission(PermissionName.WRITE_TARGETSYSTEM, item.user)" class="btn btn-xs btn-primary" type="button"
+                   routerLink="/control/targets/view/{{item.id}}"><i class="fa fa-search"></i> Details
+                </a>
+                <a *ngIf="hasPermission(PermissionName.WRITE_TARGETSYSTEM, item.user)" class="btn btn-xs btn-primary" type="button"
                    routerLink="/control/targets/edit/{{item.id}}"><i class="fa fa-pencil"></i> Clone & Edit
                 </a>
-                <a class="btn btn-xs btn-orange" type="button" *ngIf="item.status != 'WORKING'"
+                <a  class="btn btn-xs btn-orange" type="button" *ngIf="item.status != 'WORKING' && hasPermission(PermissionName.DEL_TARGETSYSTEM, item.user)"
                    data-target="#deleteTargetSystemModal"
                    (click)="modalTargetSystemDeletion(item.id)"
                    data-toggle="modal" title="Delete this experiment"><i class="fa fa-trash-o"></i> Delete

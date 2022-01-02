@@ -3,12 +3,17 @@ from flask_restful import Resource
 import oeda.controller.stages as sc
 import json as json
 import traceback
+
+from oeda.controller.securityUtils import jwt_auth_required, require_permission, Permission
+from oeda.controller.experiments import has_access_to_experiment
 from oeda.databases import db
 from collections import defaultdict
 
 class StageResultsWithExperimentIdController(Resource):
 
     @staticmethod
+    @jwt_auth_required()
+    @require_permission(Permission.GET_EXPERIMENT, has_access_to_experiment)
     def get(experiment_id, step_no, stage_no):
         try:
             res = db().get_data_points(experiment_id=experiment_id, step_no=step_no, stage_no=stage_no)
@@ -24,6 +29,8 @@ class StageResultsWithExperimentIdController(Resource):
 class AllStageResultsWithExperimentIdController(Resource):
 
     @staticmethod
+    @jwt_auth_required()
+    @require_permission(Permission.GET_EXPERIMENT, has_access_to_experiment)
     def get(experiment_id):
         try:
             resp = jsonify(get_all_stage_data(experiment_id=experiment_id))

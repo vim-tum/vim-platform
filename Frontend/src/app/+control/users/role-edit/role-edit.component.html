@@ -1,0 +1,116 @@
+<div class="container-fluid" style="max-width: 1920px; margin-left: 0">
+
+  <!-- Role selection -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sub-title">Role name</div>
+      <div>
+        <select class="form-control" (change)="selectRole($event.target['value'])" required>
+          <option [selected]="!action" disabled>Select  role</option>
+          <option *ngFor="let role of roles;" [ngValue]="role.name" [selected]="selectedRole && role.name === selectedRole.name" >{{ role.name }}</option>
+          <option [selected]="action && action === 'add'">+ Create new role</option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="action && selectedRole" class="pull-right">
+      <div>
+        <div (click)="undo()" class="btn btn-sm btn-orange" [class.disabled]="!canUndo()"><i
+          class="fa fa-undo"></i> Undo
+        </div>
+        <div (click)="redo()" class="btn btn-sm btn-orange" [class.disabled]="!canRedo()"><i
+          class="fa fa-undo fa-flip-horizontal"></i> Redo
+        </div>
+        <div *ngIf="action==='edit' && !selectedRole.basic" class="btn btn-sm btn-danger" (click)="deleteRole()">
+          <i class="fa fa-trash-o"></i> Delete
+        </div>
+        <div *ngIf="action==='edit'" class="btn btn-sm btn-orange" [class.disabled]="!canUndo()" (click)="update_role()"><i
+          class="fa fa-send"></i> Save Permissions
+        </div>
+        <div *ngIf="action==='add'" class="btn btn-sm btn-orange" [class.disabled]="!canUndo()" (click)="createRole()"><i
+          class="fa fa-send"></i> Create Role
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRole" class="row" style="padding-top: 20px">
+    <div class="col">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="card-title">
+        <div class="title">Role</div>
+      </div>
+    </div>
+    <div class="panel-body" >
+      <labeled-input *ngIf="action === 'add'"
+        name="Name"
+        [model]="selectedRole"
+        key="name"
+        data-toggle="tooltip"
+        title="Please provide a role name"
+      ></labeled-input>
+      <labeled-input
+        name="Description"
+        [model]="selectedRole"
+        key="description"
+        data-toggle="tooltip"
+        title="Please provide a meaningful description"
+
+        (modelChanged)="descriptionChanged($event)"
+      ></labeled-input>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <!-- Permissions table -->
+  <div *ngIf="selectedRole" class="row" style="padding-top: 20px">
+    <div class="col">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="card-title">
+        <div class="title">Permissions</div>
+      </div>
+    </div>
+    <div *ngIf="roles" class="panel-body" >
+      <div class="sub-title">Basic Permissions</div>
+      <div class="table-responsive">
+        <table style="margin-top: 20px" class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr class="">
+            <th>Resources/Operation</th>
+            <th class="row text-center"><div class="col-xs-6">View</div><div class="col-xs-6">All</div></th>
+            <th class="row text-center"><div class="col-xs-6">Edit</div><div class="col-xs-6">All</div></th>
+            <th class="row text-center"><div class="col-xs-6">Delete</div><div class="col-xs-6">All</div></th>
+          </tr>
+          </thead>
+          <tbody class="bigTable">
+          <tr>
+            <td><div class="align-center">Targetsystem</div></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.GET_TARGETSYSTEM"  [invoker]="invoker"></permissions-button></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.WRITE_TARGETSYSTEM"  [invoker]="invoker"></permissions-button></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.DEL_TARGETSYSTEM"  [invoker]="invoker"></permissions-button></td>
+          </tr>
+          <tr>
+            <td><div class="align-center">Experiments</div></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.GET_EXPERIMENT"  [invoker]="invoker"></permissions-button></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.WRITE_EXPERIMENT"  [hideAccessAll]="true" [invoker]="invoker"></permissions-button></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.DEL_EXPERIMENT"  [invoker]="invoker"></permissions-button></td>
+          </tr>
+          <tr>
+            <td><div class="align-center">External datastorage</div></td>
+            <td></td>
+            <td class="row text-center"><permissions-button [table]="table" [permissionName]="PermissionName.WRITE_DATASTORAGE" [hideAccessAll]="true" [invoker]="invoker"></permissions-button></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+  <div>
+  </div>
+  </div>
+  </div>
+</div>

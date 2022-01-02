@@ -1,42 +1,107 @@
 <div class="row" *ngIf="dataAvailable">
-
   <!-- Experiment Details & Analysis Section -->
-  <experiment-details [experiment]="experiment" [targetSystem]="targetSystem" [is_collapsed]="is_collapsed" [for_successful_experiment]="true"></experiment-details>
+  <experiment-details
+    [experiment]="experiment"
+    [targetSystem]="targetSystem"
+    [is_collapsed]="is_collapsed"
+    [for_successful_experiment]="true"
+  ></experiment-details>
 
-
-  <div class="col-md-6">
+  <div
+    class="col-md-6"
+    *ngIf="
+      experiment?.results_downloadable &&
+      targetSystem?.type.includes('simulation')
+    "
+  >
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
-        <div class="title">Step</div>
-          <select class="form-control"
-                  [(ngModel)]="step_no" (ngModelChange)="stepNoChanged($event)" size="1">
-            <option *ngFor="let step_no of get_keys(available_steps)" value="{{step_no}}">{{available_steps[step_no].name}}</option>
-          </select>
-        </div>
+        <a
+          class="btn btn-orange"
+          type="button"
+          (click)="downloadExperimentResult(experiment, 'simulation')"
+          title="Download this experiment results"
+          ><i class="fa fa-download"></i> Download Simulation Result
+        </a>
+      </div>
     </div>
   </div>
 
+  <div class="col-md-6" *ngIf="targetSystem?.simulationType == 'sumo'">
+    <div class="panel panel-default chartJs">
+      <div class="panel-heading">
+        <div class="title">Step</div>
+        <select
+          class="form-control"
+          [(ngModel)]="step_no"
+          (ngModelChange)="stepNoChanged($event)"
+          size="1"
+        >
+          <option
+            *ngFor="let step_no of get_keys(available_steps)"
+            value="{{ step_no }}"
+          >
+            {{ available_steps[step_no].name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
 
   <!-- Show analysis sections for relevant steps (first and last step) -->
-  <anova-analysis *ngIf="step_no == 1" [experiment]="experiment" [targetSystem]="targetSystem" [step_no]="step_no" [for_successful_experiment]="true"></anova-analysis>
+  <anova-analysis
+    *ngIf="step_no == 1 && targetSystem?.simulationType == 'sumo'"
+    [experiment]="experiment"
+    [targetSystem]="targetSystem"
+    [step_no]="step_no"
+    [for_successful_experiment]="true"
+  ></anova-analysis>
 
-  <ttest-analysis *ngIf="step_no == experiment.numberOfSteps" [experiment]="experiment" [targetSystem]="targetSystem" [step_no]="step_no"></ttest-analysis>
+  <ttest-analysis
+    *ngIf="
+      step_no == experiment.numberOfSteps &&
+      targetSystem?.simulationType == 'sumo'
+    "
+    [experiment]="experiment"
+    [targetSystem]="targetSystem"
+    [step_no]="step_no"
+  ></ttest-analysis>
 
   <!--Show informative section related with numberOfInteractions -->
 
-  <div class="col-md-12" *ngIf="step_no != 1 && step_no != experiment.numberOfSteps && totalNumberOfStagesForBO > experiment.executionStrategy.optimizer_iterations">
+  <div
+    class="col-md-12"
+    *ngIf="
+      step_no != 1 &&
+      step_no != experiment.numberOfSteps &&
+      totalNumberOfStagesForBO >
+        experiment.executionStrategy.optimizer_iterations &&
+      targetSystem?.simulationType == 'sumo'
+    "
+  >
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
         <ul>
           <li>
             <!--subtract 1 for All Stage tuple, 1 for Best Stage tuple, 1 for the name of stage-->
-            <div class="display: inline-block"> For this run, OEDA chose {{get_keys(available_steps[step_no]).length - 3}} optimizer iteration(s) to perform </div>
+            <div class="display: inline-block">
+              For this run, OEDA chose
+              {{ get_keys(available_steps[step_no]).length - 3 }} optimizer
+              iteration(s) to perform
+            </div>
           </li>
           <li>
-            <div class="display: inline-block"> For all Bayesian optimization run(s), OEDA chose {{totalNumberOfStagesForBO}} optimizer iteration(s) in total </div>
+            <div class="display: inline-block">
+              For all Bayesian optimization run(s), OEDA chose
+              {{ totalNumberOfStagesForBO }} optimizer iteration(s) in total
+            </div>
           </li>
           <li>
-            <div class="display: inline-block"> You chose {{experiment.executionStrategy.optimizer_iterations}} optimizer iteration(s) in total while creating the experiment </div>
+            <div class="display: inline-block">
+              You chose
+              {{ experiment.executionStrategy.optimizer_iterations }} optimizer
+              iteration(s) in total while creating the experiment
+            </div>
           </li>
         </ul>
       </div>
@@ -44,72 +109,111 @@
   </div>
 
   <!-- Experiment Stages with paginator -->
-  <experiment-stages-paginator [experiment]="experiment"
-                     [available_steps]="available_steps"
-                     [step_no]="step_no"
-                     [incoming_data_type_name]="incoming_data_type?.name"
-                     [scale]="scale"
-                     [targetSystem]="targetSystem"
-                     [for_successful_experiment]="true"
-                     [retrieved_data_length]="retrieved_data_length"
-                     [hidden]="false"
-                     (incomingDataTypeChanged)="incoming_data_type_changed($event)"
-                     (scaleChanged)="scale_changed($event)"
-                     (rowClicked)="stage_changed($event)"></experiment-stages-paginator>
+  <experiment-stages-paginator
+    *ngIf="targetSystem?.simulationType == 'sumo'"
+    [experiment]="experiment"
+    [available_steps]="available_steps"
+    [step_no]="step_no"
+    [incoming_data_type_name]="incoming_data_type?.name"
+    [scale]="scale"
+    [targetSystem]="targetSystem"
+    [for_successful_experiment]="true"
+    [retrieved_data_length]="retrieved_data_length"
+    [hidden]="false"
+    (incomingDataTypeChanged)="incoming_data_type_changed($event)"
+    (scaleChanged)="scale_changed($event)"
+    (rowClicked)="stage_changed($event)"
+  ></experiment-stages-paginator>
 
   <!-- Smooth-Line Chart -->
-  <div class="col-md-12" [hidden]="!is_enough_data_for_plots">
+  <div
+    class="col-md-12"
+    [hidden]="!is_enough_data_for_plots"
+    *ngIf="targetSystem?.simulationType == 'sumo'"
+  >
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="card-title">
-          <div class="title pull-left">Scatter Plot with {{scale}} Scale</div>
+          <div class="title pull-left">Scatter Plot with {{ scale }} Scale</div>
         </div>
       </div>
       <div class="panel-body">
-        <div class="col-md-12" id="chartdiv" style="width: 100%; height: 400px"></div>
+        <div
+          class="col-md-12"
+          id="chartdiv"
+          style="width: 100%; height: 400px"
+        ></div>
       </div>
       <div class="panel-footer">
-        <p id="filterSummary">Initial threshold for 95-percentile: <b>{{initial_threshold_for_scatter_chart}}</b></p>
+        <p id="filterSummary">
+          Initial threshold for 95-percentile:
+          <b>{{ initial_threshold_for_scatter_chart }}</b>
+        </p>
         <!--<button id="filterButton{{selected_stage_no}}" type="button" class="btn btn-primary" (click)="filter_outliers($event)">Filter</button>-->
       </div>
     </div>
   </div>
 
   <!-- Histogram -->
-  <div class="col-md-12" [hidden]="!is_enough_data_for_plots">
+  <div
+    class="col-md-12"
+    [hidden]="!is_enough_data_for_plots"
+    *ngIf="targetSystem?.simulationType == 'sumo'"
+  >
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="card-title">
-          <div class="title pull-left">Histogram with {{scale}} Scale</div>
+          <div class="title pull-left">Histogram with {{ scale }} Scale</div>
         </div>
       </div>
-      <div class="panel-body" >
-        <div class="col-md-12" id="histogram" style="width: 100%; height: 400px"></div>
+      <div class="panel-body">
+        <div
+          class="col-md-12"
+          id="histogram"
+          style="width: 100%; height: 400px"
+        ></div>
       </div>
     </div>
   </div>
 
   <!-- QQ graph -->
-  <div class="col-md-12" [hidden]="!is_enough_data_for_plots || incoming_data_type['scale'] == 'Boolean'">
+  <div
+    class="col-md-12"
+    [hidden]="
+      !is_enough_data_for_plots || incoming_data_type['scale'] == 'Boolean'
+    "
+    *ngIf="targetSystem?.simulationType == 'sumo'"
+  >
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
         <div class="card-title">
           <div class="row">
             <div class="col-md-6">
-              <div class="title pull-left">Quantile Quantile (QQ) Plot against Theoretical Data &nbsp;</div>
+              <div class="title pull-left">
+                Quantile Quantile (QQ) Plot against Theoretical Data &nbsp;
+              </div>
             </div>
 
             <div class="col-md-6">
               <div class="title">Theoretical Data Distribution</div>
-              <select class="form-control"
-                      [(ngModel)]="distribution" (ngModelChange)="selectDistributionAndDrawQQPlot($event)" size="1">
-                <option *ngFor="let dist of available_distributions" value="{{dist}}">{{dist}}</option>
+              <select
+                class="form-control"
+                [(ngModel)]="distribution"
+                (ngModelChange)="selectDistributionAndDrawQQPlot($event)"
+                size="1"
+              >
+                <option
+                  *ngFor="let dist of available_distributions"
+                  value="{{ dist }}"
+                >
+                  {{ dist }}
+                </option>
               </select>
             </div>
           </div>
 
           <div class="container-fluid" style="padding-top: 2%">
-            {{stage_details}}
+            {{ stage_details }}
           </div>
         </div>
       </div>
@@ -119,7 +223,7 @@
           <div class="col-md-8">
             <div [hidden]="!is_qq_plot_rendered">
               <!--additional css for centering the img-->
-              <img class="col-md-8 img-thumbnail" id="qqPlot">
+              <img class="col-md-8 img-thumbnail" id="qqPlot" />
             </div>
           </div>
         </div>
@@ -127,13 +231,21 @@
     </div>
   </div>
 
-  <div class="col-md-12" [hidden]="!is_enough_data_for_plots || incoming_data_type['scale'] == 'Boolean'">
+  <div
+    class="col-md-12"
+    [hidden]="
+      !is_enough_data_for_plots || incoming_data_type['scale'] == 'Boolean'
+    "
+    *ngIf="targetSystem?.simulationType == 'sumo'"
+  >
     <div class="panel panel-default chartJs">
       <div class="panel-heading">
         <div class="card-title">
           <div class="row">
             <div class="col-md-12">
-              <div class="title pull-left">Box Plot for {{stage_details}}</div>
+              <div class="title pull-left">
+                Box Plot for {{ stage_details }}
+              </div>
             </div>
           </div>
         </div>
@@ -144,13 +256,18 @@
           <div class="col-md-12">
             <div [hidden]="!is_box_plot_rendered">
               <!--additional css for centering the img-->
-              <img class="col-md-8 img-thumbnail" id="boxPlot">
+              <img class="col-md-8 img-thumbnail" id="boxPlot" />
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
+  <analysis-module
+    *ngIf="experiment"
+    [experiment]="experiment"
+    [targetSystem]="targetSystem"
+    [step_no]="1"
+  ></analysis-module>
 </div>

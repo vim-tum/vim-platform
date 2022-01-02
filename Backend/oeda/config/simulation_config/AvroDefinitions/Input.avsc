@@ -1,9 +1,18 @@
- { "type": "record",
- 	"namespace": "eu.fau.cs7.datamodel",
+ {
+ 	"type": "record",
+ 	"namespace": "org.vim_project.datamodel",
  	"name": "Input",
- 	"fields": [
-                        {   "name": "Processing", "type": "string"},
-                        {   "name": "Layer", "type": "string"},
-                        {   "name": "Path", "type": "string"}
-                    ]
-}    
+ 	"fields": [{
+ 			"name": "Processing",
+ 			"type": "string"
+ 		},
+ 		{
+ 			"name": "Layer",
+ 			"type": "string"
+ 		},
+ 		{
+ 			"name": "Path",
+ 			"type": "string"
+ 		}
+ 	]
+ }

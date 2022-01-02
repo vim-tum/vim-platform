@@ -10,16 +10,16 @@ import {Component, Input, EventEmitter, Output, OnChanges, SimpleChanges} from "
                id="{{name}}Edit" name="{{name}}-{{key}}"
                [(ngModel)]="model[key]" [min]="minNumber" [max]="maxNumber" disabled="{{disabled}}"
                data-toggle="tooltip" title="{{tooltipTitle}}">
-               
+
         <input (ngModelChange)="onModelChange($event)" *ngIf="inputType == 'text'" class="form-control" type="text"
                id="{{name}}Edit" name="{{name}}-{{key}}"
                [(ngModel)]="model[key]" placeholder="{{placeholder}}" disabled="{{disabled}}"
                data-toggle="tooltip" title="{{tooltipTitle}}">
-        
+
         <input (ngModelChange)="onModelChange($event)" *ngIf="inputType == 'checkbox'" class="form-check-input" type="checkbox"
                id="{{name}}Edit" name="{{name}}-{{key}}"
                [(ngModel)]="model[key]" placeholder="{{placeholder}}"
-               data-toggle="tooltip" title="{{tooltipTitle}}">
+               data-toggle="tooltip" title="{{tooltipTitle}}" disabled="{{disabled}}">
 
         <!--<input (ngModelChange)="onModelChange($event)" type="number" *ngIf="inputType == 'float'" -->
                <!--class="form-control" name="{{name}}-{{key}}" placeholder="{{placeholder}}" [(ngModel)]="model[key]"-->

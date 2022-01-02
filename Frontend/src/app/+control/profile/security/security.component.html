@@ -1,0 +1,25 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default " xmlns="http://www.w3.org/1999/html">
+        <div class="panel-heading">
+          <span class="title">Change Password</span>
+          <span class="pull-right">
+              <div class="btn btn-sm btn-orange" (click)="updatePassword()"><i class="fa fa-send"></i> Update password</div>
+          </span>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="oldPassword">Old password</label>
+            <input type="password" class="form-control" id="oldPassword" [(ngModel)]="oldPassword">
+            <label for="newPassword">New password</label>
+            <input type="password" class="form-control" id="newPassword" [(ngModel)]="newPassword">
+            <label for="confirmNewPassword">Confirm new password</label>
+            <input type="password" class="form-control" id="confirmNewPassword" [(ngModel)]="confirmNewPassword">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,3 +23,7 @@ class UserDatabase:
     def update_user(self, user):
         """ updates given user in the system """
         pass
+
+    def get_permissions(self, user):
+        """ get permissions of given user """
+        pass

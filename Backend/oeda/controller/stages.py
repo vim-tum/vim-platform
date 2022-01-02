@@ -1,10 +1,14 @@
 from flask_restful import Resource
+
+from oeda.controller.securityUtils import jwt_auth_required, require_permission, Permission, has_access_to_experiment
 from oeda.databases import db
 
 
 class StageController(Resource):
 
     @staticmethod
+    @jwt_auth_required()
+    @require_permission(Permission.GET_EXPERIMENT, has_access_to_experiment)
     def get(experiment_id):
         numberOfSteps = db().get_experiment(experiment_id=experiment_id)["numberOfSteps"]
         steps_and_stages = {}

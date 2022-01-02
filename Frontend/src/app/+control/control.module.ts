@@ -15,12 +15,24 @@ import {ShowSuccessfulExperimentComponent} from "./experiments/show/successful/s
 import {GraphsModule} from "../shared/modules/graphs/graphs.module";
 import {EditTargetsComponent} from "./targets/edit/edit-targets.component";
 import {CreateExperimentsComponent} from "./experiments/create/create-experiments.component";
+import { UsersComponent } from './users/users.component';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { RoleEditComponent } from './users/role-edit/role-edit.component';
+import { UiSwitchModule } from 'angular2-ui-switch/src';
+import { AngularMultiSelectModule } from 'angular4-multiselect-dropdown/angular4-multiselect-dropdown';
+import { ProfileComponent } from './profile/profile.component';
+import { SecurityComponent } from './profile/security/security.component';
+
+
+
 
 @NgModule({
   imports: [
     SharedModule,
     GraphsModule,
     RouterModule.forChild(routes),
+    UiSwitchModule,
+    AngularMultiSelectModule
   ],
   providers: [],
   declarations: [
@@ -35,7 +47,12 @@ import {CreateExperimentsComponent} from "./experiments/create/create-experiment
     CreateExperimentsComponent,
     ShowRunningExperimentComponent,
     ShowSuccessfulExperimentComponent,
-    EditTargetsComponent
+    EditTargetsComponent,
+    UsersComponent,
+    UserEditComponent,
+    RoleEditComponent,
+    ProfileComponent,
+    SecurityComponent,
   ]
 })
 export class ControlModule {

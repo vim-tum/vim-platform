@@ -1,3 +1,4 @@
+from flask import redirect
 from oeda.log import *
 from threading import Timer
 from oeda.service.threadpool import getCachedThreadPool
@@ -6,6 +7,7 @@ from oeda.service.rtx_definition import *
 from oeda.databases import db, experiments_db
 import traceback
 from oeda.controller.callback import set_dict as set_dict
+from oeda.rtxlib.simulationchannels.smart_simulation import equal_experiment_check
 
 execution_scheduler_timer = None
 
@@ -92,6 +94,7 @@ def rtx_execution(experiment, target_system, oeda_stop_request):
     try:
         set_experiment_status(experiment["id"], "RUNNING")
         set_target_system_status(experiment["targetSystemId"], "WORKING")
+
         # convert OEDA to RTX experiment
         workflow = RTXDefinition(experiment, target_system, oeda_callback, oeda_stop_request)
         # here we now start the experiment on a different thread (in the thread pool)

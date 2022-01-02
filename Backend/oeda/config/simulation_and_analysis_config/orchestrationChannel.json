@@ -1,0 +1,52 @@
+[
+  {
+    "name": "OrchestrationBootstrap",
+    "description": "Bootstrap topic for sending sce-files to start, stop or interrupt the simulation",
+    "type": "kafka_producer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "bootstrap",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationStatus",
+    "description": "Topic for receiving status messages sent by the simulator",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "status",
+    "serializer": "JSON",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationControl",
+    "description": "Topic for issuing control messages such as termination of a simulation run",
+    "type": "kafka_producer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "ctrl",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationCommand",
+    "description": "Command topic for sending commands to start, stop or interrupt the analysis",
+    "type": "kafka_producer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "command",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  },
+  {
+    "name": "OrchestrationResponse",
+    "description": "Response topic for receiving feedback/ack from analysis",
+    "type": "kafka_consumer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "response",
+    "serializer": "Avro",
+    "channel": "orchestration"
+  }
+]

@@ -1,25 +1,32 @@
-import {OnInit, Component} from "@angular/core";
-import {NotificationsService} from "angular2-notifications";
-import {Router} from "@angular/router";
-import {LayoutService} from "../../../shared/modules/helper/layout.service";
+import { OnInit, Component, ViewChild } from "@angular/core";
+import { NotificationsService } from "angular2-notifications";
+import { Router } from "@angular/router";
+import { LayoutService } from "../../../shared/modules/helper/layout.service";
 import {
   OEDAApiService,
   Experiment,
   Target,
   ExecutionStrategy,
-  UserEntity
+  UserEntity,
+  PermissionName,
+  Permission,
 } from "../../../shared/modules/api/oeda-api.service";
 import * as _ from "lodash.clonedeep";
-import {isNullOrUndefined} from "util";
-import {TempStorageService} from "../../../shared/modules/helper/temp-storage-service";
-import {EntityService} from "../../../shared/util/entity-service";
-import {hasOwnProperty} from "tslint/lib/utils";
-import {isNumeric} from "rxjs/util/isNumeric";
-import {UserService} from "../../../shared/modules/auth/user.service";
+import { isNullOrUndefined } from "util";
+import { TempStorageService } from "../../../shared/modules/helper/temp-storage-service";
+import { EntityService } from "../../../shared/util/entity-service";
+import { hasOwnProperty } from "tslint/lib/utils";
+import { isNumeric } from "rxjs/util/isNumeric";
+import { UserService } from "../../../shared/modules/auth/user.service";
+import { AuthorizationService } from "../../../shared/modules/auth/authorization.service";
+import {
+  AnalysisModuleSelectionComponent,
+} from "../../../shared/modules/ui/analysis-module-selection.component";
+import { ResourceService } from "../../../shared/util/resource-service";
 
 @Component({
-  selector: 'control-experiments',
-  templateUrl: './create-experiments.component.html',
+  selector: "control-experiments",
+  templateUrl: "./create-experiments.component.html",
 })
 export class CreateExperimentsComponent implements OnInit {
   experiment: Experiment;
@@ -42,43 +49,87 @@ export class CreateExperimentsComponent implements OnInit {
   maxNrOfImportantFactors: number;
   mlrMBOworking: boolean;
   stages_count: any;
+  resourceFiles: any[];
+  resourceFilesDescription: any[];
+  uploadedInputResourceFiles: any[];
+  uploadedRoadMapResourceFiles: any[];
+  uploadedOthersResourceFiles: any[];
 
-  constructor(private layout: LayoutService, private api: OEDAApiService,
-              private router: Router, private notify: NotificationsService,
-              private temp_storage: TempStorageService,
-              private userService: UserService,
-              private entityService: EntityService) {
+  // for analysis
+  experimentsLabels = [];
+  experiments = [];
+  simulationData = {
+    experimentId: null,
+    experiment: null,
+    target: null,
+  };
+
+  @ViewChild("analysisSelection")
+  analysisSelection: AnalysisModuleSelectionComponent;
+
+  permissions: Permission[] = [];
+
+  constructor(
+    private layout: LayoutService,
+    private api: OEDAApiService,
+    private router: Router,
+    private notify: NotificationsService,
+    private temp_storage: TempStorageService,
+    private userService: UserService,
+    private entityService: EntityService,
+    private authService: AuthorizationService,
+    private resourceService: ResourceService,
+  ) {
     this.availableTargetSystems = [];
 
     // create experiment, target system, and execution strategy
     this.executionStrategy = this.entityService.create_execution_strategy();
 
     this.targetSystem = this.entityService.create_target_system();
-    this.experiment = this.entityService.create_experiment(this.executionStrategy);
+    this.experiment = this.entityService.create_experiment(
+      this.executionStrategy,
+      this.targetSystem.simulationType
+    );
+    console.log(this.experiment.executionStrategy.type);
     this.originalExperiment = _(this.experiment);
     this.defaultAlpha = 0.05; // default value to be added when an analysis is selected
     this.defaultTTestEffectSize = 0.7;
     this.defaultTTestSampleSize = 1000;
     this.is_collapsed = true;
     this.mlrMBOworking = false;
+    this.resourceFiles = [];
+    this.uploadedInputResourceFiles = [];
+    this.uploadedRoadMapResourceFiles = [];
+    this.uploadedOthersResourceFiles = [];
+    this.resourceFilesDescription = [];
   }
 
   ngOnInit(): void {
     const ctrl = this;
     ctrl.layout.setHeader("Create an Experiment", "");
-    ctrl.api.loadAllTargets().subscribe(
-      (data) => {
-        if (!isNullOrUndefined(data)) {
-          for (let k = 0; k < data.length; k++) {
-            if (data[k]["status"] === "READY") {
-              ctrl.availableTargetSystems.push(data[k]);
-            }
+    ctrl.api.loadAllTargets().subscribe((data) => {
+      if (!isNullOrUndefined(data)) {
+        for (let k = 0; k < data.length; k++) {
+          if (data[k]["status"] === "READY") {
+            ctrl.availableTargetSystems.push(data[k]);
           }
-        } else {
-          this.notify.error("Error", "Please create target system first");
         }
+      } else {
+        this.notify.error("Error", "Please create target system first");
       }
-    );
+    });
+
+    this.authService
+      .getPermissions()
+      .subscribe((permissions) => (this.permissions = permissions));
+  }
+
+  hasPermission(permission: PermissionName): boolean {
+    return this.authService.hasPermissionHelper(this.permissions, permission);
+  }
+
+  public get PermissionName(): typeof PermissionName {
+    return PermissionName;
   }
 
   public saveExperiment() {
@@ -87,25 +138,45 @@ export class CreateExperimentsComponent implements OnInit {
 
     if (!this.hasErrors()) {
       // prepare other attributes
-      this.experiment.executionStrategy.optimizer_iterations = Number(this.experiment.executionStrategy.optimizer_iterations);
-      this.experiment.executionStrategy.sample_size = Number(this.experiment.executionStrategy.sample_size);
+      this.experiment.executionStrategy.optimizer_iterations = Number(
+        this.experiment.executionStrategy.optimizer_iterations
+      );
+      this.experiment.executionStrategy.sample_size = Number(
+        this.experiment.executionStrategy.sample_size
+      );
 
       // get sample size
-      this.experiment.simulation.startTime = Number(this.experiment.simulation.startTime);
-      this.experiment.simulation.endTime = Number(this.experiment.simulation.endTime);
-      this.experiment.simulation.updateInterval = Number(this.experiment.simulation.updateInterval);
-      this.experiment.analysis.sample_size = Math.floor((this.experiment.simulation.endTime - this.experiment.simulation.startTime) /
-        this.experiment.simulation.updateInterval);
+      this.experiment.simulation.startTime = Number(
+        this.experiment.simulation.startTime
+      );
+      this.experiment.simulation.endTime = Number(
+        this.experiment.simulation.endTime
+      );
+      this.experiment.simulation.updateInterval = Number(
+        this.experiment.simulation.updateInterval
+      );
+      this.experiment.analysis.sample_size = Math.floor(
+        (this.experiment.simulation.endTime -
+          this.experiment.simulation.startTime) /
+          this.experiment.simulation.updateInterval
+      );
 
-      // TODO: retrieve input for additional resources such as archived results
+      if (this.targetSystem.type.includes("analysis")) {
+        this.experiment.analysis.parent_experiment = this.simulationData.experimentId;
+        this.experiment.analysis.algorithms = this.analysisSelection.getAlgorithms();
+        console.log(
+          "Logged this.experiment.analysis.parent_experiment is : " +
+            this.experiment.analysis.parent_experiment
+        );
+      }
 
       this.experiment.user = this.user.name;
 
       // take the incoming data type labeled as "is_considered" to perform stage result calculation in backend
       for (let item of this.targetSystem.incomingDataTypes) {
-        if (item.is_considered === true) {
-          this.experiment.considered_data_types.push(item);
-        }
+        // if (item.is_considered === true) {
+        this.experiment.considered_data_types.push(item);
+        // }
       }
 
       // if the aggregate dataProvider is considered, append it to consideredAggregateTopics for subscription
@@ -132,15 +203,19 @@ export class CreateExperimentsComponent implements OnInit {
         this.experiment.executionStrategy.sample_size = this.experiment.analysis.sample_size;
       }
 
+      console.log(this.experiment);
+      console.log(this.experiment.simulation.resourcers);
+
       this.api.saveExperiment(this.experiment).subscribe(
         (success) => {
           this.notify.success("Success", "Experiment saved");
           this.temp_storage.setNewValue(this.experiment);
           this.router.navigate(["control/experiments"]);
-        }, (error) => {
+        },
+        (error) => {
           this.notify.error("Error", error.toString());
         }
-      )
+      );
     }
   }
 
@@ -157,7 +232,19 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   public targetSystemChanged(targetSystemName: any) {
-    this.selectedTargetSystem = this.availableTargetSystems.find(item => item.name === targetSystemName);
+    this.selectedTargetSystem = this.availableTargetSystems.find(
+      (item) => item.name === targetSystemName
+    );
+
+    this.simulationData = {
+      experimentId: null,
+      experiment: null,
+      target: null,
+    };
+
+    this.experiments = [];
+    this.experimentsLabels = [];
+    this.experiment.analysis.input_topics = [];
 
     if (this.selectedTargetSystem !== undefined) {
       /*
@@ -166,6 +253,11 @@ export class CreateExperimentsComponent implements OnInit {
         return;
       }
        */
+
+      this.experiment = this.entityService.create_experiment(
+        this.executionStrategy,
+        this.selectedTargetSystem.simulationType
+      );
 
       // remove previously added variables if they exist
       if (this.experiment.changeableVariables.length > 0) {
@@ -198,10 +290,9 @@ export class CreateExperimentsComponent implements OnInit {
       this.experiment.analysis.tTestAlpha = this.defaultAlpha;
       this.experiment.analysis.tTestEffectSize = this.defaultTTestEffectSize;
       this.experiment.analysis.tTestSampleSize = this.defaultTTestSampleSize;
-      this.maxNrOfImportantFactors = Math.pow(2, this.targetSystem.changeableVariables.length) - 1;
-      // this.experiment.executionStrategy.type = "self_optimizer";
+      this.maxNrOfImportantFactors =
+        Math.pow(2, this.targetSystem.changeableVariables.length) - 1;
 
-      this.experiment.executionStrategy.type = null;
       this.acquisitionMethodChanged("gp_hedge");
       // set changeableVariable.min, changeableVariable.max as default value for factorValues for each chVar
       for (let i = 0; i < this.targetSystem.changeableVariables.length; i++) {
@@ -210,8 +301,44 @@ export class CreateExperimentsComponent implements OnInit {
         // set is_selected flag via click method
         this.changeable_variable_checkbox_clicked(i);
       }
+
+      // if target system type is analysis, load required simulation target/experiment data from backend
+      if (this.targetSystem.type === "analysis") {
+        this.api.loadAllExperiments().subscribe((experiments) => {
+          if (!isNullOrUndefined(experiments)) {
+            experiments
+              .filter((experiment) => {
+                return (
+                  (experiment.status === "SUCCESS" ||
+                    experiment.status === "RUNNING") &&
+                  experiment.targetSystemId ===
+                    this.targetSystem.parentTargetSystem
+                );
+              })
+              .forEach((experiment) => {
+                this.experimentsLabels.push({
+                  key: experiment.id,
+                  label: experiment.name,
+                });
+                this.experiments.push(experiment);
+              });
+            if (this.experiments.length === 1) {
+              this.simulationData.experimentId = this.experiments[0].id;
+              this.loadSimulationTarget(this.simulationData.experimentId);
+            }
+          }
+        });
+        // if aggregated experiment than needed data is already included
+      } else if (this.targetSystem.type === "simulation_and_analysis") {
+        this.simulationData.experimentId = this.experiment.id;
+        this.simulationData.experiment = this.experiment;
+        this.simulationData.target = this.targetSystem;
+      }
     } else {
-      this.notify.error("Error", "Cannot fetch selected target system, please try again");
+      this.notify.error(
+        "Error",
+        "Cannot fetch selected target system, please try again"
+      );
       return;
     }
   }
@@ -225,18 +352,16 @@ export class CreateExperimentsComponent implements OnInit {
    * sets is_selected flag of targetSystem.changeableVariables
    */
   public changeable_variable_checkbox_clicked(changeableVariable_index): void {
-    let changeableVariable = this.targetSystem.changeableVariables[changeableVariable_index];
+    let changeableVariable = this.targetSystem.changeableVariables[
+      changeableVariable_index
+    ];
     if (isNullOrUndefined(changeableVariable.is_selected)) {
       changeableVariable.is_selected = true;
-    }
-    else
-      if (changeableVariable.is_selected === true) {
+    } else if (changeableVariable.is_selected === true) {
       changeableVariable.is_selected = false;
       // also refresh factorValues
       changeableVariable.factorValues = null;
-    }
-    else
-      if (changeableVariable.is_selected === false) {
+    } else if (changeableVariable.is_selected === false) {
       changeableVariable.is_selected = true;
     }
     this.setMaxNrOfFactors();
@@ -270,36 +395,64 @@ export class CreateExperimentsComponent implements OnInit {
       return true;
     }
 
-    if (this.experiment.simulation.startTime < 0 ||
+    if (
+      this.experiment.simulation.startTime < 0 ||
       this.experiment.simulation.startTime === null ||
-      this.experiment.simulation.endTime < this.experiment.simulation.startTime) {
+      this.experiment.simulation.endTime < this.experiment.simulation.startTime
+    ) {
       this.errorButtonLabel = "Provide valid simulation start time";
       return true;
     }
 
-    if (this.experiment.simulation.endTime <= 0 ||
+    if (
+      this.experiment.simulation.endTime <= 0 ||
       this.experiment.simulation.endTime === null ||
-      this.experiment.simulation.endTime < this.experiment.simulation.startTime) {
+      this.experiment.simulation.endTime < this.experiment.simulation.startTime
+    ) {
       this.errorButtonLabel = "Provide valid simulation end time";
       return true;
     }
 
-    if (this.experiment.simulation.updateInterval <= 0 ||
+    if (
+      this.experiment.simulation.updateInterval <= 0 ||
       this.experiment.simulation.updateInterval === null ||
-      this.experiment.simulation.updateInterval > this.experiment.simulation.endTime) {
+      this.experiment.simulation.updateInterval >
+        this.experiment.simulation.endTime
+    ) {
       this.errorButtonLabel = "Provide valid simulation update interval";
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.simulation.resources[0]["name"]) ||
-      isNullOrUndefined(this.experiment.simulation.resources[1]["name"])) {
-      this.errorButtonLabel = "Provide experiment resources (RoadMap & Sumo Network)";
-      return true;
-    }
+    /*
+      if (
+        this.targetSystem.type.includes("simulation") &&
+        (isNullOrUndefined(this.experiment.simulation.resources[0]["name"]) ||
+          isNullOrUndefined(this.experiment.simulation.resources[1]["name"]))
+      ) {
+        this.errorButtonLabel =
+          "Provide experiment resources (RoadMap & Sumo Network)";
+        return true;
+      }
+    */
 
     if (this.experiment.executionStrategy.type === null) {
       this.errorButtonLabel = "Choose the experiment strategy";
       return true;
+    }
+
+    if (this.targetSystem.type.toString().match("simulation")) {
+      if (this.experiment.simulation.resources.length == 0) {
+        this.errorButtonLabel = "Please select some custom resource files";
+        return true;
+      }
+
+      for (let resource of this.experiment.simulation.resources) {
+        if (isNullOrUndefined(resource.name)) {
+          this.errorButtonLabel =
+            "Please select a custom resource file of type " + resource.type;
+          return true;
+        }
+      }
     }
 
     // check data types for analysis
@@ -314,8 +467,21 @@ export class CreateExperimentsComponent implements OnInit {
       }
     }
 
-    if (this.entityService.get_number_of_considered_data_types(this.targetSystem) === 0) {
-      this.errorButtonLabel = "Provide at least one output data type to be analyzed";
+    if (
+      this.entityService.get_number_of_considered_data_types(
+        this.targetSystem
+      ) === 0 &&
+      this.targetSystem.type.includes("analysis") &&
+      (isNullOrUndefined(
+        this.experiment.analysis["input_topics_incoming_data_types"]
+      ) ||
+        this.experiment.analysis["input_topics_incoming_data_types"].length ===
+          0) &&
+      (isNullOrUndefined(this.experiment.analysis["input_topics"]) ||
+        this.experiment.analysis["input_topics"].length === 0)
+    ) {
+      this.errorButtonLabel =
+        "Provide at least one output data type to be analyzed";
       return true;
     }
 
@@ -324,12 +490,19 @@ export class CreateExperimentsComponent implements OnInit {
       let knobArr = this.experiment.changeableVariables[i];
       for (let idx = 0; idx < knobArr.length; idx++) {
         let knob = knobArr[idx];
-        let originalKnob = this.targetSystem.defaultVariables.find(x => x.name == knob.name);
-        if (knob.min < originalKnob.min || knob.max > originalKnob.max || knob.max <= knob.min || knob.min >= knob.max) {
-          this.errorButtonLabel = "Value(s) of input parameters should be within the range of original ones";
+        let originalKnob = this.targetSystem.defaultVariables.find(
+          (x) => x.name == knob.name
+        );
+        if (
+          knob.min < originalKnob.min ||
+          knob.max > originalKnob.max ||
+          knob.max <= knob.min ||
+          knob.min >= knob.max
+        ) {
+          this.errorButtonLabel =
+            "Value(s) of input parameters should be within the range of original ones";
           return true;
         }
-
       }
     }
 
@@ -345,29 +518,47 @@ export class CreateExperimentsComponent implements OnInit {
       return true;
     }
 */
+    if (
+      this.targetSystem.type.includes("analysis") &&
+      this.hasErrorsAnalysis()
+    ) {
+      return true;
+    }
     return false;
   }
 
   public hasErrorsAnova() {
-
     // regular check
-    if (isNullOrUndefined(this.experiment.analysis.anovaAlpha) || this.experiment.analysis.anovaAlpha <= 0 || this.experiment.analysis.anovaAlpha >= 1) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.anovaAlpha) ||
+      this.experiment.analysis.anovaAlpha <= 0 ||
+      this.experiment.analysis.anovaAlpha >= 1
+    ) {
       this.errorButtonLabelAnova = "Provide valid alpha for anova";
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.analysis.sample_size) || this.experiment.analysis.sample_size <= 0 ) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.sample_size) ||
+      this.experiment.analysis.sample_size <= 0
+    ) {
       this.errorButtonLabelAnova = "Provide valid sample size for anova";
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.analysis.nrOfImportantFactors) || this.experiment.analysis.nrOfImportantFactors <= 0 ) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.nrOfImportantFactors) ||
+      this.experiment.analysis.nrOfImportantFactors <= 0
+    ) {
       this.errorButtonLabelAnova = "Provide valid number of important factors";
       return true;
     }
 
     // n is used for number of factors in anova
-    if (isNullOrUndefined(this.experiment.analysis.n) || this.experiment.analysis.n <= 0 ) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.n) ||
+      this.experiment.analysis.n <= 0
+    ) {
       this.errorButtonLabelAnova = "Provide valid number of factors";
       return true;
     }
@@ -379,12 +570,18 @@ export class CreateExperimentsComponent implements OnInit {
       }
     }
     if (selected < 2) {
-      this.errorButtonLabelAnova = "Anova cannot be used with less than 2 factors";
+      this.errorButtonLabelAnova =
+        "Anova cannot be used with less than 2 factors";
       return true;
     }
 
-    if (this.experiment.analysis.nrOfImportantFactors > this.maxNrOfImportantFactors) {
-      this.errorButtonLabelAnova = "Number of important factors cannot exceed " + this.maxNrOfImportantFactors;
+    if (
+      this.experiment.analysis.nrOfImportantFactors >
+      this.maxNrOfImportantFactors
+    ) {
+      this.errorButtonLabelAnova =
+        "Number of important factors cannot exceed " +
+        this.maxNrOfImportantFactors;
       return true;
     }
 
@@ -400,26 +597,30 @@ export class CreateExperimentsComponent implements OnInit {
             if (factors.length >= 2) {
               for (let factor of factors) {
                 factor = factor.trim();
-                if (!isNumeric(factor)){
-                  this.errorButtonLabelAnova = "Provide numeric value(s) for factor values";
+                if (!isNumeric(factor)) {
+                  this.errorButtonLabelAnova =
+                    "Provide numeric value(s) for factor values";
                   return true;
-                }
-                else {
+                } else {
                   // now check intervals
-                  if (Number(factor) < Number(chVar["min"]) || Number(factor) > Number(chVar["max"])) {
-                    this.errorButtonLabelAnova = "Provide values within min & max values of input parameter(s)";
+                  if (
+                    Number(factor) < Number(chVar["min"]) ||
+                    Number(factor) > Number(chVar["max"])
+                  ) {
+                    this.errorButtonLabelAnova =
+                      "Provide values within min & max values of input parameter(s)";
                     return true;
                   }
                 }
               }
-            }
-            else {
-              this.errorButtonLabelAnova = "Provide at least two factor values for " + chVar.name;
+            } else {
+              this.errorButtonLabelAnova =
+                "Provide at least two factor values for " + chVar.name;
               return true;
             }
-          }
-          else {
-            this.errorButtonLabelAnova = "Provide valid value(s) for factor values";
+          } else {
+            this.errorButtonLabelAnova =
+              "Provide valid value(s) for factor values";
             return true;
           }
         }
@@ -429,16 +630,24 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   public hasErrorsOptimization() {
-
     let execution_strategy_type = this.experiment.executionStrategy.type;
-    if (this.experiment.executionStrategy.optimizer_iterations === null || this.experiment.executionStrategy.optimizer_iterations <= 0
-      || isNullOrUndefined(this.experiment.executionStrategy.acquisition_method) || isNullOrUndefined(execution_strategy_type)) {
-      this.errorButtonLabelOptimization = "Provide valid inputs for " + execution_strategy_type;
+    if (
+      this.experiment.executionStrategy.optimizer_iterations === null ||
+      this.experiment.executionStrategy.optimizer_iterations <= 0 ||
+      isNullOrUndefined(this.experiment.executionStrategy.acquisition_method) ||
+      isNullOrUndefined(execution_strategy_type)
+    ) {
+      this.errorButtonLabelOptimization =
+        "Provide valid inputs for " + execution_strategy_type;
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.executionStrategy.sample_size) || this.experiment.executionStrategy.sample_size <= 0 ) {
-      this.errorButtonLabelOptimization = "Provide valid sample size for optimization";
+    if (
+      isNullOrUndefined(this.experiment.executionStrategy.sample_size) ||
+      this.experiment.executionStrategy.sample_size <= 0
+    ) {
+      this.errorButtonLabelOptimization =
+        "Provide valid sample size for optimization";
       return true;
     }
 
@@ -455,16 +664,29 @@ export class CreateExperimentsComponent implements OnInit {
           minimum_number_of_iterations += 4;
         }
       }
-      if (this.experiment.executionStrategy.optimizer_iterations < minimum_number_of_iterations) {
-        this.errorButtonLabelOptimization = "Number of optimizer iterations should be greater than " + minimum_number_of_iterations.toString() + " for " + execution_strategy_type;
+      if (
+        this.experiment.executionStrategy.optimizer_iterations <
+        minimum_number_of_iterations
+      ) {
+        this.errorButtonLabelOptimization =
+          "Number of optimizer iterations should be greater than " +
+          minimum_number_of_iterations.toString() +
+          " for " +
+          execution_strategy_type;
         return true;
       }
-    }
-    else if (execution_strategy_type === "self_optimizer") {
+    } else if (execution_strategy_type === "self_optimizer") {
       // check if number of iterations for skopt are enough
       let minimum_number_of_iterations = 5;
-      if (this.experiment.executionStrategy.optimizer_iterations < minimum_number_of_iterations) {
-        this.errorButtonLabelOptimization = "Number of optimizer iterations should be greater than " + minimum_number_of_iterations.toString() + " for " + execution_strategy_type;
+      if (
+        this.experiment.executionStrategy.optimizer_iterations <
+        minimum_number_of_iterations
+      ) {
+        this.errorButtonLabelOptimization =
+          "Number of optimizer iterations should be greater than " +
+          minimum_number_of_iterations.toString() +
+          " for " +
+          execution_strategy_type;
         return true;
       }
     }
@@ -473,19 +695,51 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   public hasErrorsTtest() {
-    if (isNullOrUndefined(this.experiment.analysis.tTestAlpha) || this.experiment.analysis.tTestAlpha <= 0 || this.experiment.analysis.tTestAlpha >= 1) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.tTestAlpha) ||
+      this.experiment.analysis.tTestAlpha <= 0 ||
+      this.experiment.analysis.tTestAlpha >= 1
+    ) {
       this.errorButtonLabelTtest = "Provide valid alpha for T-test";
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.analysis.tTestEffectSize) || this.experiment.analysis.tTestEffectSize <= 0 || this.experiment.analysis.tTestEffectSize > 2) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.tTestEffectSize) ||
+      this.experiment.analysis.tTestEffectSize <= 0 ||
+      this.experiment.analysis.tTestEffectSize > 2
+    ) {
       this.errorButtonLabelTtest = "Provide valid effect size for T-test";
       return true;
     }
 
-    if (isNullOrUndefined(this.experiment.analysis.tTestSampleSize) || this.experiment.analysis.tTestSampleSize <= 0) {
+    if (
+      isNullOrUndefined(this.experiment.analysis.tTestSampleSize) ||
+      this.experiment.analysis.tTestSampleSize <= 0
+    ) {
       this.errorButtonLabelTtest = "Provide valid sample size for T-test";
       return true;
+    }
+    return false;
+  }
+
+  hasErrorsAnalysis(): boolean {
+    const hasTopicToAnalyze = this.experiment.analysis.input_topics.length > 0;
+    if (!hasTopicToAnalyze) {
+      this.errorButtonLabel = "Provide at least one topic to analyze";
+      return !hasTopicToAnalyze;
+    }
+
+    const hasSelected = this.analysisSelection.hasSelected();
+    if (!hasSelected) {
+      this.errorButtonLabel = "Provide select at least one analysis algorithm ";
+      return !hasSelected;
+    }
+
+    const hasErrors = this.analysisSelection.hasErrors();
+    if (hasErrors) {
+      this.errorButtonLabel = "Provide valid analysis algorithm parameters";
+      return hasErrors;
     }
     return false;
   }
@@ -498,9 +752,11 @@ export class CreateExperimentsComponent implements OnInit {
     // console.log(aggregateTopics["name"] + " is considered" + aggregateTopics["is_considered"]);
   }
 
-
   public hasChanges(): boolean {
-    return JSON.stringify(this.experiment) !== JSON.stringify(this.originalExperiment);
+    return (
+      JSON.stringify(this.experiment) !==
+      JSON.stringify(this.originalExperiment)
+    );
   }
 
   // ****************************
@@ -519,35 +775,20 @@ export class CreateExperimentsComponent implements OnInit {
     this.experiment.analysis.alpha = null;
 
     // also refresh targetSystem variables if user has selected some of them
-    this.targetSystem.changeableVariables = _(this.originalTargetSystem.changeableVariables);
-    this.targetSystem.incomingDataTypes = _(this.originalTargetSystem.incomingDataTypes);
+    this.targetSystem.changeableVariables = _(
+      this.originalTargetSystem.changeableVariables
+    );
+    this.targetSystem.incomingDataTypes = _(
+      this.originalTargetSystem.incomingDataTypes
+    );
 
     // set executionStrategy type
-    if (key === 't_test') {
+    if (key === "t_test") {
       this.experiment.executionStrategy.type = "sequential"; // TODO: this might be removed depending on backend logic
-    }
-    else if (key === 'factorial_experiment') {
-      this.experiment.executionStrategy.type = "step_explorer";  // TODO: this might be removed depending on backend logic
+    } else if (key === "factorial_experiment") {
+      this.experiment.executionStrategy.type = "step_explorer"; // TODO: this might be removed depending on backend logic
       this.experiment.analysis.n = this.targetSystem.changeableVariables.length; // set default value of factors (n)
     }
-
-  }
-
-  executionStrategyChanged(key) {
-    // this.experiment.executionStrategy = this.entityService.create_execution_strategy();
-    this.stages_count = null;
-    this.experiment.changeableVariables = [];
-    this.experiment.analysis.method = null;
-    this.experiment.analysis.data_type = null;
-    this.experiment.analysis.alpha = null;
-
-    // also refresh targetSystem variables if user has selected some of them
-    this.targetSystem.changeableVariables = _(this.originalTargetSystem.changeableVariables);
-    this.targetSystem.incomingDataTypes = _(this.originalTargetSystem.incomingDataTypes);
-
-    // set executionStrategy type
-    this.experiment.executionStrategy.type = key;
-    this.experiment.analysis.type = this.experiment.executionStrategy.type;
   }
 
   public is_changeable_variable_selected(i): boolean {
@@ -569,16 +810,26 @@ export class CreateExperimentsComponent implements OnInit {
     const ctrl = this;
     let knobArr = [];
     if (isNullOrUndefined(variable.target)) {
-      ctrl.notify.error("Error", "Provide target value for changeable variable(s)");
+      ctrl.notify.error(
+        "Error",
+        "Provide target value for changeable variable(s)"
+      );
       return;
     } else {
       // check number of already-added variables for different analysis options
       if (ctrl.experiment.changeableVariables.length == 2) {
-        ctrl.notify.error("Error", "2 factors have already been specified for T-test");
+        ctrl.notify.error(
+          "Error",
+          "2 factors have already been specified for T-test"
+        );
         return;
       }
       // ch. var is empty or there's one variable. check boundaries
-      if (!isNullOrUndefined(variable.target) && variable.target <= variable.max && variable.target >= variable.min) {
+      if (
+        !isNullOrUndefined(variable.target) &&
+        variable.target <= variable.max &&
+        variable.target >= variable.min
+      ) {
         // ch. var is empty, just push
         knobArr.push(_(variable));
         ctrl.experiment.changeableVariables.push(knobArr);
@@ -593,12 +844,19 @@ export class CreateExperimentsComponent implements OnInit {
   // assuming that user has provided different configurations for variables and wants them to use for the selected analysis test
   addVariablesFor2FactorAndSeqTest() {
     let number_of_desired_variables: number;
-    if (this.experiment.analysis.type == 't_test') {
+    if (this.experiment.analysis.type == "t_test") {
       number_of_desired_variables = 2;
     }
 
-    if (this.experiment.changeableVariables.length >= number_of_desired_variables) {
-      this.notify.error("Error", "You can't exceed " + number_of_desired_variables + " variable(s) for this test");
+    if (
+      this.experiment.changeableVariables.length >= number_of_desired_variables
+    ) {
+      this.notify.error(
+        "Error",
+        "You can't exceed " +
+          number_of_desired_variables +
+          " variable(s) for this test"
+      );
       return;
     }
 
@@ -610,7 +868,10 @@ export class CreateExperimentsComponent implements OnInit {
           this.notify.error("Error", "Provide valid values for variable(s)");
           return;
         } else {
-          if (variable.target < variable.min || variable.target > variable.max) {
+          if (
+            variable.target < variable.min ||
+            variable.target > variable.max
+          ) {
             this.notify.error("Error", "Provide valid values for variable(s)");
             return;
           }
@@ -623,7 +884,7 @@ export class CreateExperimentsComponent implements OnInit {
     let knobArr = [];
     for (let variable of this.targetSystem.changeableVariables) {
       if (variable["is_selected"] == true) {
-        if (!isNullOrUndefined(variable.target) ) {
+        if (!isNullOrUndefined(variable.target)) {
           // push an array of k-v pairs instead of pushing variables directly
           let knob: any = {};
           knob.name = variable.name;
@@ -633,18 +894,23 @@ export class CreateExperimentsComponent implements OnInit {
           knob.target = variable.target;
           knobArr.push(knob);
         } else {
-          this.notify.error("Error", "Please specify valid values for the selected changeable variables");
+          this.notify.error(
+            "Error",
+            "Please specify valid values for the selected changeable variables"
+          );
           return;
         }
       }
     }
     // do not push empty k-v pair
     if (knobArr.length == 0) {
-      this.notify.error("Error", "Please specify valid values for the selected changeable variables");
+      this.notify.error(
+        "Error",
+        "Please specify valid values for the selected changeable variables"
+      );
     } else {
       this.experiment.changeableVariables.push(knobArr);
     }
-
   }
 
   // checks if user has selected proper number of variables for analysis tests
@@ -659,16 +925,21 @@ export class CreateExperimentsComponent implements OnInit {
       }
 
       // check boundaries
-      if (chVar["is_selected"] == true && (chVar.target < chVar.min || chVar.target > chVar.max)) {
+      if (
+        chVar["is_selected"] == true &&
+        (chVar.target < chVar.min || chVar.target > chVar.max)
+      ) {
         this.errorButtonLabelTtest = "Provide valid value(s)";
         return true;
       }
 
-      if (chVar["is_selected"] == true && !isNullOrUndefined(chVar["target"]))
+      if (chVar["is_selected"] == true && !isNullOrUndefined(chVar["target"])) {
         nr += 1;
+      }
     }
     if (nr == 0) {
-      this.errorButtonLabelTtest = "Select and provide value(s) for at least one variable";
+      this.errorButtonLabelTtest =
+        "Select and provide value(s) for at least one variable";
       return true;
     }
     return false;
@@ -695,22 +966,226 @@ export class CreateExperimentsComponent implements OnInit {
   }
 
   addResources() {
-    this.experiment.simulation.resources.push({
-      "disabled": false
-    });
+    this.experiment.simulation.resources.push({});
   }
 
   removeResource(index) {
     this.experiment.simulation.resources.splice(index, 1);
   }
 
-  addResults() {
-    this.experiment.simulation.archivedResults.push({
-      "disabled": false
+  selectFiles(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      this.resourceFiles = [];
+      // populate the resoure file table with the selected user files
+      for (var i = 0; i < fileList.length; i++) {
+        this.resourceFiles.push({
+          name: fileList[i].name,
+          description: "missing",
+          status: "NOT UPLOADED",
+          file: fileList[i],
+          resource_type: "RoadMap",
+        });
+      }
+    }
+  }
+
+  fetchUploadedResourceFiles(resource_type) {
+    console.log(resource_type);
+    const path_in_bucket = this.resourceService.getPathInS3Bucket(
+      resource_type
+    );
+    this.api.getResourceFiles(path_in_bucket).subscribe((file_list) => {
+      console.log(file_list);
+      if (resource_type == "Input") {
+        this.uploadedInputResourceFiles = [];
+        file_list.map((file_name) => {
+          this.uploadedInputResourceFiles.push({
+            key: file_name,
+            label: file_name,
+          });
+        });
+      } else if (resource_type == "RoadMap") {
+        this.uploadedRoadMapResourceFiles = [];
+        file_list.map((file_name) => {
+          this.uploadedRoadMapResourceFiles.push({
+            key: file_name,
+            label: file_name,
+          });
+        });
+      } else if (resource_type == "Other") {
+        this.uploadedOthersResourceFiles = [];
+        file_list.map((file_name) => {
+          this.uploadedOthersResourceFiles.push({
+            key: file_name,
+            label: file_name,
+          });
+        });
+      } else {
+        this.notify.error("Error", "Wrong resource type has been selected");
+        return;
+      }
     });
   }
 
-  removeResult(index) {
-    this.experiment.simulation.archivedResults.splice(index, 1);
+  fetchUploadedResourceFileDescription(resource_type, file_name) {
+    console.log(resource_type);
+    console.log(file_name);
+    const path_in_bucket = this.resourceService.getPathInS3Bucket(
+      resource_type
+    );
+    const description_file_name = file_name + ".description";
+    this.api
+      .getResourceFileDescription(
+        path_in_bucket + "-descriptions",
+        description_file_name
+      )
+      .subscribe((description) => {
+        if (
+          this.resourceFilesDescription.find((descrObj) => {
+            return (
+              descrObj["file_name"] == file_name &&
+              descrObj["file_description"] == description &&
+              descrObj["resource_type"] == resource_type
+            );
+          }) == undefined
+        ) {
+          this.resourceFilesDescription.push({
+            file_name: file_name,
+            file_description: description,
+            resource_type: resource_type,
+          });
+        }
+      });
+  }
+
+  checkResourceFileDescription(current_description) {
+    if (current_description == "missing") {
+      this.notify.error(
+        "Error",
+        "This file needs another description before uploading"
+      );
+      return false;
+    }
+    return true;
+  }
+
+  updateFileProperty(property, file_name, new_property) {
+    this.resourceFiles.map((item) => {
+      if (item.name == file_name) {
+        if (property == "status") {
+          item.status = new_property;
+        } else if (property == "description") {
+          item.description = new_property;
+        } else if (property == "resource_type") {
+          item.resource_type = new_property;
+        }
+      }
+    });
+  }
+
+  uploadFile(event) {
+    console.log(event);
+    let file: File = event.file;
+    const resource_file_type = this.resourceFiles.find((item) => {
+      if (item.name == file.name) {
+        return item;
+      }
+    }).resource_type;
+    if (resource_file_type == null) {
+      this.notify.error("Error", "No resource type has been selected");
+      return;
+    }
+    if (!this.checkResourceFileDescription(event.description)) {
+      return;
+    } else {
+      var path_in_bucket = this.resourceService.getPathInS3Bucket(
+        resource_file_type
+      );
+      // 1. check if file already exists in s3 bucket
+      this.api
+        .getResourceFile(path_in_bucket, file.name, file.size)
+        .subscribe((result) => {
+          // if file_name and byte size are equal, throw error that the exact same file already is uploaded
+          // if only the file_name exists, throw an error that the name is taken already
+          // possible results: "file not uploaded", "file name already taken", "file already exists"
+          if (result == "file not uploaded") {
+            // 2. send file as binary data to backend, where the file is stored on the local disk storage,
+            // send to the s3 bucket from the backend server and then removed from the local disk storage
+            this.api
+              .postResourceFile(path_in_bucket, file.name, file)
+              .subscribe((result) => {
+                this.updateFileProperty(
+                  "status",
+                  file.name,
+                  "UPLOADED SUCCESSFULLY"
+                );
+                // 3.1. upload the resource file description as a separate resource file to the s3 bucket under the same path
+                this.api
+                  .postResourceFile(
+                    path_in_bucket + "-descriptions",
+                    file.name + ".description",
+                    event.description
+                  )
+                  .subscribe((result) => {});
+                // 3.2 refresh the uploaded resource files for the user to pick those
+                this.fetchUploadedResourceFiles(resource_file_type);
+              });
+          }
+          // 4. if the file is already uploaded or the file name taken display it in the file table
+          else if (result == "file name already taken") {
+            this.updateFileProperty(
+              "status",
+              file.name,
+              "UPLOAD FAILED - FILE NAME TAKEN"
+            );
+            this.notify.error(
+              "Error",
+              "This file name is already taken, please specify valid file name."
+            );
+            return;
+          } else if (result == "file already exists") {
+            this.updateFileProperty(
+              "status",
+              file.name,
+              "UPLOAD FAILED - FILE ALREADY EXISTS"
+            );
+            this.notify.error(
+              "Error",
+              "A file with exactly this name and size already exists"
+            );
+            return;
+          } else {
+            this.notify.error("Error", "Unknown file upload error occured");
+            return;
+          }
+        });
+    }
+  }
+
+  loadSimulationTarget($event) {
+    console.log($event);
+    this.experiment.analysis.input_topics = [];
+    const selectedExperiment = this.experiments.find(
+      (experiment) => experiment.id === $event
+    );
+    console.log("Selected experiment is .. : " + selectedExperiment);
+    this.simulationData.experiment = selectedExperiment;
+    this.api
+      .loadTargetById(selectedExperiment.targetSystemId)
+      .subscribe((target) => {
+        this.simulationData.target = target;
+        console.log("logging the retrieved target from api call : " + target);
+        this.onIncomingDataTypesChangedAnalysis(
+          this.simulationData.target.incomingDataTypes
+        );
+      });
+  }
+
+  onIncomingDataTypesChanged($event) {}
+
+  onIncomingDataTypesChangedAnalysis($event) {
+    this.experiment.analysis["input_topics_incoming_data_types"] = $event;
   }
 }

@@ -15,11 +15,26 @@ import {ExperimentStagesPaginatorRunningComponent} from "./experiment-stages-pag
 import {AnovaAnalysisComponent} from "./anova-analysis.component";
 import {IncomingDataTypesSimulationComponent} from "./incoming-data-types-simulation.component";
 import {AggregateTopicsComponent} from "./aggregate-topics";
+import {InputTopicsAnalysisComponent} from "./input-topics-analysis.component";
+import {AnalysisModuleComponent} from "./analysis-module.component";
+import {PermissionButtonComponent} from "./permission-button";
+import {UiSwitchModule} from "angular2-ui-switch/src/index";
+import {UserFormComponent} from "./user-form.component";
+import {AnalysisModuleSelectionComponent} from "./analysis-module-selection.component";
+import {AccordionModule} from "ngx-bootstrap";
+import {BootstrapSwitchModule} from "angular2-bootstrap-switch";
+import {AlgorithmSelectionHeaderComponent} from "./algorithm-selection-header.component";
+import {LabeledInputArrayComponent} from "./labeled-input-array.component";
+import {ResourceFilesViewlistComponent} from "./resource-files-viewlist.component";
+import {AnalysisGroupViewComponent} from "./analysis-group-view.component";
+import {AnalysisSnapshotViewComponent} from "./analysis-snapshot-view.component";
+import {AnalysisResultComponent} from "./analysis-result.component";
 
 const uiElements = [
   DebugElementComponent,
   LabeledInputComponent,
   LabeledInputSelectComponent,
+  LabeledInputArrayComponent,
   ExperimentDetailsComponent,
   ExperimentStagesComponent,
   ExperimentStagesPaginatorComponent,
@@ -29,7 +44,17 @@ const uiElements = [
   IncomingDataTypesComponent,
   IncomingDataTypesAnalysisComponent,
   IncomingDataTypesSimulationComponent,
-  AggregateTopicsComponent
+  AggregateTopicsComponent,
+  InputTopicsAnalysisComponent,
+  AnalysisModuleComponent,
+  AnalysisModuleSelectionComponent,
+  AlgorithmSelectionHeaderComponent,
+  PermissionButtonComponent,
+  UserFormComponent,
+  ResourceFilesViewlistComponent,
+  AnalysisGroupViewComponent,
+  AnalysisSnapshotViewComponent,
+  AnalysisResultComponent
 ];
 
 @NgModule({
@@ -37,7 +62,10 @@ const uiElements = [
   imports: [
     CommonModule,
     FormsModule,
-    DataTableModule
+    DataTableModule,
+    UiSwitchModule,
+    AccordionModule,
+    BootstrapSwitchModule,
   ],
   exports: uiElements,
   providers: [],

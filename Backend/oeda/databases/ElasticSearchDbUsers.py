@@ -35,7 +35,7 @@ class ElasticSearchDbUsers(UserDatabase):
         try:
             self.indices_client = IndicesClient(self.es)
             if not self.indices_client.exists(self.index):
-                self.indices_client.create(index=self.index, body=body)
+                self.indices_client.create(index=self.index, body=body, include_type_name=True)
         except TransportError:
             error("Error while creating elasticsearch cluster for users. Check type mappings in user_db_config.json.")
             print(traceback.format_exc())

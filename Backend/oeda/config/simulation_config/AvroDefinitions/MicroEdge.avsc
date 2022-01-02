@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "MicroEdge",
+  "namespace": "org.vim_project.datamodel",
+  "fields": [
+    { "name": "edgeID", "type": "string"},    
+    { "name": "emission","type": "string"},
+    { "name": "flow", "type": "double"},
+    { "name": "occupancy", "type": "double"},
+    { "name": "speed", "type": "double"},
+    { "name": "vehicles", "type":  {"type": "array", "items": "org.vim_project.datamodel.Micro"}},
+    { "name": "vehicleIDs", "type":  {"type": "array", "items": "string"}}
+  ]
+}

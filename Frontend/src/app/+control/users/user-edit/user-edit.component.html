@@ -1,0 +1,37 @@
+<div class="panel panel-default " xmlns="http://www.w3.org/1999/html">
+  <div class="panel-heading">
+    <span>{{action === 'edit' ? "Editing " : "Register new "}}user...</span>
+    <span class="pull-right">
+      <div *ngIf="action === 'edit'" class="btn btn-sm btn-orange" (click)="saveUserRoles()"><i
+        class="fa fa-send"></i> Save User
+      </div>
+      <div *ngIf="action === 'add'" class="btn btn-sm btn-orange" (click)="registerUser()"><i
+        class="fa fa-send"></i> Register User
+      </div>
+    </span>
+  </div>
+  <div class="panel-body">
+    <user-form #userForm [user]="user_" [hidePassword]="action === 'edit'" [disableEditName]="action !== 'add'" [generatePassword]="action === 'add'"></user-form>
+    <label style="margin-top: 20px">Roles</label>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <th>Role</th>
+        <th>Description</th>
+        <th>Active</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let role of roles">
+          <ng-container>
+            <td>{{role.name}}</td>
+            <td>{{role.description}}</td>
+            <td>
+              <input type="checkbox" class="form-check-input" [(ngModel)]="role['isActive']">
+            </td>
+          </ng-container>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

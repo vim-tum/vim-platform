@@ -1,5 +1,6 @@
 import {Component, ViewContainerRef} from '@angular/core';
 import {NotificationsService} from "angular2-notifications/dist";
+import {AuthorizationService} from "./shared/modules/auth/authorization.service";
 
 
 @Component({

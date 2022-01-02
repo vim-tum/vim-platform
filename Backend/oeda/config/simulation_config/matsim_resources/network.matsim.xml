@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE network SYSTEM "http://www.matsim.org/files/dtd/network_v1.dtd">
+
+<network name="NAME">
+   <nodes>
+      <node id="gneJ10" x="-300.00" y="-200.00"/>
+      <node id="gneJ11" x="-200.00" y="-200.00"/>
+      <node id="gneJ12" x="-100.00" y="-100.00"/>
+      <node id="gneJ13" x="-100.00" y="0.00"/>
+      <node id="gneJ14" x="-200.00" y="100.00"/>
+      <node id="gneJ15" x="-300.00" y="100.00"/>
+      <node id="gneJ8" x="-400.00" y="0.00"/>
+      <node id="gneJ9" x="-400.00" y="-100.00"/>
+   </nodes>
+   <links capperiod="01:00:00">
+      <link id="a" from="gneJ8" to="gneJ9" length="100.00" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="b" from="gneJ9" to="gneJ10" length="141.42" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="c" from="gneJ10" to="gneJ11" length="100.00" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="d" from="gneJ11" to="gneJ12" length="141.42" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="e" from="gneJ12" to="gneJ13" length="100.00" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="f" from="gneJ13" to="gneJ14" length="141.42" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="g" from="gneJ14" to="gneJ15" length="100.00" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+      <link id="h" from="gneJ15" to="gneJ8" length="141.42" capacity="3600.00" freespeed="13.89" permlanes="2"/>
+   </links>
+</network>

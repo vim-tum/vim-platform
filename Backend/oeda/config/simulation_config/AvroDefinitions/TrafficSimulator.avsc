@@ -1,60 +1,130 @@
- { "type": "record",
- 	"namespace": "eu.fau.cs7.datamodel",
- 	"name": "TrafficSimulator",
- 	"fields": [
-                        {   "name": "ID", "type": "string"},
-                        {   "name": "Type", "type": "string"},
-                        {   "name": "StepLength", "type": "int"},
-                        {   "name": "Layer", "type": "string"},
-                        {   "name": "LayerParams", "type": {
-				                "type": "array",
-				                "items":{
-				                    "name": "LayerParam",
-				                    "type": "KeyValue"
-				                }
-				          	}
-			            },
-                        {   "name": "Resources", "type": {			               
-                                "type": "array",
-				                "items":{
-				                    "name": "Resource",
-				                    "type": "KeyValue"
-				                }
-				          	}
-                        },
-                        {   "name": "Results", "type": {
-				                "type": "array",
-				                "items":{
-				                    "name": "Result",
-				                    "type": "KeyValue"
-				                }
-				          	}
-			            },
-                        {   "name": "Timing", 	"type" : "Timing"},	
-			            {   "name": "Responsibilities", "type": {
-				                "type": "array",
-				                "items":{
-				                    "name": "Responsibility",
-				                    "type": "string" 
-				                }
-				          	}
-			            },
-                        {   "name": "Borders", "type": {
-				                "type": "array",
-				                "items":{
-				                    "name": "Border",
-				                    "type": "string" 
-				                }
-				          	}
-                        },
-                        {  	"name": "Observers", "type" : { 
-		                        "type": "array",
-								"items":{
-									"name": "Observer",
-									"type": "Observer"
-								}
-							}
-                        },
-                        {   "name": "CustomParams", "type": "string"}
-                    ]
+{
+  "type": "record",
+  "namespace": "org.vim_project.datamodel",
+  "name": "TrafficSimulator",
+  "fields": [
+    {
+      "name": "ID",
+      "type": "string"
+    },
+    {
+      "name": "Type",
+      "type": "string"
+    },
+    {
+      "name": "StepLength",
+      "type": "int"
+    },
+    {
+      "name": "Layer",
+      "type": "string"
+    },
+    {
+      "name": "LayerParams",
+      "type": {
+        "type": "map",
+        "values": "string",
+        "default": {}
+      }
+    },
+    {
+      "name": "Resources",
+      "type": {
+        "type": "map",
+        "values": "string",
+        "default": {}
+      }
+    },
+    {
+      "name": "Results",
+      "type": {
+        "type": "map",
+        "values": "string",
+        "default": {}
+      }
+    },
+    {
+      "name": "Timing",
+      "type": {
+        "type": "record",
+        "name": "Timing",
+        "fields": [
+          {
+            "name": "Constrained",
+            "type": "boolean"
+          },
+          {
+            "name": "Regulating",
+            "type": "boolean"
+          },
+          {
+            "name": "Lookahead",
+            "type": "long"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Responsibilities",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Borders",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Observers",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Observer",
+          "fields": [
+            {
+              "name": "Task",
+              "type": "string"
+            },
+            {
+              "name": "Attribute",
+              "type": "string"
+            },
+            {
+              "name": "Filter",
+              "type": "string"
+            },
+            {
+              "name": "Period",
+              "type": "int"
+            },
+            {
+              "name": "Subject",
+              "type": "string"
+            },
+            {
+              "name": "Trigger",
+              "type": "string"
+            },
+            {
+              "name": "Type",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "CustomParams",
+      "type": {
+        "type": "map",
+        "values": "string",
+        "default": {}
+      }
+    }
+  ]
 }

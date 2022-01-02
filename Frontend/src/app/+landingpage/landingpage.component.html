@@ -9,38 +9,7 @@
           <hr>
         </div>
         <div class="panel-body">
-          <form accept-charset="UTF-8" role="form" class="form-signin">
-            <fieldset>
-
-              <div class="form-group">
-                <label for="username" class="cols-sm-2 control-label">Username</label>
-                <div class="cols-sm-10">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username" [(ngModel)]="user.name"/>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="password" class="cols-sm-2 control-label">Password</label>
-                <div class="cols-sm-10">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password" [(ngModel)]="user.password"/>
-                  </div>
-                </div>
-              </div>
-              <button type="button" class="navbar-brand btn btn-lg default btn-block"
-                      (click)="submitLogin()" style="padding-bottom: 5%">Sign in
-              </button>
-              <hr>
-              <p></p>
-              <button type="button" class="navbar-brand btn btn-lg btn-primary btn-block"
-                      (click)="submitRegistration()"   style="padding-bottom: 5%">Register
-              </button>
-            </fieldset>
-          </form>
+          <router-outlet></router-outlet>
         </div>
       </div>
     </div>

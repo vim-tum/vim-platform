@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "Scenario",
-  "namespace": "eu.fau.cs7.datamodel",
+  "namespace": "org.vim_project.datamodel",
   "fields": [
     {
       "name": "ID",
@@ -95,35 +95,25 @@
             {
               "name": "LayerParams",
               "type": {
-                "type": "array",
-                "items": {
-                  "type": "record",
-                  "name": "KeyValue",
-                  "fields": [
-                    {
-                      "name": "Key",
-                      "type": "string"
-                    },
-                    {
-                      "name": "Value",
-                      "type": "string"
-                    }
-                  ]
-                }
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
               "name": "Resources",
               "type": {
-                "type": "array",
-                "items": "KeyValue"
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
               "name": "Results",
               "type": {
-                "type": "array",
-                "items": "KeyValue"
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
@@ -148,12 +138,18 @@
               }
             },
             {
-            "name": "Responsibilities", 
-            "type": {"type": "array", "items": "string"} 
-            }, 
+              "name": "Responsibilities",
+              "type": {
+                "type": "array",
+                "items": "string"
+              }
+            },
             {
-            "name": "Borders", 
-            "type": {"type": "array", "items": "string"} 
+              "name": "Borders",
+              "type": {
+                "type": "array",
+                "items": "string"
+              }
             },
             {
               "name": "Observers",
@@ -176,15 +172,19 @@
                       "type": "string"
                     },
                     {
-                      "name": "Subject",
-                      "type": "string"
-                    },
-                    {
                       "name": "Period",
                       "type": "int"
                     },
                     {
+                      "name": "Subject",
+                      "type": "string"
+                    },
+                    {
                       "name": "Trigger",
+                      "type": "string"
+                    },
+                    {
+                      "name": "Type",
                       "type": "string"
                     }
                   ]
@@ -193,7 +193,11 @@
             },
             {
               "name": "CustomParams",
-              "type": "string"
+              "type": {
+                "type": "map",
+                "values": "string",
+                "default": {}
+              }
             }
           ]
         }
@@ -225,7 +229,11 @@
             },
             {
               "name": "CustomParams",
-              "type": "string"
+              "type": {
+                "type": "map",
+                "values": "string",
+                "default": {}
+              }
             }
           ]
         }
@@ -258,22 +266,25 @@
             {
               "name": "LayerParams",
               "type": {
-                "type": "array",
-                "items": "KeyValue"
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
               "name": "Resources",
               "type": {
-                "type": "array",
-                "items": "KeyValue"
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
               "name": "Results",
               "type": {
-                "type": "array",
-                "items": "KeyValue"
+                "type": "map",
+                "values": "string",
+                "default": {}
               }
             },
             {
@@ -286,7 +297,11 @@
             },
             {
               "name": "CustomParams",
-              "type": "string"
+              "type": {
+                "type": "map",
+                "values": "string",
+                "default": {}
+              }
             }
           ]
         }

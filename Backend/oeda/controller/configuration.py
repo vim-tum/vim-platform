@@ -4,6 +4,7 @@ from oeda.config.simulation_config import Config as SimulationConfig
 from oeda.config.crowdnav_config import Config as CrowdNavConfig
 from oeda.config.platooning_config import Config as PlatooningConfig
 from oeda.config.R_config import Config as mlrMBOConfig
+from oeda.controller.securityUtils import Permission, jwt_auth_required, require_permission
 from oeda.log import *
 import traceback
 import json
@@ -11,6 +12,8 @@ import requests
 
 class ConfigController(Resource):
     @staticmethod
+    @jwt_auth_required()
+    @require_permission(Permission.GET_TARGETSYSTEM)
     def get():
         try:
             crowd_nav_knobs = json.loads(open('oeda/config/crowdnav_config/knobs.json').read())
@@ -27,6 +30,10 @@ class ConfigController(Resource):
             # Make something similar for interaction channel. This will feed into changeProvider
             # simulation_interaction = json.loads(open('oeda/config/simulation_config/interactionChannel.json').read())
 
+            analysis_provision = json.loads(open('oeda/config/analysis_config/provisionChannel.json').read())
+
+            simulation_and_analysis_provision = json.loads(open('oeda/config/simulation_and_analysis_config/provisionChannel.json').read())
+
             data = [
                 {
                     "name": "Simulation",
@@ -40,8 +47,33 @@ class ConfigController(Resource):
                     "changesApplicable": True, # if we can change target system's default configuration on-the-fly
                     "knobs": simulation_knobs, # used to populate changeableVariables in OEDA
                     "dataProviders": simulation_provision # used to populate dataProviders in OEDA
-                }
-                ,
+                },
+                {
+                    "name": "Analysis",
+                    "description": "Analysis channel setup",
+                    "kafkaTopicRouting": "",
+                    "kafkaTopicTrips": "",
+                    "kafkaTopicPerformance": "",
+                    "kafkaTopicProvision": "analysis-provision",
+                    "kafkaHost": SimulationConfig.kafkaHost,
+                    "kafkaCommandsTopic": SimulationConfig.kafkaCommandsTopic,
+                    "changesApplicable": True,  # if we can change target system's default configuration on-the-fly
+                    "knobs": [],  # used to populate changeableVariables in OEDA
+                    "dataProviders": analysis_provision  # used to populate dataProviders in OEDA
+                },
+                {
+                    "name": "Simulation & Analysis",
+                    "description": "Simulation based on SUMO with integrated Analysis setup",
+                    "kafkaTopicRouting": SimulationConfig.kafkaTopicRouting,
+                    "kafkaTopicTrips": SimulationConfig.kafkaTopicTrips,
+                    "kafkaTopicPerformance": SimulationConfig.kafkaTopicPerformance,
+                    "kafkaTopicProvision": "simulation-and-analysis-provision",
+                    "kafkaHost": SimulationConfig.kafkaHost,
+                    "kafkaCommandsTopic": SimulationConfig.kafkaCommandsTopic,
+                    "changesApplicable": True,  # if we can change target system's default configuration on-the-fly
+                    "knobs": simulation_knobs,  # used to populate changeableVariables in OEDA
+                    "dataProviders": simulation_and_analysis_provision  # used to populate dataProviders in OEDA
+                },
                 {
                     "name": "CrowdNav",
                     "description": "Simulation based on SUMO",

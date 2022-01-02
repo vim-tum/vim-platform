@@ -24,6 +24,10 @@ class Database:
         """ returns all the target systems """
         pass
 
+    def get_targets_by(self, field, value):
+        """ returns all the target systems """
+        pass
+
     def save_experiment(self, experiment_data):
         """ saves the data of an OEDA experiment, id is retrieved from data """
         pass

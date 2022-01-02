@@ -2,7 +2,43 @@
   <div class="col-md-3">
     <div class="board">
       <div class="panel panel-primary">
-        <button class="btn btn-danger" (click)="clear_database()" *ngIf="!is_cleared">Clear Database</button>
+        <button
+          class="btn btn-danger"
+          (click)="clear_database()"
+          *ngIf="!is_cleared"
+        >
+          Clear Database
+        </button>
+      </div>
+      <div class="panel panel-primary">
+        <button class="btn btn-danger" (click)="clear_s3_storage()">
+          Clear S3 Storage
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="board">
+      <div class="panel panel-primary">
+        <div style="padding-bottom: 5%">
+          <button class="btn btn-danger" (click)="delete_experiments()">
+            Delete all Experiments older then
+          </button>
+        </div>
+        <div>
+          <select
+            class="form-control"
+            name="Datetime Experiment Creation"
+            size="1"
+            [(ngModel)]="deletion_time"
+            data-toggle="tooltip"
+            title="Amount of days passed since creation or older"
+          >
+            <option value="30" [disabled]="false">30 Days or more</option>
+            <option value="60" [disabled]="false">60 Days or more</option>
+            <option value="90" [disabled]="false">90 Days or more</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>

@@ -1,0 +1,225 @@
+[
+  {
+    "name": "Vehicle",
+    "description": "Provides acceleration, edge, position and speed of vehicles",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "vehicle",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": true,
+    "incomingDataTypes": [
+      {
+        "name": "acceleration",
+        "description": "acceleration value of vehicles",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "angle",
+        "description": "angle value of vehicles",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "edge",
+        "description": "edge value of the vehicle",
+        "scale": "Text",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "lane",
+        "description": "lane value of vehicles",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "position",
+        "description": "current position of the car",
+        "scale": "Vec3",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "positionEdge",
+        "description": "current position edge of the car",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "slope",
+        "description": "current slope of the car",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      },
+      {
+        "name": "speed",
+        "description": "current speed of the car",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Vehicle"
+      }
+    ]
+  },
+  {
+    "name": "Edge",
+    "description": "Provides statistics of the edge",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "edge",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": true,
+    "incomingDataTypes": [
+      {
+        "name": "emission",
+        "description": "Provides fuel emission by vehicles on the edge",
+        "scale": "Text",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      },
+      {
+        "name": "flow",
+        "description": "Provides flow data by vehicles on the edge",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      },
+      {
+        "name": "occupancy",
+        "description": "Provides occupancy data by vehicles on the edge",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      },
+      {
+        "name": "speed",
+        "description": "Provides speed data by vehicles on the edge",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      },
+      {
+        "name": "vehicleIDs",
+        "description": "Provides IDs from the vehicles on the edge",
+        "scale": "Text",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      },
+      {
+        "name": "vehicles",
+        "description": "Provides vehicles data on the edge",
+        "scale": "Vehicle",
+        "criteria": "Minimize",
+        "dataProviderName": "Edge"
+      }
+    ]
+  },
+  {
+    "name": "Detector",
+    "description": "Provides statistics of the edge",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "detector",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": true,
+    "incomingDataTypes": [
+      {
+        "name": "lastStepVehicleNumber",
+        "description": "Provides the vehilce number of the last step",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      },
+      {
+        "name": "lastStepMeanSpeed",
+        "description": "Provides the mean speed of the last step",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      },
+      {
+        "name": "lastStepVehicleIDs",
+        "description": "Provides the vehicle IDs in the last made step",
+        "scale": "Text",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      },
+      {
+        "name": "lastStepOccupancy",
+        "description": "Provides the occupancy of the last step",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      },
+      {
+        "name": "lastStepMeanLength",
+        "description": "Provides the mean length of the last step",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      },
+      {
+        "name": "timeSinceDetection",
+        "description": "Provides the time since detection",
+        "scale": "Metric",
+        "criteria": "Minimize",
+        "dataProviderName": "Detector"
+      }
+    ]
+  },
+  {
+    "name": "Scenario",
+    "description": "Used for ACK purposes",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "scenario",
+    "serializer": "JSON",
+    "channel": "provision",
+    "is_configurable": false
+  },
+  {
+    "name": "Results",
+    "description": "A consumer topic for receiving simulation results in an archived file",
+    "type": "kafka_consumer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "result",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": false
+  },
+  {
+    "name": "Resource",
+    "description": "A producer topic for sending resources to the simulator (mapfile, traffic input, etc.)",
+    "type": "kafka_producer",
+    "experiment_type": "simulation",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "resource",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": false
+  },
+  {
+    "name": "Output",
+    "description": "A consumer topic for receiving analysis results in an archived file",
+    "type": "kafka_consumer",
+    "experiment_type": "analysis",
+    "kafka_uri": "131.159.24.152:9092",
+    "topic": "output",
+    "serializer": "Avro",
+    "channel": "provision",
+    "is_configurable": true
+  }
+]

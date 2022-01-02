@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "MicroDetector",
+  "namespace": "org.vim_project.datamodel",
+  "fields": [
+    { "name": "detectorID", "type": "string"},    
+    { "name": "values", "type": {"type": "map", "values": ["boolean","double","int","string"]}}
+    ]
+}

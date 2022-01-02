@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Observable} from "rxjs/Rx";
 import {Http, Headers, Response} from "@angular/http";
 import {LoggerService} from "../helper/logger.service";
@@ -7,15 +7,22 @@ import {Router} from "@angular/router";
 import {Try, Option, None, Some} from "monapt";
 import {environment} from "../../../../environments/environment";
 import {NotificationsService} from "angular2-notifications/dist";
+import {OEDAApiService, Permission, PermissionName, Role, UserRole} from "../api/oeda-api.service";
+import {catchError, map} from "rxjs/operators";
+import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http, private router: Router, private log: LoggerService, private notify: NotificationsService) {
+
+
+  constructor(private http: Http, private router: Router, private log: LoggerService, private notify: NotificationsService ) {
   }
 
   /** store the URL so we can redirect after logging in */
   redirectUrl: string;
+
+  public refreshTokenEndpoint = environment.backendURL + '/auth/refresh'
 
   /** helper for the jwt token */
   jwtHelper: JwtHelper = new JwtHelper();
@@ -23,6 +30,13 @@ export class UserService {
   /** true if the user is logged in */
   isLoggedIn(): boolean {
     return this.getAuthTokenRaw().map(token => {
+        return Try(() => !this.jwtHelper.isTokenExpired(token)).getOrElse(() => false)
+      }
+    ).getOrElse(() => false)
+  }
+
+  canRefresh(): boolean {
+    return this.getRefreshTokenRaw().map(token => {
         return Try(() => !this.jwtHelper.isTokenExpired(token)).getOrElse(() => false)
       }
     ).getOrElse(() => false)
@@ -37,19 +51,47 @@ export class UserService {
 
   }
 
-  tryTokenRenewal(): Observable<boolean> {
-    if (this.getAuthTokenRaw().isEmpty) {
-      return Observable.throw("not logged in")
-    }
+  getUsername(): string {
+    return this.getAuthToken()["value"]["sub"];
+  }
+
+  private tryTokenRenewal(): Observable<boolean> {
+    console.log("UserService - reauth requested")
     const authHeader = new Headers();
-    authHeader.append('Authorization', 'Bearer ' + this.getAuthTokenRaw().get());
-    return this.http.post(environment.backendURL + "/auth/renew", {},
+    const refreshToken = this.getRefreshTokenRaw();
+    authHeader.append('Authorization', 'Bearer ' + refreshToken.get());
+    console.log("request")
+    return this.http.post(environment.backendURL + "/auth/refresh", {},
       {headers: authHeader})
       .map((response: Response) => {
-        this.log.debug("UserService - reauth successful");
+        console.log(response);
         this.setAuthToken(response.json().token);
         return true;
+      }).catch((error) => {
+        const errorMsg = JSON.parse(error._body);
+        this.notify.error("Error", errorMsg.error || errorMsg.message);
+        return Observable.throw(error || 'Server error')
       })
+  }
+
+  renewToken(): Observable<boolean> {
+    return this.tryTokenRenewal().pipe(map(
+        (res) => {
+          this.notify.success("Success", "Token renewal works!");
+          return true;
+        }),
+      catchError(
+        (error: Error) => {
+          this.redirectToLogin()
+          return Observable.of(false);
+        })
+    )
+  }
+
+  redirectToLogin(): void {
+    this.notify.error("Error", "Your session has expired.");
+    this.logout();
+    this.router.navigate(['/'], {queryParams: {returnUrl: ''}});
   }
 
 
@@ -66,17 +108,20 @@ export class UserService {
 
   /** tries to log in the user and stores the token in localStorage (another option is to store it in sessionStorage) */
   login(request: LoginRequest): Observable<boolean> {
+    console.log("UserService - starting LoginRequest")
     this.log.debug("UserService - starting LoginRequest");
     return this.http.post(environment.backendURL + "/auth/login", request)
       .map((response: Response) => {
+        console.log("UserService - request successful")
         this.log.debug("UserService - request successful");
         this.setAuthToken(response.json().token);
+        this.setRefreshToken(response.json().refresh_token);
         return true;
       })
       .catch((error: any) => {
         let errorMsg: any = {};
         // server is not running
-        if (typeof(error._body) == 'object') {
+        if (typeof (error._body) == 'object') {
           errorMsg.message = "Server is not running";
         } else {
           // server is running and returned a json string
@@ -98,9 +143,21 @@ export class UserService {
     localStorage.setItem('oeda_token', token)
   }
 
+  setRefreshToken(token: string): void {
+    localStorage.setItem('oeda_refresh_token', token);
+  }
+
   /** returns the token stored in localStorage */
   getAuthTokenRaw(): Option<string> {
-    const token = localStorage.getItem('oeda_token');
+   return this.getJWTTokenRaw('oeda_token');
+  }
+
+  getRefreshTokenRaw(): Option<string> {
+    return this.getJWTTokenRaw('oeda_refresh_token');
+  }
+
+  getJWTTokenRaw(key: string): Option<string> {
+    const token = localStorage.getItem(key);
     if (token == null || token.split('.').length !== 3) {
       return None
     } else {
@@ -110,49 +167,16 @@ export class UserService {
 
   /** logs out the user */
   logout(): void {
-    console.log("UserService - removing token");
-    this.log.debug("UserService - removing token");
+    console.log("UserService - removing tokens");
+    this.log.debug("UserService - removing tokens");
     localStorage.removeItem('oeda_token');
-    console.log(localStorage.getItem('oeda_token'));
+    localStorage.removeItem('oeda_refresh_token')
     this.router.navigate(['/'])
   }
 
-  /** checks if a user has a given permission */
-  hasPermission(permission: Permission): boolean {
-    return true
-  }
-
-  forcePermission(permission: Permission): Promise<boolean> { // Permission
-    if (!this.isLoggedIn()) {
-      this.log.warn("UserService - user is not logged in - sending to login");
-      return this.router.navigate(['/auth/login'])
-    }
-    // check if the token has the given permission allowed
-    const permissionNumber = this.getAuthToken().map(f => f.permissions).getOrElse(() => 0);
-    const toLessPermissions = (permissionNumber === 0);
-    if (toLessPermissions) {
-      this.log.warn("UserService - not enough access rights for this page");
-      return this.router.navigate(['/'])
-    }
-    this.log.debug("UserService - user has all permissions for this page");
-  }
 }
 
 
-/** a permission in the system */
-export class Permission {
-
-  /** allows access to the system status page */
-  static FOUND_SYSINFO_READ = new Permission(0, "FOUND_SYSINFO_READ");
-
-  constructor(index: number, name: string) {
-    this.index = index;
-    this.name = name;
-  }
-
-  index: number;
-  name: string;
-}
 
 /** request for logging in */
 export interface LoginRequest {
